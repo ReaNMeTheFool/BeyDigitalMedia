@@ -12,14 +12,7 @@ const projects = [
     service: "Google Ads & SEO",
     color: "from-emerald-500 to-teal-600",
     results: "Organik trafik +280%",
-  },
-  {
-    id: 3,
-    title: "Balya",
-    category: "Kurumsal Kimlik",
-    service: "Logo & Marka Tasarımı",
-    color: "from-amber-500 to-orange-500",
-    results: "Yeni marka lansmanı",
+    logo: "/guzgunlar_logo.webp",
   },
   {
     id: 4,
@@ -36,6 +29,7 @@ const projects = [
     service: "Web Sitesi & SEO",
     color: "from-rose-500 to-pink-600",
     results: "Dönüşüm oranı +200%",
+    logo: "/lada_logo.webp",
   },
 ];
 
@@ -197,30 +191,40 @@ export default function Portfolio() {
                 >
                   {/* Image Container */}
                   <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}
-                    />
-                    {/* Animated gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    {project.logo ? (
+                      <img
+                        src={project.logo}
+                        alt={project.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    ) : (
+                      <>
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}
+                        />
+                        {/* Animated gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-                    {/* Content overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center text-white p-8">
-                      <div className="text-center">
-                        <motion.div
-                          className="w-24 h-24 mx-auto mb-4 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                        >
-                          <span className="text-4xl font-bold drop-shadow-lg">
-                            {project.title.charAt(0)}
-                          </span>
-                        </motion.div>
-                        <h3 className="text-2xl font-bold mb-2 drop-shadow-md">{project.title}</h3>
-                        <span className="text-sm opacity-90 font-medium">
-                          {project.category}
-                        </span>
-                      </div>
-                    </div>
+                        {/* Content overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center text-white p-8">
+                          <div className="text-center">
+                            <motion.div
+                              className="w-24 h-24 mx-auto mb-4 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner overflow-hidden"
+                              whileHover={{ scale: 1.1, rotate: 5 }}
+                              transition={{ type: "spring", stiffness: 400 }}
+                            >
+                              <span className="text-4xl font-bold drop-shadow-lg">
+                                {project.title.charAt(0)}
+                              </span>
+                            </motion.div>
+                            <h3 className="text-2xl font-bold mb-2 drop-shadow-md">{project.title}</h3>
+                            <span className="text-sm opacity-90 font-medium">
+                              {project.category}
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    )}
 
                     {/* Results Badge */}
                     <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">

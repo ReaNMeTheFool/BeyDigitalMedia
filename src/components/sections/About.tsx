@@ -38,7 +38,7 @@ export default function About() {
               />
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#181825] flex items-center justify-center shadow-[0_0_50px_rgba(0,64,255,0.5)]">
                 {/* Bey Digital Logo */}
-                <div className="relative w-48 h-48 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+                <div className="relative w-[768px] h-[768px] drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
                   <Image
                     src="/beydigital_logo.png"
                     alt="Bey Digital Media"
@@ -105,7 +105,7 @@ export default function About() {
                 markalar yaratmak.
               </p>
               <p>
-                150'den fazla mutlu müşteri ve 200'ün üzerinde tamamlanan proje ile
+                100'den fazla mutlu müşteri ve 150'nin üzerinde tamamlanan proje ile
                 Türkiye'nin dört bir yanından markalarla çalışma fırsatı bulduk.
                 Siz de dijital dönüşüm yolculuğunuzda bize güvenebilirsiniz.
               </p>
