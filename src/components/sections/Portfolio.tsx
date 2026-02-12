@@ -181,7 +181,7 @@ export default function Portfolio() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="overflow-x-hidden pb-8 pt-4" // pt-4 eklendi
+          className="overflow-x-hidden pb-8 pt-4"
           ref={scrollContainerRef}
         >
           <div className="flex gap-6 px-4 sm:px-6 lg:px-8">
@@ -193,7 +193,7 @@ export default function Portfolio() {
                 <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30 overflow-visible" // overflow-visible eklendi
+                  className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30 overflow-visible"
                 >
                   {/* Image Container */}
                   <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
@@ -222,10 +222,9 @@ export default function Portfolio() {
                       </div>
                     </div>
 
-                    {/* Results Badge - Modern Redesign */}
-                    <div className="absolute -top-3 right-4 bg-gradient-to-r from-[#0040ff] to-[#0066ff] rounded-full px-4 py-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 shadow-lg shadow-[#0040ff]/30 z-20">
-                      <p className="text-white font-bold text-xs flex items-center gap-1">
-                        <span className="text-yellow-300 text-sm">★</span>
+                    {/* Results Badge - Minimal */}
+                    <div className="absolute top-3 right-3 bg-black/30 backdrop-blur-md border border-white/10 rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-white/90 text-[10px] font-medium tracking-wide">
                         {project.results}
                       </p>
                     </div>
