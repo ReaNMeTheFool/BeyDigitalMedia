@@ -6,19 +6,11 @@ import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
   {
-    id: 1,
-    title: "DMÖ",
-    category: "Sosyal Medya Yönetimi",
-    service: "Instagram & Meta Ads",
-    color: "from-blue-600 to-indigo-600",
-    results: "Takipçi artışı %340",
-  },
-  {
     id: 2,
     title: "Gzugunlar",
     category: "Dijital Pazarlama",
     service: "Google Ads & SEO",
-    color: "from-green-600 to-emerald-600",
+    color: "from-emerald-500 to-teal-600",
     results: "Organik trafik +280%",
   },
   {
@@ -26,7 +18,7 @@ const projects = [
     title: "Balya",
     category: "Kurumsal Kimlik",
     service: "Logo & Marka Tasarımı",
-    color: "from-amber-500 to-orange-600",
+    color: "from-amber-500 to-orange-500",
     results: "Yeni marka lansmanı",
   },
   {
@@ -34,7 +26,7 @@ const projects = [
     title: "İşbir Yatak",
     category: "Sosyal Medya",
     service: "İçerik Üretimi",
-    color: "from-purple-600 to-pink-600",
+    color: "from-violet-500 to-purple-600",
     results: "Etkileşim oranı +150%",
   },
   {
@@ -42,7 +34,7 @@ const projects = [
     title: "Lada Wedding",
     category: "Web Tasarım",
     service: "Web Sitesi & SEO",
-    color: "from-rose-500 to-red-600",
+    color: "from-rose-500 to-pink-600",
     results: "Dönüşüm oranı +200%",
   },
 ];
@@ -52,7 +44,7 @@ const extendedProjects = [...projects, ...projects, ...projects];
 
 export default function Portfolio() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(projects.length); // Orta setten başla
+  const [currentIndex, setCurrentIndex] = useState(projects.length);
   const [isScrolling, setIsScrolling] = useState(false);
 
   const getCardWidth = useCallback(() => {
@@ -60,11 +52,10 @@ export default function Portfolio() {
     if (!container) return 0;
     const card = container.querySelector('.project-card') as HTMLElement;
     if (!card) return 0;
-    const gap = 24; // gap-6 = 24px
+    const gap = 24;
     return card.offsetWidth + gap;
   }, []);
 
-  // Başlangıç pozisyonunu orta sete ayarla
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -72,7 +63,6 @@ export default function Portfolio() {
     const cardWidth = getCardWidth();
     if (cardWidth === 0) return;
     
-    // Orta setin başlangıcına scroll yap (animasyonsuz)
     container.scrollLeft = projects.length * cardWidth;
   }, [getCardWidth]);
 
@@ -93,7 +83,6 @@ export default function Portfolio() {
     
     setCurrentIndex(newIndex);
     
-    // Eğer son sete ulaştıysak, scroll bitince başa sar
     if (newIndex >= projects.length * 2) {
       setTimeout(() => {
         container.style.scrollBehavior = 'auto';
@@ -127,7 +116,6 @@ export default function Portfolio() {
     
     setCurrentIndex(newIndex);
     
-    // Eğer ilk sete ulaştıysak, scroll bitince sona sar
     if (newIndex < projects.length) {
       setTimeout(() => {
         container.style.scrollBehavior = 'auto';
@@ -167,8 +155,25 @@ export default function Portfolio() {
         </motion.div>
       </div>
 
-      {/* Horizontal Scroll Container with Navigation */}
+      {/* Carousel Container */}
       <div className="relative">
+        {/* Navigation Buttons - Side Arrows (Yukarı Taşındı - top-1/3) */}
+        <button
+          onClick={scrollToPrev}
+          className="absolute left-4 top-1/3 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
+          aria-label="Önceki proje"
+        >
+          <ChevronLeft size={24} />
+        </button>
+
+        <button
+          onClick={scrollToNext}
+          className="absolute right-4 top-1/3 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
+          aria-label="Sonraki proje"
+        >
+          <ChevronRight size={24} />
+        </button>
+
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -184,77 +189,76 @@ export default function Portfolio() {
                 className="project-card shrink-0"
               >
                 <motion.div
-                  whileHover={{ y: -8 }}
-                  className="group relative w-80 md:w-96 bg-[#1e1e2e] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30"
                 >
                   {/* Image Container */}
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${project.color}`}
+                      className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}
                     />
+                    {/* Animated gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    
                     {/* Content overlay */}
                     <div className="absolute inset-0 flex items-center justify-center text-white p-8">
                       <div className="text-center">
-                        <div className="w-24 h-24 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                          <span className="text-4xl font-bold">
+                        <motion.div 
+                          className="w-24 h-24 mx-auto mb-4 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner"
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <span className="text-4xl font-bold drop-shadow-lg">
                             {project.title.charAt(0)}
                           </span>
-                        </div>
-                        <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                        <span className="text-sm opacity-80">
+                        </motion.div>
+                        <h3 className="text-2xl font-bold mb-2 drop-shadow-md">{project.title}</h3>
+                        <span className="text-sm opacity-90 font-medium">
                           {project.category}
                         </span>
                       </div>
                     </div>
 
                     {/* Results Badge */}
-                    <div className="absolute bottom-4 left-4 right-4 bg-black/40 backdrop-blur-sm rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                       <p className="text-[#ffd76e] font-bold text-center text-sm">{project.results}</p>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
-                    <span className="text-sm text-[#0040ff] font-medium">
+                  <div className="p-6 relative">
+                    {/* Accent line */}
+                    <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#2d2d44] to-transparent" />
+                    
+                    <span className="inline-block px-3 py-1 text-xs bg-[#0040ff]/10 text-[#0040ff] rounded-full font-medium mb-3">
                       {project.service}
                     </span>
-                    <h3 className="text-xl font-bold text-[#cdd6f4] mt-2">
+                    <h3 className="text-xl font-bold text-[#cdd6f4] mb-1">
                       {project.title}
                     </h3>
+                    <p className="text-[#6c7086] text-sm">
+                      {project.category}
+                    </p>
                   </div>
                 </motion.div>
               </motion.div>
             ))}
           </div>
         </motion.div>
-
-        {/* Navigation Buttons - Side Arrows */}
-        <button
-          onClick={scrollToPrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
-          aria-label="Önceki proje"
-        >
-          <ChevronLeft size={24} />
-        </button>
-
-        <button
-          onClick={scrollToNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
-          aria-label="Sonraki proje"
-        >
-          <ChevronRight size={24} />
-        </button>
       </div>
 
       {/* View All Button */}
       <div className="text-center mt-12">
-        <a
+        <motion.a
           href="#contact"
-          className="inline-flex items-center gap-2 text-[#0040ff] font-semibold hover:gap-3 transition-all"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0040ff] text-white rounded-xl font-semibold hover:bg-[#0033cc] transition-colors shadow-lg shadow-[#0040ff]/25"
         >
-          <span>Sizin Projeniz'de Burada Olabilir!</span>
+          <span>Sizin Projeniz de Burada Olabilir!</span>
           <ExternalLink size={18} />
-        </a>
+        </motion.a>
       </div>
     </section>
   );
