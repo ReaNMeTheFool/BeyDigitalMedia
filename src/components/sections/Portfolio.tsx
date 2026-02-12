@@ -7,7 +7,7 @@ import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 const projects = [
   {
     id: 2,
-    title: "Gzugunlar",
+    title: "Guzgunlar",
     category: "Dijital Pazarlama",
     service: "Google Ads & SEO",
     color: "from-emerald-500 to-teal-600",
@@ -157,21 +157,23 @@ export default function Portfolio() {
 
       {/* Carousel Container */}
       <div className="relative">
-        {/* Navigation Buttons - Side Arrows (Yukarı Taşındı - top-1/3) */}
+        {/* Navigation Buttons - Modern Design */}
         <button
           onClick={scrollToPrev}
-          className="absolute left-4 top-1/3 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
+          className="group absolute left-4 top-1/3 -translate-y-1/2 z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1e1e2e] to-[#252538] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center shadow-xl hover:border-[#0040ff]/50 hover:text-[#0040ff] hover:shadow-[0_0_30px_rgba(0,64,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
           aria-label="Önceki proje"
         >
-          <ChevronLeft size={24} />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0040ff]/0 to-[#0040ff]/0 group-hover:from-[#0040ff]/10 group-hover:to-[#0040ff]/5 transition-all duration-300" />
+          <ChevronLeft size={26} className="relative z-10 group-hover:-translate-x-1 transition-transform duration-300" />
         </button>
 
         <button
           onClick={scrollToNext}
-          className="absolute right-4 top-1/3 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
+          className="group absolute right-4 top-1/3 -translate-y-1/2 z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1e1e2e] to-[#252538] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center shadow-xl hover:border-[#0040ff]/50 hover:text-[#0040ff] hover:shadow-[0_0_30px_rgba(0,64,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
           aria-label="Sonraki proje"
         >
-          <ChevronRight size={24} />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0040ff]/0 to-[#0040ff]/0 group-hover:from-[#0040ff]/10 group-hover:to-[#0040ff]/5 transition-all duration-300" />
+          <ChevronRight size={26} className="relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
         </button>
 
         <motion.div
