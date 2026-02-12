@@ -69,7 +69,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2 absolute left-8">
               <div className="relative w-12 h-12">
                 <Image
-                  src="/beydigital_logo.png"
+                  src="/beydigital_logo.webp"
                   alt="Bey Digital Media"
                   fill
                   sizes="48px"
