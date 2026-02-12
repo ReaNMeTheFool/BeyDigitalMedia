@@ -255,7 +255,7 @@ export default function Hero() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg md:text-xl text-[#cdd6f4]/80 max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.
+            Bey  Digital  Media  olarak  markanızı  dijital  dünyada  büyütmek  için  Meta  Ads, Google Ads,  Sosyal  Medya  Yönetimi  ve  daha  fazlasını  sunuyoruz.
           </motion.p>
 
           <motion.div

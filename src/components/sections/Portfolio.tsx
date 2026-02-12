@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
   {
@@ -47,6 +48,59 @@ const projects = [
 ];
 
 export default function Portfolio() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const getCardWidth = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return 0;
+    const card = container.querySelector('.snap-start') as HTMLElement;
+    if (!card) return 0;
+    return card.offsetWidth + 24; // card width + gap
+  };
+
+  const scrollToIndex = (index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    const cardWidth = getCardWidth();
+    const scrollPosition = index * cardWidth;
+    
+    container.scrollTo({
+      left: scrollPosition,
+      behavior: 'smooth'
+    });
+    setCurrentIndex(index);
+  };
+
+  const scrollToPrev = () => {
+    const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
+    scrollToIndex(newIndex);
+  };
+
+  const scrollToNext = () => {
+    const newIndex = currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
+    scrollToIndex(newIndex);
+  };
+
+  // Scroll event listener to update current index
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const cardWidth = getCardWidth();
+      if (cardWidth === 0) return;
+      const newIndex = Math.round(container.scrollLeft / cardWidth);
+      if (newIndex >= 0 && newIndex < projects.length) {
+        setCurrentIndex(newIndex);
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section id="portfolio" className="py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,78 +124,99 @@ export default function Portfolio() {
         </motion.div>
       </div>
 
-      {/* Horizontal Scroll Container */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="overflow-x-auto pb-8 scrollbar-hide"
-      >
-        <div className="flex gap-6 px-4 sm:px-6 lg:px-8 snap-x snap-mandatory">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: "easeOut",
-              }}
-              className="snap-start shrink-0"
-            >
+      {/* Horizontal Scroll Container with Navigation */}
+      <div className="relative">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="overflow-x-auto pb-8 scrollbar-hide"
+          ref={scrollContainerRef}
+        >
+          <div className="flex gap-6 px-4 sm:px-6 lg:px-8 snap-x snap-mandatory">
+            {projects.map((project, index) => (
               <motion.div
-                whileHover={{ y: -8 }}
-                className="group relative w-80 md:w-96 bg-[#1e1e2e] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                key={project.id}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.1,
+                  ease: "easeOut",
+                }}
+                className="snap-start shrink-0"
               >
-                {/* Image Container */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${project.color}`}
-                  />
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center text-white p-8">
-                    <div className="text-center">
-                      <div className="w-24 h-24 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                        <span className="text-4xl font-bold">
-                          {project.title.charAt(0)}
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="group relative w-80 md:w-96 bg-[#1e1e2e] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                >
+                  {/* Image Container */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${project.color}`}
+                    />
+                    {/* Content overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center text-white p-8">
+                      <div className="text-center">
+                        <div className="w-24 h-24 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                          <span className="text-4xl font-bold">
+                            {project.title.charAt(0)}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+                        <span className="text-sm opacity-80">
+                          {project.category}
                         </span>
                       </div>
-                      <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                      <span className="text-sm opacity-80">
-                        {project.category}
-                      </span>
+                    </div>
+
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="text-center text-white p-6">
+                        <p className="text-[#ffd76e] font-bold text-lg mb-2">{project.results}</p>
+                        <button className="flex items-center gap-2 mx-auto border-2 border-white rounded-full px-6 py-3 hover:bg-white hover:text-[#181825] transition-colors cursor-pointer">
+                          <span>Projeyi Gör</span>
+                          <ArrowUpRight size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="text-center text-white p-6">
-                      <p className="text-[#ffd76e] font-bold text-lg mb-2">{project.results}</p>
-                      <button className="flex items-center gap-2 mx-auto border-2 border-white rounded-full px-6 py-3 hover:bg-white hover:text-[#181825] transition-colors cursor-pointer">
-                        <span>Projeyi Gör</span>
-                        <ArrowUpRight size={20} />
-                      </button>
-                    </div>
+                  {/* Content */}
+                  <div className="p-6">
+                    <span className="text-sm text-[#0040ff] font-medium">
+                      {project.service}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#cdd6f4] mt-2">
+                      {project.title}
+                    </h3>
                   </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <span className="text-sm text-[#0040ff] font-medium">
-                    {project.service}
-                  </span>
-                  <h3 className="text-xl font-bold text-[#cdd6f4] mt-2">
-                    {project.title}
-                  </h3>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Left Navigation Button */}
+        <button
+          onClick={scrollToPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff] text-white flex items-center justify-center shadow-lg hover:bg-[#0030cc] hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0040ff] focus:ring-offset-2 focus:ring-offset-[#181825]"
+          aria-label="Önceki proje"
+        >
+          <ChevronLeft size={24} />
+        </button>
+
+        {/* Right Navigation Button */}
+        <button
+          onClick={scrollToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff] text-white flex items-center justify-center shadow-lg hover:bg-[#0030cc] hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0040ff] focus:ring-offset-2 focus:ring-offset-[#181825]"
+          aria-label="Sonraki proje"
+        >
+          <ChevronRight size={24} />
+        </button>
+      </div>
 
       {/* View All Button */}
       <div className="text-center mt-12">
