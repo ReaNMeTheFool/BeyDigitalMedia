@@ -135,7 +135,27 @@ export async function submitContactForm(
         : "Belirtilmemiş";
 
     // Resend ile email gönder
-    const recipientEmail = process.env.RECIPIENT_EMAIL || "Beydigitalmedia@gmail.com";
+    const recipientEmail = process.env.RECIPIENT_EMAIL;
+    const resendApiKey = process.env.RESEND_API_KEY;
+    
+    // Environment variable kontrolü
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY tanımlı değil");
+      return {
+        success: false,
+        message: "Sunucu yapılandırma hatası: Email servisi ayarlanmamış. Lütfen daha sonra tekrar deneyin.",
+        errors: {},
+      };
+    }
+    
+    if (!recipientEmail) {
+      console.error("RECIPIENT_EMAIL tanımlı değil");
+      return {
+        success: false,
+        message: "Sunucu yapılandırma hatası: Alıcı email adresi ayarlanmamış.",
+        errors: {},
+      };
+    }
     
     const { data, error } = await resend.emails.send({
       from: "Bey Digital Media <onboarding@resend.dev>",
@@ -157,6 +177,14 @@ export async function submitContactForm(
 
     if (error) {
       console.error("Email gönderim hatası:", error);
+      // Resend domain doğrulama hatası kontrolü
+      if (error.message && error.message.includes("domain")) {
+        return {
+          success: false,
+          message: "Email gönderimi için domain doğrulaması gerekiyor. Lütfen bizimle telefon ile iletişime geçin.",
+          errors: {},
+        };
+      }
       return {
         success: false,
         message: "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
