@@ -7,7 +7,7 @@ import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 const projects = [
   {
     id: 2,
-    title: "Guzgunlar",
+    title: "Guzgun Tekstil",
     category: "Dijital Pazarlama",
     service: "Google Ads & SEO",
     color: "from-emerald-500 to-teal-600",
@@ -59,30 +59,30 @@ export default function Portfolio() {
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
-    
+
     const cardWidth = getCardWidth();
     if (cardWidth === 0) return;
-    
+
     container.scrollLeft = projects.length * cardWidth;
   }, [getCardWidth]);
 
   const scrollToNext = () => {
     if (isScrolling) return;
     setIsScrolling(true);
-    
+
     const container = scrollContainerRef.current;
     if (!container) return;
-    
+
     const cardWidth = getCardWidth();
     const newIndex = currentIndex + 1;
-    
+
     container.scrollTo({
       left: newIndex * cardWidth,
       behavior: 'smooth'
     });
-    
+
     setCurrentIndex(newIndex);
-    
+
     if (newIndex >= projects.length * 2) {
       setTimeout(() => {
         container.style.scrollBehavior = 'auto';
@@ -102,20 +102,20 @@ export default function Portfolio() {
   const scrollToPrev = () => {
     if (isScrolling) return;
     setIsScrolling(true);
-    
+
     const container = scrollContainerRef.current;
     if (!container) return;
-    
+
     const cardWidth = getCardWidth();
     const newIndex = currentIndex - 1;
-    
+
     container.scrollTo({
       left: newIndex * cardWidth,
       behavior: 'smooth'
     });
-    
+
     setCurrentIndex(newIndex);
-    
+
     if (newIndex < projects.length) {
       setTimeout(() => {
         container.style.scrollBehavior = 'auto';
@@ -181,7 +181,7 @@ export default function Portfolio() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="overflow-x-hidden pb-8"
+          className="overflow-x-hidden pb-8 pt-4" // pt-4 eklendi
           ref={scrollContainerRef}
         >
           <div className="flex gap-6 px-4 sm:px-6 lg:px-8">
@@ -191,22 +191,22 @@ export default function Portfolio() {
                 className="project-card shrink-0"
               >
                 <motion.div
-                  whileHover={{ y: -10, scale: 1.02 }}
+                  whileHover={{ y: -8 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30"
+                  className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30 overflow-visible" // overflow-visible eklendi
                 >
                   {/* Image Container */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}
                     />
                     {/* Animated gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                    
+
                     {/* Content overlay */}
                     <div className="absolute inset-0 flex items-center justify-center text-white p-8">
                       <div className="text-center">
-                        <motion.div 
+                        <motion.div
                           className="w-24 h-24 mx-auto mb-4 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                           transition={{ type: "spring", stiffness: 400 }}
@@ -222,17 +222,20 @@ export default function Portfolio() {
                       </div>
                     </div>
 
-                    {/* Results Badge */}
-                    <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <p className="text-[#ffd76e] font-bold text-center text-sm">{project.results}</p>
+                    {/* Results Badge - Modern Redesign */}
+                    <div className="absolute -top-3 right-4 bg-gradient-to-r from-[#0040ff] to-[#0066ff] rounded-full px-4 py-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 shadow-lg shadow-[#0040ff]/30 z-20">
+                      <p className="text-white font-bold text-xs flex items-center gap-1">
+                        <span className="text-yellow-300 text-sm">★</span>
+                        {project.results}
+                      </p>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 relative">
+                  <div className="p-6 relative rounded-b-3xl">
                     {/* Accent line */}
                     <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#2d2d44] to-transparent" />
-                    
+
                     <span className="inline-block px-3 py-1 text-xs bg-[#0040ff]/10 text-[#0040ff] rounded-full font-medium mb-3">
                       {project.service}
                     </span>
