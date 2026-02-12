@@ -53,11 +53,14 @@ function AnimatedHeadline() {
   );
 }
 
-// Seçenek 4: Canvas Particle Network
+// Canvas Particle Network - Sadece masaüstünde
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Mobilde canvas'ı devre dışı bırak
+    if (window.innerWidth < 768) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -67,7 +70,7 @@ function ParticleCanvas() {
     let animationId: number;
     let particles: Particle[] = [];
     let lastTime = 0;
-    const frameInterval = 1000 / 30; // 30 FPS'e sınırla (mobil için)
+    const frameInterval = 1000 / 30;
 
     const resizeCanvas = () => {
       canvas!.width = window.innerWidth;
@@ -109,7 +112,6 @@ function ParticleCanvas() {
 
     const initParticles = () => {
       particles = [];
-      // Mobilde daha az partikül (daha iyi performans)
       const isMobile = canvas!.width < 768;
       const baseCount = isMobile ? 30 : 120;
       const density = isMobile ? 15000 : 10000;
@@ -144,7 +146,6 @@ function ParticleCanvas() {
     const animate = (currentTime: number) => {
       const isMobile = canvas!.width < 768;
       
-      // Mobilde FPS sınırlama
       if (isMobile) {
         const deltaTime = currentTime - lastTime;
         if (deltaTime < frameInterval) {
@@ -227,31 +228,17 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.165, 0.84, 0.44, 1] }}
-        >
-          {/* Main Headline - Sabit pozisyonlu */}
+        <div className="animate-fade-in-up">
+          {/* Main Headline */}
           <div className="mb-8">
             <AnimatedHeadline />
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-lg md:text-xl text-[#cdd6f4]/80 max-w-3xl mx-auto mb-10 leading-relaxed"
-          >
-            Bey  Digital  Media  olarak  markanızı  dijital  dünyada  büyütmek  için  Meta  Ads, Google Ads,  Sosyal  Medya  Yönetimi  ve  daha  fazlasını  sunuyoruz.
-          </motion.p>
+          <p className="text-lg md:text-xl text-[#cdd6f4]/80 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <button
               onClick={scrollToContact}
               className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"
@@ -265,60 +252,45 @@ export default function Hero() {
             >
               Hizmetlerimiz
             </button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
-        >
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           {[
             { number: "150+", label: "Tamamlanan Proje" },
             { number: "100+", label: "Memnun Müşteri" },
             { number: "8+", label: "Yıllık Deneyim" },
             { number: "%100", label: "Müşteri Memnuniyeti" },
-          ].map((stat, index) => (
-            <motion.div
+          ].map((stat) => (
+            <div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
               className="text-center"
             >
               <div className="text-3xl md:text-4xl font-bold text-[#ffd76e] mb-1">
                 {stat.number}
               </div>
               <div className="text-sm text-[#cdd6f4]/60">{stat.label}</div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
-      <motion.button
+      <button
         onClick={() => {
           const element = document.getElementById('services');
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
           }
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#cdd6f4]/50 hover:text-[#cdd6f4] transition-colors cursor-pointer"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#cdd6f4]/50 hover:text-[#cdd6f4] transition-colors cursor-pointer animate-bounce-slow"
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2"
-        >
+        <div className="flex flex-col items-center gap-2">
           <span className="text-sm tracking-wider">Bizi daha fazla keşfet</span>
           <ChevronDown className="w-6 h-6" />
-        </motion.div>
-      </motion.button>
+        </div>
+      </button>
     </section>
   );
 }
