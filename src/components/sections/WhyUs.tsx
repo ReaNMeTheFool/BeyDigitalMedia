@@ -1,0 +1,115 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { CheckCircle2, TrendingUp, Clock, Users, Award, Zap } from "lucide-react";
+
+const reasons = [
+  {
+    icon: TrendingUp,
+    title: "Sonuç Odaklı Yaklaşım",
+    description: "Her projede ölçülebilir KPI'lar belirliyor ve düzenli raporlarla ilerlemeyi takip ediyoruz.",
+  },
+  {
+    icon: Clock,
+    title: "7/24 Destek",
+    description: "Müşterilerimize haftanın her günü, günün her saati destek sağlıyoruz.",
+  },
+  {
+    icon: Users,
+    title: "Deneyimli Ekip",
+    description: "8+ yıllık sektör deneyimiyle uzman kadromuz hizmetinizde.",
+  },
+  {
+    icon: Award,
+    title: "Profesyonel İş Ahlakı",
+    description: "Şeffaf iletişim, dürüst fiyatlandırma ve zamanında teslimat ilkelerimizdir.",
+  },
+  {
+    icon: Zap,
+    title: "Hızlı Dönüş",
+    description: "Taleplerinize en hızlı şekilde yanıt veriyor ve aksiyon alıyoruz.",
+  },
+  {
+    icon: CheckCircle2,
+    title: "Özelleştirilmiş Stratejiler",
+    description: "Her marka farklıdır. Size özel, kişiselleştirilmiş çözümler sunuyoruz.",
+  },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut" as const,
+    },
+  },
+};
+
+export default function WhyUs() {
+  return (
+    <section id="why-us" className="py-24 bg-[#1e1e2e]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
+        >
+          <span className="inline-block px-4 py-2 bg-[#ffd76e]/10 text-[#ffd76e] rounded-full text-sm font-semibold mb-4">
+            Neden Biz?
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
+            Farkımız <span className="text-[#0040ff]">Ne?</span>
+          </h2>
+          <p className="text-[#a6adc8] text-lg max-w-2xl mx-auto">
+            Bey Digital Media olarak sadece bir ajans değil, dijital büyüme ortağınız olmayı hedefliyoruz.
+          </p>
+        </motion.div>
+
+        {/* Reasons Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {reasons.map((reason, index) => (
+            <motion.div
+              key={reason.title}
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="group p-8 bg-[#181825] rounded-2xl border border-[#2d2d44] hover:border-[#0040ff]/20 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="w-14 h-14 bg-[#0040ff]/10 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-[#0040ff] group-hover:scale-110 transition-all duration-300">
+                <reason.icon className="w-7 h-7 text-[#0040ff] group-hover:text-[#cdd6f4] transition-colors" />
+              </div>
+              <h3 className="text-xl font-bold text-[#cdd6f4] mb-3">
+                {reason.title}
+              </h3>
+              <p className="text-[#a6adc8] leading-relaxed">
+                {reason.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}

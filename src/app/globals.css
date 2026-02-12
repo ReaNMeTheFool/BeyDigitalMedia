@@ -1,0 +1,490 @@
+@import "tailwindcss";
+
+@theme {
+  /* ============================================
+     DARK READER RENK ŞEMASI
+     ============================================ */
+  
+  /* Primary - Ana Marka Rengi (Koyu Mavi/Lacivert tonları) */
+  --color-primary: #0040ff;
+  --color-primary-50: #f0f4ff;
+  --color-primary-100: #d6e0ff;
+  --color-primary-200: #a8c0ff;
+  --color-primary-300: #7a9fff;
+  --color-primary-400: #4c7fff;
+  --color-primary-500: #1e5fff;
+  --color-primary-600: #0040ff;
+  --color-primary-700: #0033cc;
+  --color-primary-800: #002699;
+  --color-primary-900: #001a66;
+
+  /* Accent - Vurgu Rengi (Altın/Sarı tonları) */
+  --color-accent: #ffd76e;
+  --color-accent-50: #fff8e1;
+  --color-accent-100: #ffecb3;
+  --color-accent-200: #ffe082;
+  --color-accent-300: #ffd54f;
+  --color-accent-400: #ffca28;
+  --color-accent-500: #ffc107;
+  --color-accent-600: #ffd76e;
+  --color-accent-700: #f9a825;
+  --color-accent-800: #f57f17;
+  --color-accent-900: #ff6f00;
+
+  /* Surface - Yüzey Renkleri (Koyu tema için) */
+  --color-surface: #1e1e2e;
+  --color-surface-dark: #181825;
+  --color-surface-light: #252538;
+  --color-surface-hover: #2a2a3e;
+  
+  /* Text - Metin Renkleri */
+  --color-text-primary: #cdd6f4;
+  --color-text-secondary: #bac2de;
+  --color-text-muted: #a6adc8;
+  --color-text-light: #9399b2;
+  --color-text-disabled: #6c7086;
+
+  /* Gray Scale - Dark Reader */
+  --color-gray-50: #181825;
+  --color-gray-100: #1e1e2e;
+  --color-gray-200: #2d2d44;
+  --color-gray-300: #3d3d5c;
+  --color-gray-400: #4d4d70;
+  --color-gray-500: #6c6c98;
+  --color-gray-600: #a0a0a0;
+  --color-gray-700: #bac2de;
+  --color-gray-800: #cdd6f4;
+  --color-gray-900: #e4e4e4;
+
+  /* White & Black - Dark Reader Uyumlu */
+  --color-white: #1e1e2e;
+  --color-black: #cdd6f4;
+
+  /* ============================================
+     RENK PALETİ - DARK READER
+     ============================================ */
+  
+  /* Rose */
+  --color-rose-50: #4c1c24;
+  --color-rose-100: #661c2c;
+  --color-rose-200: #991c3c;
+  --color-rose-300: #cc1c4c;
+  --color-rose-400: #ff1c5c;
+  --color-rose-500: #ff4d7d;
+  --color-rose-600: #ff6b8a;
+  --color-rose-700: #ff8fa8;
+  --color-rose-800: #ffb3c6;
+  --color-rose-900: #ffd7e1;
+
+  /* Pink */
+  --color-pink-50: #4c1c3c;
+  --color-pink-100: #661c4c;
+  --color-pink-200: #991c6c;
+  --color-pink-300: #cc1c8c;
+  --color-pink-400: #ff1cac;
+  --color-pink-500: #ff4dc4;
+  --color-pink-600: #ff6bd2;
+  --color-pink-700: #ff8fe0;
+  --color-pink-800: #ffb3ee;
+  --color-pink-900: #ffd7f7;
+
+  /* Purple */
+  --color-purple-50: #2d1c4c;
+  --color-purple-100: #3d1c66;
+  --color-purple-200: #5c1c99;
+  --color-purple-300: #7a1ccc;
+  --color-purple-400: #9a1cff;
+  --color-purple-500: #b34dff;
+  --color-purple-600: #c084fc;
+  --color-purple-700: #d8b4fe;
+  --color-purple-800: #e9d5ff;
+  --color-purple-900: #f3e8ff;
+
+  /* Indigo */
+  --color-indigo-50: #1c1c4c;
+  --color-indigo-100: #1c1c66;
+  --color-indigo-200: #1c1c99;
+  --color-indigo-300: #1c1ccc;
+  --color-indigo-400: #1c1cff;
+  --color-indigo-500: #4d4dff;
+  --color-indigo-600: #6366f1;
+  --color-indigo-700: #818cf8;
+  --color-indigo-800: #a5b4fc;
+  --color-indigo-900: #c7d2fe;
+
+  /* Blue */
+  --color-blue-50: #0c1c3c;
+  --color-blue-100: #0c1c5c;
+  --color-blue-200: #0c1c8c;
+  --color-blue-300: #0c1cbc;
+  --color-blue-400: #0c1cec;
+  --color-blue-500: #1c3cff;
+  --color-blue-600: #3b82f6;
+  --color-blue-700: #60a5fa;
+  --color-blue-800: #93c5fd;
+  --color-blue-900: #bfdbfe;
+
+  /* Cyan */
+  --color-cyan-50: #0c2c3c;
+  --color-cyan-100: #0c3c4c;
+  --color-cyan-200: #0c5c7c;
+  --color-cyan-300: #0c7cac;
+  --color-cyan-400: #0c9cdc;
+  --color-cyan-500: #0cbcfc;
+  --color-cyan-600: #22d3ee;
+  --color-cyan-700: #67e8f9;
+  --color-cyan-800: #a5f3fc;
+  --color-cyan-900: #cffafe;
+
+  /* Emerald */
+  --color-emerald-50: #0c2c1c;
+  --color-emerald-100: #0c3c24;
+  --color-emerald-200: #0c5c3c;
+  --color-emerald-300: #0c7c54;
+  --color-emerald-400: #0c9c6c;
+  --color-emerald-500: #0cbc84;
+  --color-emerald-600: #10b981;
+  --color-emerald-700: #34d399;
+  --color-emerald-800: #6ee7b7;
+  --color-emerald-900: #a7f3d0;
+
+  /* Green */
+  --color-green-50: #0c2c14;
+  --color-green-100: #0c3c1c;
+  --color-green-200: #0c5c2c;
+  --color-green-300: #0c7c3c;
+  --color-green-400: #0c9c4c;
+  --color-green-500: #0cbc5c;
+  --color-green-600: #22c55e;
+  --color-green-700: #4ade80;
+  --color-green-800: #86efac;
+  --color-green-900: #bbf7d0;
+
+  /* Yellow */
+  --color-yellow-50: #2c280c;
+  --color-yellow-100: #3c380c;
+  --color-yellow-200: #5c580c;
+  --color-yellow-300: #7c780c;
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #fde047;
+  --color-yellow-600: #fef08a;
+  --color-yellow-700: #fef9c3;
+  --color-yellow-800: #fefce8;
+  --color-yellow-900: #fffff0;
+
+  /* Amber */
+  --color-amber-50: #2c200c;
+  --color-amber-100: #3c2c0c;
+  --color-amber-200: #5c440c;
+  --color-amber-300: #7c5c0c;
+  --color-amber-400: #9c740c;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #fbbf24;
+  --color-amber-700: #fcd34d;
+  --color-amber-800: #fde68a;
+  --color-amber-900: #fef3c7;
+
+  /* Orange */
+  --color-orange-50: #2c180c;
+  --color-orange-100: #3c200c;
+  --color-orange-200: #5c300c;
+  --color-orange-300: #7c400c;
+  --color-orange-400: #9c500c;
+  --color-orange-500: #bc600c;
+  --color-orange-600: #f97316;
+  --color-orange-700: #fb923c;
+  --color-orange-800: #fdba74;
+  --color-orange-900: #fed7aa;
+
+  /* Red */
+  --color-red-50: #2c0c0c;
+  --color-red-100: #3c0c0c;
+  --color-red-200: #5c0c0c;
+  --color-red-300: #7c0c0c;
+  --color-red-400: #9c0c0c;
+  --color-red-500: #ef4444;
+  --color-red-600: #f87171;
+  --color-red-700: #fca5a5;
+  --color-red-800: #fecaca;
+  --color-red-900: #fee2e2;
+
+  /* Font Ailesi */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Tipografi Ölçekleri */
+  --font-size-display: clamp(3rem, 8vw, 6rem);
+  --font-size-h1: clamp(2rem, 5vw, 3.5rem);
+  --font-size-h2: clamp(1.5rem, 3vw, 2.5rem);
+  --font-size-h3: clamp(1.25rem, 2vw, 1.75rem);
+  --font-size-h4: clamp(1.1rem, 1.5vw, 1.25rem);
+  --font-size-body: clamp(1rem, 1vw, 1.125rem);
+  --font-size-small: clamp(0.875rem, 0.9vw, 0.9375rem);
+
+  /* Animasyonlar */
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-bounce-slow: bounce-slow 2s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-gradient: gradient 8s ease infinite;
+
+  /* Dark Reader Spesifik */
+  --darkreader-text-302505: #302505;
+  --darkreader-background-c59d00: #c59d00;
+  --darkreader-background-ffd76e: #ffd76e;
+  --darkreader-background-faffbd: #faffbd;
+  --darkreader-text-a9a9a9: #a9a9a9;
+  --darkreader-border-808080: #808080;
+  --darkreader-text-0040ff: #0040ff;
+  --darkreader-border-4c4c4c: #4c4c4c;
+  --darkreader-text-000000: #000000;
+  --darkreader-border-404040: #404040;
+  --darkreader-background-ffffff: #ffffff;
+  --darkreader-selection-text: #cdd6f4;
+  --darkreader-selection-background: #005ccc;
+  --darkreader-neutral-text: #a6adc8;
+  --darkreader-neutral-background: #1e1e2e;
+  --darkreader-border-white: #2d2d44;
+  --darkreader-text-white: #cdd6f4;
+  --darkreader-bg-white: #1e1e2e;
+  --darkreader-bg-black: #181825;
+}
+
+/* ============================================
+   ANİMASYON KEYFRAMES
+   ============================================ */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #181825 !important;
+  color: #cdd6f4 !important;
+}
+
+::selection {
+  background-color: #005ccc !important;
+  color: #cdd6f4 !important;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #181825;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4d4d70;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6d6d98;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* ============================================
+   COMPONENT STYLES
+   ============================================ */
+
+/* Card Styles */
+.card {
+  background-color: #1e1e2e !important;
+  border: 1px solid #2d2d44 !important;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: #ffd76e !important;
+  color: #181825 !important;
+}
+
+.btn-secondary {
+  background-color: #2d2d44 !important;
+  color: #cdd6f4 !important;
+  border: 1px solid #4d4d70 !important;
+}
+
+/* ============================================
+   TAILWIND OVERRIDE - DARK READER UYUMLU
+   ============================================ */
+
+/* Text Colors Override */
+.text-gray-600, .text-gray-700, .text-gray-800 {
+  color: #a0a0a0 !important;
+}
+
+.text-gray-900, .text-black {
+  color: #cdd6f4 !important;
+}
+
+.text-gray-400, .text-gray-500 {
+  color: #6c6c98 !important;
+}
+
+/* Background Colors Override */
+.bg-white {
+  background-color: #1e1e2e !important;
+}
+
+.bg-gray-50, .bg-gray-100 {
+  background-color: #181825 !important;
+}
+
+.bg-gray-200 {
+  background-color: #2d2d44 !important;
+}
+
+/* Border Colors */
+.border-gray-100 {
+  border-color: #2d2d44 !important;
+}
+
+.border-gray-200 {
+  border-color: #3d3d5c !important;
+}
+
+/* Selection Override */
+::selection {
+  background-color: #005ccc !important;
+  color: #cdd6f4 !important;
+}
+
+/* ============================================
+   DARK READER SPESIFIK RENKLER
+   ============================================ */
+
+/* Dark Reader temel renkleri */
+.darkreader-text {
+  color: #cdd6f4;
+}
+
+.darkreader-bg {
+  background-color: #1e1e2e;
+}
+
+.darkreader-border {
+  border-color: #2d2d44;
+}
+
+/* Accent renkleri */
+.darkreader-accent {
+  color: #ffd76e;
+}
+
+.darkreader-accent-bg {
+  background-color: #ffd76e;
+}
+
+/* Yüzey renkleri */
+.darkreader-surface {
+  background-color: #181825;
+}
+
+.darkreader-surface-light {
+  background-color: #252538;
+}
+
+/* Metin renkleri */
+.darkreader-text-primary {
+  color: #cdd6f4;
+}
+
+.darkreader-text-secondary {
+  color: #bac2de;
+}
+
+.darkreader-text-muted {
+  color: #a6adc8;
+}
