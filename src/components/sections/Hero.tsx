@@ -24,45 +24,42 @@ function AnimatedHeadline() {
   }, [words.length]);
 
   return (
-    <div className="flex items-center justify-center">
-      {/* Sol taraf - Dijital */}
-      <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+    <div className="flex flex-col sm:flex-row items-center justify-center">
+      {/* Üst satır - Dijital */}
+      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Dijital
       </span>
       
-      {/* Orta boşluk */}
-      <span className="w-6 sm:w-8 md:w-10"></span>
+      {/* Boşluk - sadece sm ve üstü */}
+      <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
       
-      {/* Animasyonlu kelime container - Sabit genişlik */}
+      {/* Animasyonlu kelime container */}
       <span
-        className="relative inline-flex items-center justify-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold"
-        style={{ width: '440px', minWidth: '440px' }}
+        className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0"
+        style={{ width: 'auto', minWidth: 'auto' }}
       >
         <AnimatePresence mode="wait">
           <motion.span
             key={currentIndex}
-            initial={{ opacity: 0, y: 20, scale: 0.8, x: "-50%" }}
-            animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
-            exit={{ opacity: 0, y: -20, scale: 0.8, x: "-50%" }}
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.8 }}
             transition={{ duration: 0.5 }}
-            className="text-[#ffd76e] absolute whitespace-nowrap"
+            className="text-[#ffd76e] whitespace-nowrap"
             style={{
-              textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)",
-              left: "50%"
+              textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
             }}
           >
             {words[currentIndex]}
           </motion.span>
         </AnimatePresence>
-        {/* Görünmez placeholder - layout stabitesi için */}
-        <span className="invisible">Satışlarınızı</span>
       </span>
       
-      {/* Sağ boşluk */}
-      <span className="w-6 sm:w-8 md:w-10"></span>
+      {/* Boşluk - sadece sm ve üstü */}
+      <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
       
       {/* Sağ taraf - Büyütüyoruz */}
-      <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Büyütüyoruz
       </span>
     </div>
