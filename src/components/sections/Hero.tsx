@@ -185,7 +185,7 @@ function ParticleCanvas() {
 
     resizeCanvas();
     initParticles();
-    animate();
+    animate(0);
 
     window.addEventListener("resize", handleResize);
 
