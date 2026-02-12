@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -47,81 +47,102 @@ const projects = [
   },
 ];
 
+// Projeleri kopyalayarak sonsuz döngü için hazırla
+const extendedProjects = [...projects, ...projects, ...projects];
+
 export default function Portfolio() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [displayProjects, setDisplayProjects] = useState(projects);
+  const [currentIndex, setCurrentIndex] = useState(projects.length); // Orta setten başla
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  const getCardWidth = () => {
+  const getCardWidth = useCallback(() => {
     const container = scrollContainerRef.current;
     if (!container) return 0;
-    const card = container.querySelector('.snap-start') as HTMLElement;
+    const card = container.querySelector('.project-card') as HTMLElement;
     if (!card) return 0;
-    return card.offsetWidth + 24; // card width + gap
-  };
+    const gap = 24; // gap-6 = 24px
+    return card.offsetWidth + gap;
+  }, []);
 
-  // Sağa kaydır - en soldaki sağa gider, soldan yeni gelir
-  const scrollToNext = () => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const cardWidth = getCardWidth();
-    
-    // Döngü mantığı: ilk elemanı sona at
-    setDisplayProjects((prev) => {
-      const newProjects = [...prev];
-      const firstProject = newProjects.shift();
-      if (firstProject) {
-        newProjects.push(firstProject);
-      }
-      return newProjects;
-    });
-
-    // Scroll animasyonu
-    container.scrollTo({
-      left: cardWidth,
-      behavior: 'smooth'
-    });
-
-    // Animasyon sonrası scroll'u sıfırla
-    setTimeout(() => {
-      container.scrollLeft = 0;
-    }, 300);
-  };
-
-  // Sola kaydır - en sağdaki sola gider, sağdan yeni gelir
-  const scrollToPrev = () => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    // Döngü mantığı: son elemanı başa at
-    setDisplayProjects((prev) => {
-      const newProjects = [...prev];
-      const lastProject = newProjects.pop();
-      if (lastProject) {
-        newProjects.unshift(lastProject);
-      }
-      return newProjects;
-    });
-  };
-
-  // Scroll event listener to update current index
+  // Başlangıç pozisyonunu orta sete ayarla
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
+    
+    const cardWidth = getCardWidth();
+    if (cardWidth === 0) return;
+    
+    // Orta setin başlangıcına scroll yap (animasyonsuz)
+    container.scrollLeft = projects.length * cardWidth;
+  }, [getCardWidth]);
 
-    const handleScroll = () => {
-      const cardWidth = getCardWidth();
-      if (cardWidth === 0) return;
-      const newIndex = Math.round(container.scrollLeft / cardWidth);
-      if (newIndex >= 0 && newIndex < displayProjects.length) {
-        setCurrentIndex(newIndex);
-      }
-    };
+  const scrollToNext = () => {
+    if (isScrolling) return;
+    setIsScrolling(true);
+    
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    const cardWidth = getCardWidth();
+    const newIndex = currentIndex + 1;
+    
+    container.scrollTo({
+      left: newIndex * cardWidth,
+      behavior: 'smooth'
+    });
+    
+    setCurrentIndex(newIndex);
+    
+    // Eğer son sete ulaştıysak, scroll bitince başa sar
+    if (newIndex >= projects.length * 2) {
+      setTimeout(() => {
+        container.style.scrollBehavior = 'auto';
+        const resetIndex = projects.length;
+        container.scrollLeft = resetIndex * cardWidth;
+        setCurrentIndex(resetIndex);
+        setTimeout(() => {
+          container.style.scrollBehavior = 'smooth';
+          setIsScrolling(false);
+        }, 50);
+      }, 300);
+    } else {
+      setTimeout(() => setIsScrolling(false), 300);
+    }
+  };
 
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, [displayProjects.length]);
+  const scrollToPrev = () => {
+    if (isScrolling) return;
+    setIsScrolling(true);
+    
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    
+    const cardWidth = getCardWidth();
+    const newIndex = currentIndex - 1;
+    
+    container.scrollTo({
+      left: newIndex * cardWidth,
+      behavior: 'smooth'
+    });
+    
+    setCurrentIndex(newIndex);
+    
+    // Eğer ilk sete ulaştıysak, scroll bitince sona sar
+    if (newIndex < projects.length) {
+      setTimeout(() => {
+        container.style.scrollBehavior = 'auto';
+        const resetIndex = projects.length * 2 - 1;
+        container.scrollLeft = resetIndex * cardWidth;
+        setCurrentIndex(resetIndex);
+        setTimeout(() => {
+          container.style.scrollBehavior = 'smooth';
+          setIsScrolling(false);
+        }, 50);
+      }, 300);
+    } else {
+      setTimeout(() => setIsScrolling(false), 300);
+    }
+  };
 
   return (
     <section id="portfolio" className="py-24 bg-[#181825] overflow-hidden">
@@ -153,21 +174,14 @@ export default function Portfolio() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="overflow-x-auto pb-8 scrollbar-hide"
+          className="overflow-x-hidden pb-8"
           ref={scrollContainerRef}
         >
           <div className="flex gap-6 px-4 sm:px-6 lg:px-8">
-            {displayProjects.map((project, index) => (
+            {extendedProjects.map((project, index) => (
               <motion.div
                 key={`${project.id}-${index}`}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.3,
-                  delay: index * 0.05,
-                  ease: "easeOut",
-                }}
-                className="shrink-0"
+                className="project-card shrink-0"
               >
                 <motion.div
                   whileHover={{ y: -8 }}
