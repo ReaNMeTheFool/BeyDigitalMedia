@@ -1,16 +1,9 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle, AlertCircle, ChevronDown, Check } from "lucide-react";
-import { submitContactForm } from "@/app/actions";
-
-const initialState = {
-  success: false,
-  message: "",
-  errors: {} as Record<string, string[]>,
-};
+import emailjs from "@emailjs/browser";
 
 const services = [
   { id: "social-media", label: "Sosyal Medya Yönetimi" },
@@ -22,32 +15,6 @@ const services = [
   { id: "content", label: "İçerik Üretimi" },
   { id: "consulting", label: "Dijital Danışmanlık" },
 ];
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      type="submit"
-      disabled={pending}
-      className="w-full bg-[#0040ff] text-[#cdd6f4] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#0033cc] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-    >
-      {pending ? (
-        <>
-          <div className="w-5 h-5 border-2 border-[#cdd6f4]/30 border-t-[#cdd6f4] rounded-full animate-spin" />
-          <span>Gönderiliyor...</span>
-        </>
-      ) : (
-        <>
-          <Send size={20} />
-          <span>Mesaj Gönder</span>
-        </>
-      )}
-    </motion.button>
-  );
-}
 
 interface ServiceDropdownProps {
   selectedServices: string[];
@@ -156,20 +123,14 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
 }
 
 export default function ContactForm() {
-  const [state, formAction] = useActionState(submitContactForm, initialState);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (state.success) {
-      // Form başarıyla gönderildiğinde formu resetle
-      const form = document.getElementById("contact-form") as HTMLFormElement;
-      if (form) {
-        form.reset();
-      }
-      // Seçili hizmetleri de temizle
-      setSelectedServices([]);
-    }
-  }, [state.success]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{
+    success: boolean;
+    message: string;
+    errors: Record<string, string[]>;
+  } | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleServiceToggle = (serviceId: string) => {
     setSelectedServices((prev) =>
@@ -179,8 +140,118 @@ export default function ContactForm() {
     );
   };
 
+  // Hizmet adlarını Türkçe'ye çevir
+  const getServiceNames = () => {
+    const serviceNames: Record<string, string> = {
+      "social-media": "Sosyal Medya Yönetimi",
+      "meta-ads": "Meta Ads",
+      "google-ads": "Google Ads",
+      "web-design": "Web Tasarım",
+      "seo": "SEO",
+      "branding": "Logo ve Kurumsal Kimlik",
+      "content": "İçerik Üretimi",
+      "consulting": "Dijital Danışmanlık",
+    };
+
+    if (selectedServices.length === 0) return "Belirtilmemiş";
+    return selectedServices
+      .map((s) => serviceNames[s] || s)
+      .join(", ");
+  };
+
+  const validateForm = (formData: FormData): Record<string, string[]> => {
+    const errors: Record<string, string[]> = {};
+    
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    if (!name || name.trim().length < 2) {
+      errors.name = ["Adınız en az 2 karakter olmalıdır"];
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      errors.email = ["Geçerli bir e-posta adresi giriniz"];
+    }
+
+    if (!message || message.trim().length < 10) {
+      errors.message = ["Mesajınız en az 10 karakter olmalıdır"];
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (!formRef.current) return;
+
+    const formData = new FormData(formRef.current);
+    const errors = validateForm(formData);
+
+    if (Object.keys(errors).length > 0) {
+      setStatus({
+        success: false,
+        message: "Lütfen form alanlarını kontrol edin.",
+        errors,
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus(null);
+
+    // EmailJS environment variables
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setStatus({
+        success: false,
+        message: "Email servisi yapılandırılmamış. Lütfen daha sonra tekrar deneyin.",
+        errors: {},
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const templateParams = {
+        from_name: formData.get("name"),
+        from_email: formData.get("email"),
+        phone: formData.get("phone") || "Belirtilmemiş",
+        services: getServiceNames(),
+        message: formData.get("message"),
+        to_email: "Beydigitalmedia@gmail.com",
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      setStatus({
+        success: true,
+        message: "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
+        errors: {},
+      });
+      
+      // Formu temizle
+      formRef.current.reset();
+      setSelectedServices([]);
+    } catch (error) {
+      console.error("Email gönderim hatası:", error);
+      setStatus({
+        success: false,
+        message: "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        errors: {},
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <form id="contact-form" action={formAction} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       {/* Name Field */}
       <div>
         <label
@@ -197,10 +268,10 @@ export default function ContactForm() {
           className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
           placeholder="Örn: Ahmet Yılmaz"
         />
-        {state.errors?.name && (
+        {status?.errors?.name && (
           <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
             <AlertCircle size={14} />
-            {state.errors.name[0]}
+            {status.errors.name[0]}
           </p>
         )}
       </div>
@@ -221,10 +292,10 @@ export default function ContactForm() {
           className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
           placeholder="ornek@email.com"
         />
-        {state.errors?.email && (
+        {status?.errors?.email && (
           <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
             <AlertCircle size={14} />
-            {state.errors.email[0]}
+            {status.errors.email[0]}
           </p>
         )}
       </div>
@@ -244,10 +315,10 @@ export default function ContactForm() {
           className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
           placeholder="05XX XXX XX XX"
         />
-        {state.errors?.phone && (
+        {status?.errors?.phone && (
           <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
             <AlertCircle size={14} />
-            {state.errors.phone[0]}
+            {status.errors.phone[0]}
           </p>
         )}
       </div>
@@ -260,12 +331,6 @@ export default function ContactForm() {
         <ServiceDropdown
           selectedServices={selectedServices}
           onToggle={handleServiceToggle}
-        />
-        {/* Hidden input to track selected services */}
-        <input
-          type="hidden"
-          name="service"
-          value={selectedServices.join(",")}
         />
       </div>
 
@@ -285,38 +350,56 @@ export default function ContactForm() {
           className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086] resize-none"
           placeholder="Projeniz hakkında kısa bir bilgi verin..."
         />
-        {state.errors?.message && (
+        {status?.errors?.message && (
           <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
             <AlertCircle size={14} />
-            {state.errors.message[0]}
+            {status.errors.message[0]}
           </p>
         )}
       </div>
 
       {/* Submit Button */}
-      <SubmitButton />
+      <motion.button
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full bg-[#0040ff] text-[#cdd6f4] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#0033cc] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        {isSubmitting ? (
+          <>
+            <div className="w-5 h-5 border-2 border-[#cdd6f4]/30 border-t-[#cdd6f4] rounded-full animate-spin" />
+            <span>Gönderiliyor...</span>
+          </>
+        ) : (
+          <>
+            <Send size={20} />
+            <span>Mesaj Gönder</span>
+          </>
+        )}
+      </motion.button>
 
       {/* Success Message */}
-      {state.success && (
+      {status?.success && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-2 text-green-400 bg-green-400/10 p-4 rounded-xl"
         >
           <CheckCircle size={20} />
-          <span>{state.message}</span>
+          <span>{status.message}</span>
         </motion.div>
       )}
 
       {/* Error Message */}
-      {!state.success && state.message && (
+      {!status?.success && status?.message && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-2 text-red-400 bg-red-400/10 p-4 rounded-xl"
         >
           <AlertCircle size={20} />
-          <span>{state.message}</span>
+          <span>{status.message}</span>
         </motion.div>
       )}
     </form>
