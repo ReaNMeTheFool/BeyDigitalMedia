@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ExternalLink, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
   {
@@ -193,44 +193,22 @@ export default function Portfolio() {
           </div>
         </motion.div>
 
-        {/* Navigation Buttons - Modern Design */}
-        <div className="flex justify-center items-center gap-4 mt-8">
-          {/* Left Navigation Button */}
-          <button
-            onClick={scrollToPrev}
-            className="group relative w-14 h-14 rounded-2xl bg-[#1e1e2e] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center overflow-hidden transition-all duration-300 hover:border-[#0040ff] hover:text-[#0040ff] hover:shadow-[0_0_20px_rgba(0,64,255,0.3)] focus:outline-none focus:ring-2 focus:ring-[#0040ff]/50"
-            aria-label="Önceki proje"
-          >
-            <span className="absolute inset-0 bg-[#0040ff]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <ArrowLeft size={22} className="relative z-10 transition-transform duration-300 group-hover:-translate-x-1" />
-          </button>
+        {/* Navigation Buttons - Side Arrows */}
+        <button
+          onClick={scrollToPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
+          aria-label="Önceki proje"
+        >
+          <ChevronLeft size={24} />
+        </button>
 
-          {/* Progress Indicator */}
-          <div className="flex items-center gap-2 px-4">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollToIndex(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? "w-8 bg-[#0040ff]"
-                    : "w-2 bg-[#2d2d44] hover:bg-[#0040ff]/50"
-                }`}
-                aria-label={`Proje ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          {/* Right Navigation Button */}
-          <button
-            onClick={scrollToNext}
-            className="group relative w-14 h-14 rounded-2xl bg-[#1e1e2e] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center overflow-hidden transition-all duration-300 hover:border-[#0040ff] hover:text-[#0040ff] hover:shadow-[0_0_20px_rgba(0,64,255,0.3)] focus:outline-none focus:ring-2 focus:ring-[#0040ff]/50"
-            aria-label="Sonraki proje"
-          >
-            <span className="absolute inset-0 bg-[#0040ff]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <ArrowRight size={22} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
-        </div>
+        <button
+          onClick={scrollToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
+          aria-label="Sonraki proje"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
 
       {/* View All Button */}
