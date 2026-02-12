@@ -38,9 +38,9 @@ export default function About() {
               />
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#181825] flex items-center justify-center shadow-[0_0_50px_rgba(0,64,255,0.5)]">
                 {/* Bey Digital Logo */}
-                <div className="relative w-[768px] h-[768px] drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+                <div className="relative w-64 h-64 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
                   <Image
-                    src="/beydigital_logo.png"
+                    src="/beydigital_logo.webp"
                     alt="Bey Digital Media"
                     fill
                     className="object-contain"
