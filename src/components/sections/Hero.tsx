@@ -79,6 +79,8 @@ function ParticleCanvas() {
 
     let animationId: number;
     let particles: Particle[] = [];
+    let lastTime = 0;
+    const frameInterval = 1000 / 30; // 30 FPS'e sınırla (mobil için)
 
     const resizeCanvas = () => {
       canvas!.width = window.innerWidth;
@@ -120,7 +122,11 @@ function ParticleCanvas() {
 
     const initParticles = () => {
       particles = [];
-      const particleCount = Math.min(120, Math.floor((canvas!.width * canvas!.height) / 10000));
+      // Mobilde daha az partikül (daha iyi performans)
+      const isMobile = canvas!.width < 768;
+      const baseCount = isMobile ? 30 : 120;
+      const density = isMobile ? 15000 : 10000;
+      const particleCount = Math.min(baseCount, Math.floor((canvas!.width * canvas!.height) / density));
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(canvas!.width, canvas!.height));
       }
@@ -148,7 +154,19 @@ function ParticleCanvas() {
       }
     };
 
-    const animate = () => {
+    const animate = (currentTime: number) => {
+      const isMobile = canvas!.width < 768;
+      
+      // Mobilde FPS sınırlama
+      if (isMobile) {
+        const deltaTime = currentTime - lastTime;
+        if (deltaTime < frameInterval) {
+          animationId = requestAnimationFrame(animate);
+          return;
+        }
+        lastTime = currentTime;
+      }
+      
       ctx.clearRect(0, 0, canvas!.width, canvas!.height);
       
       particles.forEach((particle) => {

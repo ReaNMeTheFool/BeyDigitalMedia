@@ -92,7 +92,7 @@ export default function RootLayout({
       style={{ colorScheme: 'dark' }}
     >
       <body
-        className="font-sans antialiased bg-[#181825] text-[#cdd6f4]"
+        className="font-sans antialiased bg-[#181825] text-[#cdd6f4] overflow-x-hidden"
         suppressHydrationWarning
         style={{ backgroundColor: '#181825', color: '#cdd6f4' }}
       >
