@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
@@ -48,44 +48,80 @@ const projects = [
 ];
 
 export default function Portfolio() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const [displayProjects, setDisplayProjects] = useState(projects);
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
+  const getCardWidth = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return 0;
+    const card = container.querySelector('.snap-start') as HTMLElement;
+    if (!card) return 0;
+    return card.offsetWidth + 24; // card width + gap
   };
 
-  const swipeConfidenceThreshold = 10000;
-  const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity;
+  // Sağa kaydır - en soldaki sağa gider, soldan yeni gelir
+  const scrollToNext = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const cardWidth = getCardWidth();
+    
+    // Döngü mantığı: ilk elemanı sona at
+    setDisplayProjects((prev) => {
+      const newProjects = [...prev];
+      const firstProject = newProjects.shift();
+      if (firstProject) {
+        newProjects.push(firstProject);
+      }
+      return newProjects;
+    });
+
+    // Scroll animasyonu
+    container.scrollTo({
+      left: cardWidth,
+      behavior: 'smooth'
+    });
+
+    // Animasyon sonrası scroll'u sıfırla
+    setTimeout(() => {
+      container.scrollLeft = 0;
+    }, 300);
   };
 
-  const paginate = (newDirection: number) => {
-    const newIndex = currentIndex + newDirection;
-    if (newIndex < 0) {
-      setCurrentIndex(projects.length - 1);
-    } else if (newIndex >= projects.length) {
-      setCurrentIndex(0);
-    } else {
-      setCurrentIndex(newIndex);
-    }
-    setDirection(newDirection);
+  // Sola kaydır - en sağdaki sola gider, sağdan yeni gelir
+  const scrollToPrev = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Döngü mantığı: son elemanı başa at
+    setDisplayProjects((prev) => {
+      const newProjects = [...prev];
+      const lastProject = newProjects.pop();
+      if (lastProject) {
+        newProjects.unshift(lastProject);
+      }
+      return newProjects;
+    });
   };
 
-  const project = projects[currentIndex];
+  // Scroll event listener to update current index
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const cardWidth = getCardWidth();
+      if (cardWidth === 0) return;
+      const newIndex = Math.round(container.scrollLeft / cardWidth);
+      if (newIndex >= 0 && newIndex < displayProjects.length) {
+        setCurrentIndex(newIndex);
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [displayProjects.length]);
 
   return (
     <section id="portfolio" className="py-24 bg-[#181825] overflow-hidden">
@@ -110,116 +146,90 @@ export default function Portfolio() {
         </motion.div>
       </div>
 
-      {/* Carousel Container */}
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative h-[500px] md:h-[550px] overflow-hidden rounded-3xl">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={1}
-              onDragEnd={(e, { offset, velocity }) => {
-                const swipe = swipePower(offset.x, velocity.x);
-                if (swipe < -swipeConfidenceThreshold) {
-                  paginate(1);
-                } else if (swipe > swipeConfidenceThreshold) {
-                  paginate(-1);
-                }
-              }}
-              className="absolute inset-0 cursor-grab active:cursor-grabbing"
-            >
+      {/* Horizontal Scroll Container with Navigation */}
+      <div className="relative">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="overflow-x-auto pb-8 scrollbar-hide"
+          ref={scrollContainerRef}
+        >
+          <div className="flex gap-6 px-4 sm:px-6 lg:px-8">
+            {displayProjects.map((project, index) => (
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="group relative w-full h-full bg-[#1e1e2e] rounded-3xl overflow-hidden shadow-2xl"
+                key={`${project.id}-${index}`}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.3,
+                  delay: index * 0.05,
+                  ease: "easeOut",
+                }}
+                className="shrink-0"
               >
-                {/* Image Container */}
-                <div className="relative h-3/5 overflow-hidden">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${project.color}`}
-                  />
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center text-white p-8">
-                    <div className="text-center">
-                      <div className="w-28 h-28 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                        <span className="text-5xl font-bold">
-                          {project.title.charAt(0)}
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="group relative w-80 md:w-96 bg-[#1e1e2e] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                >
+                  {/* Image Container */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${project.color}`}
+                    />
+                    {/* Content overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center text-white p-8">
+                      <div className="text-center">
+                        <div className="w-24 h-24 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                          <span className="text-4xl font-bold">
+                            {project.title.charAt(0)}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+                        <span className="text-sm opacity-80">
+                          {project.category}
                         </span>
                       </div>
-                      <h3 className="text-3xl font-bold mb-2">{project.title}</h3>
-                      <span className="text-base opacity-80">
-                        {project.category}
-                      </span>
+                    </div>
+
+                    {/* Results Badge */}
+                    <div className="absolute bottom-4 left-4 right-4 bg-black/40 backdrop-blur-sm rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-[#ffd76e] font-bold text-center text-sm">{project.results}</p>
                     </div>
                   </div>
 
-                  {/* Results Badge */}
-                  <div className="absolute bottom-4 left-4 right-4 bg-black/40 backdrop-blur-sm rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-[#ffd76e] font-bold text-center text-base">{project.results}</p>
+                  {/* Content */}
+                  <div className="p-6">
+                    <span className="text-sm text-[#0040ff] font-medium">
+                      {project.service}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#cdd6f4] mt-2">
+                      {project.title}
+                    </h3>
                   </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-8 h-2/5 flex flex-col justify-center">
-                  <span className="text-base text-[#0040ff] font-medium">
-                    {project.service}
-                  </span>
-                  <h3 className="text-2xl font-bold text-[#cdd6f4] mt-3 mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-[#a6adc8]">
-                    {project.category}
-                  </p>
-                </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Navigation Buttons - Side Arrows */}
         <button
-          onClick={() => paginate(-1)}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-[#0040ff] text-white flex items-center justify-center shadow-lg hover:bg-[#0033cc] transition-all duration-300 hover:scale-110"
+          onClick={scrollToPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
           aria-label="Önceki proje"
         >
           <ChevronLeft size={24} />
         </button>
 
         <button
-          onClick={() => paginate(1)}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-[#0040ff] text-white flex items-center justify-center shadow-lg hover:bg-[#0033cc] transition-all duration-300 hover:scale-110"
+          onClick={scrollToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-[#0040ff]/90 text-white flex items-center justify-center shadow-lg hover:bg-[#0040ff] transition-all duration-300 hover:scale-110"
           aria-label="Sonraki proje"
         >
           <ChevronRight size={24} />
         </button>
-
-        {/* Dots Indicator */}
-        <div className="flex justify-center gap-2 mt-6">
-          {projects.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setDirection(index > currentIndex ? 1 : -1);
-                setCurrentIndex(index);
-              }}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? "w-8 bg-[#0040ff]"
-                  : "w-2 bg-[#2d2d44] hover:bg-[#0040ff]/50"
-              }`}
-              aria-label={`Proje ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* View All Button */}
