@@ -222,9 +222,9 @@ export default function Portfolio() {
                       </div>
                     </div>
 
-                    {/* Results Badge - Minimal */}
-                    <div className="absolute top-3 right-3 bg-black/30 backdrop-blur-md border border-white/10 rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="text-white/90 text-[10px] font-medium tracking-wide">
+                    {/* Results Badge - Büyük */}
+                    <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-white text-xs font-semibold">
                         {project.results}
                       </p>
                     </div>
