@@ -198,7 +198,7 @@ function ParticleCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 z-[1]"
+      className="absolute inset-0 z-[1] hidden md:block"
       style={{ opacity: 0.6 }}
     />
   );
@@ -222,7 +222,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden w-full max-w-[100vw]"
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 z-0">

@@ -64,9 +64,9 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-20 relative">
+          <div className="flex items-center h-20 relative overflow-hidden">
             {/* Logo - Absolute positioning */}
-            <Link href="/" className="flex items-center gap-2 absolute left-8">
+            <Link href="/" className="flex items-center gap-2 absolute left-0 sm:left-8">
               <div className="relative w-12 h-12">
                 <Image
                   src="/beydigital_logo.webp"
