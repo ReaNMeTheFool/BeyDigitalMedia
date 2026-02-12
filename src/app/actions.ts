@@ -4,9 +4,6 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 
-// Resend client initialization
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // Rate limiting için basit bir Map (production'da Redis kullanılmalı)
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 const RATE_LIMIT = 5; // 5 dakikada max 5 istek
@@ -156,6 +153,9 @@ export async function submitContactForm(
         errors: {},
       };
     }
+    
+    // Resend client'ı lazy initialization ile oluştur
+    const resend = new Resend(resendApiKey);
     
     const { data, error } = await resend.emails.send({
       from: "Bey Digital Media <onboarding@resend.dev>",
