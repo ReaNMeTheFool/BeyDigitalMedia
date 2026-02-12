@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-// Animasyonlu başlık bileşeni - Sabit pozisyonlu
+// Animasyonlu başlık bileşeni - CSS tabanlı
 function AnimatedHeadline() {
   const words = [
     "Satışlarınızı",
@@ -33,26 +33,14 @@ function AnimatedHeadline() {
       {/* Boşluk - sadece sm ve üstü */}
       <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
       
-      {/* Animasyonlu kelime container */}
+      {/* Animasyonlu kelime container - CSS fade */}
       <span
-        className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0"
-        style={{ width: 'auto', minWidth: 'auto' }}
+        className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap transition-opacity duration-500"
+        style={{
+          textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
+        }}
       >
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={currentIndex}
-            initial={{ opacity: 0, y: 20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.8 }}
-            transition={{ duration: 0.5 }}
-            className="text-[#ffd76e] whitespace-nowrap"
-            style={{
-              textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
-            }}
-          >
-            {words[currentIndex]}
-          </motion.span>
-        </AnimatePresence>
+        {words[currentIndex]}
       </span>
       
       {/* Boşluk - sadece sm ve üstü */}
@@ -232,24 +220,10 @@ export default function Hero() {
       {/* Particle Effect */}
       <ParticleCanvas />
 
-      {/* Subtle gradient orbs */}
-      <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#ffd76e]/10 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.15, 0.1]
-          }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#0040ff]/10 blur-3xl"
-        />
+      {/* Subtle gradient orbs - CSS Animation */}
+      <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden hidden sm:block">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#ffd76e]/10 blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#0040ff]/10 blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* Content */}
