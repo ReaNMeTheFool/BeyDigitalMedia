@@ -263,6 +263,17 @@
   }
 }
 
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Mobilde marquee'yi yavaşlat veya durdur */
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 60s;
+  }
+}
+
 @keyframes bounce-slow {
   0%, 100% {
     transform: translateY(0);
