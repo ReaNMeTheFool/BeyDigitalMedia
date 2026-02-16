@@ -39,50 +39,48 @@ function AnimatedHeadline() {
   }, [words.length, isMobile]);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center">
-      {/* Üst satır - Dijital */}
-      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+    <div className="grid grid-cols-1 sm:grid-cols-3 items-center justify-items-center gap-0 sm:gap-4 md:gap-8 lg:gap-10">
+      {/* Sol taraf - Dijital */}
+      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap text-center">
         Dijital
       </span>
       
-      {/* Boşluk - sadece sm ve üstü */}
-      <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
-      
-      {/* Animasyonlu kelime container */}
-      {isMobile ? (
-        // Mobilde sabit metin (performans için)
-        <span
-          className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap"
-          style={{
-            textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
-          }}
-        >
-          {words[0]}
-        </span>
-      ) : (
-        // PC'de Framer Motion animasyonu
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={currentIndex}
-            initial={{ opacity: 0, y: 20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.8 }}
-            transition={{ duration: 0.5 }}
-            className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap"
+      {/* Orta - Animasyonlu kelime container - Sabit genişlik */}
+      <span
+        className="relative flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 w-[320px] sm:w-[340px] md:w-[420px] lg:w-[500px] xl:w-[580px] h-[1.2em]"
+      >
+        {isMobile ? (
+          // Mobilde sabit metin (performans için)
+          <span
+            className="text-[#ffd76e] whitespace-nowrap"
             style={{
               textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
             }}
           >
-            {words[currentIndex]}
-          </motion.span>
-        </AnimatePresence>
-      )}
-      
-      {/* Boşluk - sadece sm ve üstü */}
-      <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
+            {words[0]}
+          </span>
+        ) : (
+          // PC'de Framer Motion animasyonu
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={currentIndex}
+              initial={{ opacity: 0, y: 20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.8 }}
+              transition={{ duration: 0.5 }}
+              className="text-[#ffd76e] whitespace-nowrap absolute"
+              style={{
+                textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
+              }}
+            >
+              {words[currentIndex]}
+            </motion.span>
+          </AnimatePresence>
+        )}
+      </span>
       
       {/* Sağ taraf - Büyütüyoruz */}
-      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap text-center">
         Büyütüyoruz
       </span>
     </div>
