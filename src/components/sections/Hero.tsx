@@ -1,9 +1,10 @@
 "use client";
 
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-// Animasyonlu başlık bileşeni - CSS tabanlı
+// Animasyonlu başlık bileşeni - PC'de animasyonlu, mobilde sabit
 function AnimatedHeadline() {
   const words = [
     "Satışlarınızı",
@@ -13,14 +14,29 @@ function AnimatedHeadline() {
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Ekran boyutunu kontrol et
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // Mobilde animasyon yok
+    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % words.length);
     }, 2500);
 
     return () => clearInterval(interval);
-  }, [words.length]);
+  }, [words.length, isMobile]);
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center">
@@ -32,15 +48,35 @@ function AnimatedHeadline() {
       {/* Boşluk - sadece sm ve üstü */}
       <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
       
-      {/* Animasyonlu kelime container - CSS fade */}
-      <span
-        className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap transition-opacity duration-500"
-        style={{
-          textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
-        }}
-      >
-        {words[currentIndex]}
-      </span>
+      {/* Animasyonlu kelime container */}
+      {isMobile ? (
+        // Mobilde sabit metin (performans için)
+        <span
+          className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap"
+          style={{
+            textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
+          }}
+        >
+          {words[0]}
+        </span>
+      ) : (
+        // PC'de Framer Motion animasyonu
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+            className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap"
+            style={{
+              textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
+            }}
+          >
+            {words[currentIndex]}
+          </motion.span>
+        </AnimatePresence>
+      )}
       
       {/* Boşluk - sadece sm ve üstü */}
       <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
