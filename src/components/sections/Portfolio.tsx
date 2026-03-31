@@ -4,7 +4,18 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
-const projects = [
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  service: string;
+  color: string;
+  results: string;
+  logo?: string;
+  resultsColor?: string;
+}
+
+const projects: Project[] = [
   {
     id: 2,
     title: "Guzgun Tekstil",
@@ -22,6 +33,7 @@ const projects = [
     color: "from-violet-500 to-purple-600",
     results: "Etkileşim oranı +150%",
     logo: "/isbir_yatak.webp",
+    resultsColor: "#ef4444",
   },
   {
     id: 5,
@@ -229,7 +241,7 @@ export default function Portfolio() {
 
                     {/* Results Badge */}
                     <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <p className="text-[#ffd76e] font-bold text-center text-sm">{project.results}</p>
+                      <p className="font-bold text-center text-sm" style={{ color: project.resultsColor ?? "#ffd76e" }}>{project.results}</p>
                     </div>
                   </div>
 
