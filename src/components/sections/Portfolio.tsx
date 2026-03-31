@@ -33,7 +33,7 @@ const projects: Project[] = [
     color: "from-violet-500 to-purple-600",
     results: "Etkileşim oranı +150%",
     logo: "/isbir_yatak.webp",
-    resultsColor: "#ef4444",
+    resultsColor: "#d93b38",
   },
   {
     id: 5,
