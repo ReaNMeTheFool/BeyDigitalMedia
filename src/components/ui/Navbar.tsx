@@ -67,27 +67,26 @@ export default function Navbar() {
           <div className="flex items-center h-20 relative overflow-hidden">
             {/* Logo - Absolute positioning */}
             <Link href="/" className="flex items-center gap-2 absolute left-0 sm:left-8">
-              <div className="relative w-12 h-12">
-                <Image
-                  src="/beydigital_logo.webp"
-                  alt="Bey Digital Media"
-                  fill
-                  sizes="48px"
-                  className="object-contain"
-                  priority
-                />
-              </div>
+              <Image
+                src="/beydigital_logo.webp"
+                alt="Bey Digital Media"
+                width={48}
+                height={48}
+                className="object-contain"
+                priority
+                unoptimized
+              />
               <span
                 className={`font-bold text-xl transition-colors ${
                   isScrolled ? "text-[#cdd6f4]" : "text-[#cdd6f4]"
                 }`}
               >
-                Bey Digital
+                Bey Digital Media
               </span>
             </Link>
 
             {/* Desktop Navigation - True center */}
-            <div className="hidden md:flex items-center gap-8 justify-center w-full">
+            <div className="hidden lg:flex items-center gap-8 justify-center w-full pl-5">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
@@ -108,7 +107,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors ${
+              className={`lg:hidden ml-auto p-2 rounded-lg transition-colors ${
                 isScrolled ? "text-[#cdd6f4]" : "text-[#cdd6f4]"
               }`}
             >
@@ -126,7 +125,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-20 left-0 right-0 bg-[#1e1e2e] border-b border-[#2d2d44] p-4 flex flex-col gap-4 shadow-lg z-40 md:hidden"
+            className="fixed top-20 left-0 right-0 bg-[#1e1e2e] border-b border-[#2d2d44] p-4 flex flex-col gap-4 shadow-lg z-40 lg:hidden"
           >
             {navLinks.map((link) => (
               <button
