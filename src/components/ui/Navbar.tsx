@@ -91,9 +91,9 @@ export default function Navbar() {
                 <button
                   key={link.name}
                   onClick={() => scrollToSection(link.href)}
-                  className={`text-sm font-medium transition-colors hover:text-[#0040ff] ${
+                  className={`text-sm font-medium transition-colors hover:text-[#7da5ff] ${
                     activeSection === link.href.replace("#", "")
-                      ? "text-[#0040ff]"
+                      ? "text-[#7da5ff] font-semibold"
                       : isScrolled
                       ? "text-[#cdd6f4]"
                       : "text-[#cdd6f4]/90"
