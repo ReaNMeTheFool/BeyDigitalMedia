@@ -21,6 +21,7 @@ const projects = [
     service: "İçerik Üretimi",
     color: "from-violet-500 to-purple-600",
     results: "Etkileşim oranı +150%",
+    logo: "/isbir_yatak.webp",
   },
   {
     id: 5,
