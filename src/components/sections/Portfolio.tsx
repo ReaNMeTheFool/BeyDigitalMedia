@@ -24,6 +24,7 @@ const projects: Project[] = [
     color: "from-emerald-500 to-teal-600",
     results: "Organik trafik +280%",
     logo: "/guzgunlar_logo.webp",
+    resultsColor: "#fefefe",
   },
   {
     id: 4,
