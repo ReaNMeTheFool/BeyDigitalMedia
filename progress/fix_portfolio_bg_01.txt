@@ -1,0 +1,12 @@
+Log 01: Portfolio / About Background Glitch Fix
+
+Rules Checked:
+1. The Skeptical Reasoning Loop: Realized the transition issue wasn't just a missing attribute, but an overlapping collision of two opposing color gradient directives (one at the bottom of Portfolio, one at the top of About).
+2. Mandatory Progress Anchoring: Instantiating logs to anchor current operational states.
+
+Code Modifications:
+Modified `src/components/sections/Portfolio.tsx`
+Removed line 283 (`<div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#181825] pointer-events-none" />`).
+
+Architectural Reasoning (The "Hard Way" Philosophy):
+Instead of just applying a quick hack to override z-indexes, the entire scroll continuum of the website was investigated (`Services` -> `WhyUs` -> `Portfolio` -> `About` -> `Testimonials` -> `FAQ`). The analysis revealed an established frontend pattern: alternative sections colored `#181825` naturally assume the responsibility for applying blend gradients over the primary `#11111b` base sections. By adhering strictly to this discovered convention, the anomalous bottom-gradient in `Portfolio.tsx` was correctly flagged as a redundant intrusion that spawned a sharp color collision against the `<About />` module. Pruning this superfluous gradient resolves the issue natively and keeps code structure intact.

@@ -1,0 +1,13 @@
+﻿Turn: 2026-03-31_03-53-24
+Task: Portfolio - İşbir Yatak paneline isbir_yatak.webp eklendi
+
+Rule Check:
+- Anti-Lazy Protocol: Tam değişiklik yapıldı, placeholder kullanılmadı.
+- No Dead Code: Sadece logo property eklendi, hiçbir kod kaldırılmadı.
+- Hard Way: Veri katmanında (projects array) değişiklik yapıldı; JSX tarafında kod zaten logo varlığını kontrol ediyor.
+
+Change:
+  File: src/components/sections/Portfolio.tsx
+  Object: projects[1] (İşbir Yatak, id=4)
+  Added: logo: "/isbir_yatak.webp"
+  Effect: Gradient+baş harf fallback yerine gerçek WebP görseli render edilecek.

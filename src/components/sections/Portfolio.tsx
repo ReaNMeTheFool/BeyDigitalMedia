@@ -47,103 +47,115 @@ const projects: Project[] = [
   },
 ];
 
-// Projeleri kopyalayarak sonsuz döngü için hazırla
 const extendedProjects = [...projects, ...projects, ...projects];
+const SCROLL_MS = 350;
 
 export default function Portfolio() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(projects.length);
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [activeHover, setActiveHover] = useState<string | null>(null);
+  const indexRef = useRef(projects.length);
+  const cardWidthRef = useRef(0);
+  const canScrollRef = useRef(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const getCardWidth = useCallback(() => {
     const container = scrollContainerRef.current;
     if (!container) return 0;
-    const card = container.querySelector('.project-card') as HTMLElement;
+    const card = container.querySelector(".project-card") as HTMLElement;
     if (!card) return 0;
-    const gap = 24;
-    return card.offsetWidth + gap;
+    return card.offsetWidth + 24;
   }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const cardWidth = getCardWidth();
-    if (cardWidth === 0) return;
+    const init = () => {
+      cardWidthRef.current = getCardWidth();
+      if (cardWidthRef.current > 0) {
+        container.scrollLeft = indexRef.current * cardWidthRef.current;
+      }
+    };
 
-    container.scrollLeft = projects.length * cardWidth;
+    const t = setTimeout(init, 50);
+
+    const ro = new ResizeObserver(() => {
+      cardWidthRef.current = getCardWidth();
+      container.scrollLeft = indexRef.current * cardWidthRef.current;
+    });
+    ro.observe(container);
+
+    return () => {
+      clearTimeout(t);
+      ro.disconnect();
+    };
   }, [getCardWidth]);
 
-  const scrollToNext = () => {
-    if (isScrolling) return;
-    setIsScrolling(true);
-
+  const scrollToIndex = useCallback((index: number, instant = false) => {
     const container = scrollContainerRef.current;
-    if (!container) return;
+    const cw = cardWidthRef.current;
+    if (!container || !cw) return;
 
-    const cardWidth = getCardWidth();
-    const newIndex = currentIndex + 1;
-
-    container.scrollTo({
-      left: newIndex * cardWidth,
-      behavior: 'smooth'
-    });
-
-    setCurrentIndex(newIndex);
-
-    if (newIndex >= projects.length * 2) {
-      setTimeout(() => {
-        container.style.scrollBehavior = 'auto';
-        const resetIndex = projects.length;
-        container.scrollLeft = resetIndex * cardWidth;
-        setCurrentIndex(resetIndex);
-        setTimeout(() => {
-          container.style.scrollBehavior = 'smooth';
-          setIsScrolling(false);
-        }, 50);
-      }, 300);
+    if (instant) {
+      container.style.scrollBehavior = "auto";
+      container.scrollLeft = index * cw;
+      requestAnimationFrame(() => {
+        container.style.scrollBehavior = "";
+      });
     } else {
-      setTimeout(() => setIsScrolling(false), 300);
+      container.scrollTo({ left: index * cw, behavior: "smooth" });
     }
-  };
+  }, []);
 
-  const scrollToPrev = () => {
-    if (isScrolling) return;
-    setIsScrolling(true);
+  const navigate = useCallback(
+    (direction: 1 | -1) => {
+      if (!canScrollRef.current) return;
+      canScrollRef.current = false;
 
-    const container = scrollContainerRef.current;
-    if (!container) return;
+      if (timerRef.current) clearTimeout(timerRef.current);
 
-    const cardWidth = getCardWidth();
-    const newIndex = currentIndex - 1;
+      const newIndex = indexRef.current + direction;
+      indexRef.current = newIndex;
+      scrollToIndex(newIndex);
 
-    container.scrollTo({
-      left: newIndex * cardWidth,
-      behavior: 'smooth'
-    });
+      let handled = false;
+      const handleScrollEnd = () => {
+        if (handled) return;
+        handled = true;
+        if (timerRef.current) clearTimeout(timerRef.current);
+        const container = scrollContainerRef.current;
+        if (container) container.removeEventListener("scrollend", handleScrollEnd);
 
-    setCurrentIndex(newIndex);
+        let resetIndex: number | null = null;
+        if (indexRef.current >= projects.length * 2) resetIndex = projects.length;
+        else if (indexRef.current < projects.length) resetIndex = projects.length * 2 - 1;
 
-    if (newIndex < projects.length) {
-      setTimeout(() => {
-        container.style.scrollBehavior = 'auto';
-        const resetIndex = projects.length * 2 - 1;
-        container.scrollLeft = resetIndex * cardWidth;
-        setCurrentIndex(resetIndex);
-        setTimeout(() => {
-          container.style.scrollBehavior = 'smooth';
-          setIsScrolling(false);
-        }, 50);
-      }, 300);
-    } else {
-      setTimeout(() => setIsScrolling(false), 300);
+        if (resetIndex !== null) {
+          indexRef.current = resetIndex;
+          scrollToIndex(resetIndex, true);
+        }
+        canScrollRef.current = true;
+      };
+
+      const container = scrollContainerRef.current;
+      if (container) container.addEventListener("scrollend", handleScrollEnd);
+      timerRef.current = setTimeout(handleScrollEnd, 600);
+    },
+    [scrollToIndex]
+  );
+
+  const getGerçekColor = () => {
+    switch (activeHover) {
+      case "Guzgun Tekstil": return "#0040ff";
+      case "İşbir Yatak": return "#dc2626";
+      case "Lada Wedding": return "#d69f55";
+      default: return "#0040ff";
     }
   };
 
   return (
-    <section id="portfolio" className="py-24 bg-[#181825] overflow-hidden">
+    <section id="portfolio" className="relative py-24 bg-[#11111b] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -151,24 +163,22 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-[#0040ff]/10 text-[#0040ff] rounded-full text-sm font-semibold mb-4">
-            Portfolyo
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
-            <span className="text-[#0040ff]">Gerçek</span> Başarı Hikayeleri
+            <span style={{ color: getGerçekColor(), transition: "color 300ms ease-in-out" }}>
+              Gerçek
+            </span>{" "}
+            Başarı Hikayeleri
           </h2>
-          <p className="text-[#a6adc8] text-lg max-w-2xl mx-auto">
-            Türkiye'nin önde gelen markalarıyla çalışarak dijital dünyada ölçülebilir sonuçlar elde ediyoruz.
+          <p className="text-[#cdd6f4]/90 text-lg max-w-2xl mx-auto">
+            Türkiye&apos;nin önde gelen markalarıyla çalışarak dijital dünyada ölçülebilir sonuçlar elde ediyoruz.
           </p>
         </motion.div>
       </div>
 
-      {/* Carousel Container */}
       <div className="relative">
-        {/* Navigation Buttons - Modern Design */}
         <button
-          onClick={scrollToPrev}
-          className="group absolute left-4 top-1/3 -translate-y-1/2 z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1e1e2e] to-[#252538] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center shadow-xl hover:border-[#0040ff]/50 hover:text-[#0040ff] hover:shadow-[0_0_30px_rgba(0,64,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
+          onClick={() => navigate(-1)}
+          className="group absolute left-2 sm:left-4 top-1/3 -translate-y-1/2 z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1e1e2e] to-[#252538] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center shadow-xl hover:border-[#0040ff]/50 hover:text-[#0040ff] hover:shadow-[0_0_30px_rgba(0,64,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
           aria-label="Önceki proje"
         >
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0040ff]/0 to-[#0040ff]/0 group-hover:from-[#0040ff]/10 group-hover:to-[#0040ff]/5 transition-all duration-300" />
@@ -176,8 +186,8 @@ export default function Portfolio() {
         </button>
 
         <button
-          onClick={scrollToNext}
-          className="group absolute right-4 top-1/3 -translate-y-1/2 z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1e1e2e] to-[#252538] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center shadow-xl hover:border-[#0040ff]/50 hover:text-[#0040ff] hover:shadow-[0_0_30px_rgba(0,64,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
+          onClick={() => navigate(1)}
+          className="group absolute right-2 sm:right-4 top-1/3 -translate-y-1/2 z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1e1e2e] to-[#252538] border border-[#2d2d44] text-[#cdd6f4] flex items-center justify-center shadow-xl hover:border-[#0040ff]/50 hover:text-[#0040ff] hover:shadow-[0_0_30px_rgba(0,64,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95"
           aria-label="Sonraki proje"
         >
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0040ff]/0 to-[#0040ff]/0 group-hover:from-[#0040ff]/10 group-hover:to-[#0040ff]/5 transition-all duration-300" />
@@ -203,8 +213,11 @@ export default function Portfolio() {
                   transition={{ type: "spring", stiffness: 300 }}
                   className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30 overflow-visible"
                 >
-                  {/* Image Container */}
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-3xl">
+                  <div
+                    className="relative aspect-[4/3] overflow-hidden rounded-t-3xl"
+                    onMouseEnter={() => setActiveHover(project.title)}
+                    onMouseLeave={() => setActiveHover(null)}
+                  >
                     {project.logo ? (
                       <img
                         src={project.logo}
@@ -213,13 +226,8 @@ export default function Portfolio() {
                       />
                     ) : (
                       <>
-                        <div
-                          className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}
-                        />
-                        {/* Animated gradient overlay */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`} />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-                        {/* Content overlay */}
                         <div className="absolute inset-0 flex items-center justify-center text-white p-8">
                           <div className="text-center">
                             <motion.div
@@ -232,34 +240,26 @@ export default function Portfolio() {
                               </span>
                             </motion.div>
                             <h3 className="text-2xl font-bold mb-2 drop-shadow-md">{project.title}</h3>
-                            <span className="text-sm opacity-90 font-medium">
-                              {project.category}
-                            </span>
+                            <span className="text-sm opacity-90 font-medium">{project.category}</span>
                           </div>
                         </div>
                       </>
                     )}
 
-                    {/* Results Badge */}
                     <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <p className="font-bold text-center text-sm" style={{ color: project.resultsColor ?? "#ffd76e" }}>{project.results}</p>
+                      <p className="font-bold text-center text-sm" style={{ color: project.resultsColor ?? "#ffd76e" }}>
+                        {project.results}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className="p-6 relative rounded-b-3xl">
-                    {/* Accent line */}
                     <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#2d2d44] to-transparent" />
-
                     <span className="inline-block px-3 py-1 text-xs bg-[#0040ff]/10 text-[#0040ff] rounded-full font-medium mb-3">
                       {project.service}
                     </span>
-                    <h3 className="text-xl font-bold text-[#cdd6f4] mb-1">
-                      {project.title}
-                    </h3>
-                    <p className="text-[#6c7086] text-sm">
-                      {project.category}
-                    </p>
+                    <h3 className="text-xl font-bold text-[#cdd6f4] mb-1">{project.title}</h3>
+                    <p className="text-[#6c7086] text-sm">{project.category}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -268,7 +268,6 @@ export default function Portfolio() {
         </motion.div>
       </div>
 
-      {/* View All Button */}
       <div className="text-center mt-12">
         <motion.a
           href="#contact"
@@ -280,6 +279,7 @@ export default function Portfolio() {
           <ExternalLink size={18} />
         </motion.a>
       </div>
+
     </section>
   );
 }

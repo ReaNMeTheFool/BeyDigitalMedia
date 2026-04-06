@@ -61,7 +61,7 @@ const itemVariants = {
 
 export default function WhyUs() {
   return (
-    <section id="why-us" className="py-24 bg-[#1e1e2e]">
+    <section id="why-us" className="relative py-24 bg-[#181825]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -74,10 +74,10 @@ export default function WhyUs() {
           <span className="inline-block px-4 py-2 bg-[#ffd76e]/10 text-[#ffd76e] rounded-full text-sm font-semibold mb-4">
             Neden Biz?
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6">
             Farkımız <span className="text-[#0040ff]">Ne?</span>
           </h2>
-          <p className="text-[#a6adc8] text-lg max-w-2xl mx-auto">
+          <p className="text-[#cdd6f4]/90 text-lg max-w-3xl mx-auto">
             Bey Digital Media olarak sadece bir ajans değil, dijital büyüme ortağınız olmayı hedefliyoruz.
           </p>
         </motion.div>
@@ -95,21 +95,25 @@ export default function WhyUs() {
               key={reason.title}
               variants={itemVariants}
               whileHover={{ y: -5 }}
-              className="group p-8 bg-[#181825] rounded-2xl border border-[#2d2d44] hover:border-[#0040ff]/20 hover:shadow-lg transition-all duration-300"
+              className="group p-6 bg-[#181825] rounded-2xl border border-[#2d2d44] hover:border-[#0040ff]/30 hover:shadow-lg hover:shadow-[#0040ff]/5 transition-all duration-300"
             >
-              <div className="w-14 h-14 bg-[#0040ff]/10 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-[#0040ff] group-hover:scale-110 transition-all duration-300">
-                <reason.icon className="w-7 h-7 text-[#0040ff] group-hover:text-[#cdd6f4] transition-colors" />
+              <div className="flex items-center gap-5 mb-5 w-full">
+                <div className="w-14 h-14 shrink-0 bg-[#0040ff]/10 rounded-xl flex items-center justify-center group-hover:bg-[#0040ff] group-hover:scale-110 transition-all duration-300">
+                  <reason.icon className="w-7 h-7 text-[#0040ff] group-hover:text-[#cdd6f4] transition-colors" />
+                </div>
+                <h3 className="flex-1 text-lg font-bold text-[#a6adc8] leading-tight">
+                  {reason.title}
+                </h3>
               </div>
-              <h3 className="text-xl font-bold text-[#cdd6f4] mb-3">
-                {reason.title}
-              </h3>
-              <p className="text-[#a6adc8] leading-relaxed">
+              <p className="text-[#cdd6f4]/80 leading-relaxed text-sm">
                 {reason.description}
               </p>
             </motion.div>
           ))}
         </motion.div>
       </div>
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#11111b] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );
 }

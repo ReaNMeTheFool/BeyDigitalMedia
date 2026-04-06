@@ -1,8 +1,10 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
-  Share2,
+  Users,
   Target,
   Search,
   Globe,
@@ -15,7 +17,7 @@ import {
 
 const services = [
   {
-    icon: Share2,
+    icon: Users,
     title: "Sosyal Medya Yönetimi",
     description:
       "Instagram, Facebook, LinkedIn ve X platformlarında profesyonel içerik stratejisi, topluluk yönetimi ve etkileşim optimizasyonu.",
@@ -25,21 +27,26 @@ const services = [
   },
   {
     icon: Target,
+    imageSrc: "/meta_logo_icon_214665.png",
     title: "Meta Ads",
     description:
       "Facebook ve Instagram reklamlarıyla hedef kitlenize ulaşın. A/B testleri, lookalike kitleler ve dönüşüm odaklı kampanyalar.",
     link: "#contact",
     color: "text-indigo-600",
-    bgColor: "bg-indigo-600/10",
+    bgColor: "",
+    bgStyle: { backgroundColor: "rgba(24, 119, 242, 0.40)" },
   },
   {
     icon: Search,
+    imageSrc: "/google-ads-transparent.png",
+    imageStyle: { marginLeft: "2px" },
     title: "Google Ads",
     description:
       "Arama motoru reklamcılığında uzman desteği. Anahtar kelime optimizasyonu, reklam metni yazımı ve bütçe yönetimi.",
     link: "#contact",
     color: "text-green-600",
-    bgColor: "bg-green-600/10",
+    bgColor: "",
+    bgStyle: { backgroundColor: "rgba(66, 133, 244, 0.20)" },
   },
   {
     icon: Globe,
@@ -113,7 +120,7 @@ const itemVariants = {
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 bg-[#181825]">
+    <section id="services" className="relative py-24 bg-[#11111b]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -129,8 +136,8 @@ export default function Services() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
             Dijital <span className="text-[#0040ff]">Büyüme</span> Çözümleri
           </h2>
-          <p className="text-[#a6adc8] text-lg max-w-2xl mx-auto">
-            Built for Digital Growth - Markanızı dijital dünyada büyütmek için ihtiyacınız olan tüm hizmetler tek çatı altında.
+          <p className="text-[#cdd6f4]/90 text-lg max-w-3xl mx-auto">
+            Markanızı dijital dünyada büyütmek için ihtiyacınız olan tüm hizmetler tek çatı altında.
           </p>
         </motion.div>
 
@@ -140,27 +147,40 @@ export default function Services() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
           {services.map((service) => (
             <motion.div
               key={service.title}
               variants={itemVariants}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="group bg-[#1e1e2e] rounded-2xl p-6 shadow-sm border border-[#2d2d44] hover:shadow-xl hover:border-[#0040ff]/20 transition-all duration-300 flex flex-col h-full"
+              className="group bg-[#1e1e2e] rounded-2xl p-4 sm:p-6 shadow-sm border border-[#2d2d44] hover:shadow-xl hover:border-[#0040ff]/20 transition-all duration-300 flex flex-col h-full"
             >
               {/* Icon */}
               <div
-                className={`w-12 h-12 ${service.bgColor} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 ${"bgStyle" in service ? "" : service.bgColor}`}
+                style={"bgStyle" in service ? (service.bgStyle as React.CSSProperties) : undefined}
               >
-                <service.icon className={`w-6 h-6 ${service.color}`} />
+                {"imageSrc" in service && service.imageSrc ? (
+                  <Image
+                    src={service.imageSrc}
+                    alt={service.title}
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                    style={"imageStyle" in service ? (service.imageStyle as React.CSSProperties) : undefined}
+                    unoptimized
+                  />
+                ) : (
+                  <service.icon className={`w-6 h-6 ${service.color}`} />
+                )}
               </div>
 
               {/* Content */}
-              <h3 className="text-lg font-bold text-[#cdd6f4] mb-3">
+              <h3 className="text-lg font-bold text-[#94e2d5] mb-3">
                 {service.title}
               </h3>
-              <p className="text-[#a6adc8] text-sm leading-relaxed flex-grow">
+              <p className="text-[#cdd6f4]/80 text-sm leading-relaxed flex-grow">
                 {service.description}
               </p>
 

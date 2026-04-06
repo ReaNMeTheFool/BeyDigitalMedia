@@ -64,29 +64,24 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-20 relative overflow-hidden">
-            {/* Logo - Absolute positioning */}
-            <Link href="/" className="flex items-center gap-2 absolute left-0 sm:left-8">
-              <Image
-                src="/beydigital_logo.webp"
-                alt="Bey Digital Media"
-                width={48}
-                height={48}
-                className="object-contain"
-                priority
-                unoptimized
-              />
-              <span
-                className={`font-bold text-xl transition-colors ${
-                  isScrolled ? "text-[#cdd6f4]" : "text-[#cdd6f4]"
-                }`}
-              >
-                Bey Digital Media
-              </span>
-            </Link>
+          <div className="flex items-center h-20 justify-center relative">
+            {/* Logo + Nav — tek grup, sayfa ortasına hizalı */}
+            <div className="hidden lg:flex items-center gap-8">
+              <Link href="/" className="flex items-center gap-2 mr-10">
+                <Image
+                  src="/beydigital_logo.webp"
+                  alt="Bey Digital Media"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                  priority
+                  unoptimized
+                />
+                <span className="font-bold text-xl text-[#cdd6f4]">
+                  Bey Digital Media
+                </span>
+              </Link>
 
-            {/* Desktop Navigation - True center */}
-            <div className="hidden lg:flex items-center gap-8 justify-center w-full pl-5">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
@@ -104,12 +99,26 @@ export default function Navbar() {
               ))}
             </div>
 
+            {/* Mobile: Logo sol, hamburger sağ */}
+            <Link href="/" className="lg:hidden flex items-center gap-2">
+              <Image
+                src="/beydigital_logo.webp"
+                alt="Bey Digital Media"
+                width={40}
+                height={40}
+                className="object-contain"
+                priority
+                unoptimized
+              />
+              <span className="font-bold text-lg text-[#cdd6f4]">
+                Bey Digital Media
+              </span>
+            </Link>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden ml-auto p-2 rounded-lg transition-colors ${
-                isScrolled ? "text-[#cdd6f4]" : "text-[#cdd6f4]"
-              }`}
+              className="lg:hidden absolute right-0 p-2 rounded-lg text-[#cdd6f4]"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

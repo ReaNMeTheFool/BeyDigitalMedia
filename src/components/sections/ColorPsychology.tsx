@@ -65,7 +65,7 @@ export default function ColorPsychology() {
   const activeColor = hoveredColor || selectedColor;
 
   return (
-    <section className="py-24 bg-[#1e1e2e]">
+    <section className="relative py-24 bg-[#11111b]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left Column - Text */}
@@ -82,7 +82,7 @@ export default function ColorPsychology() {
               Renklerle{" "}
               <span className="text-[#0040ff]">Konuşuyoruz</span>
             </h2>
-            <p className="text-[#a6adc8] text-lg leading-relaxed mb-8">
+            <p className="text-[#cdd6f4]/90 text-lg leading-relaxed mb-8">
               Her renk bir duygu, her ton bir mesaj taşır. Markanızın kimliğini
               oluştururken renklerin psikolojik etkilerini kullanarak hedef
               kitlenizle derin bir bağ kuruyoruz. Doğru renk seçimi, markanızın
@@ -113,7 +113,7 @@ export default function ColorPsychology() {
                       </span>
                     </div>
                   </div>
-                  <p className="text-[#a6adc8] leading-relaxed">
+                  <p className="text-[#cdd6f4]/90 leading-relaxed">
                     {activeColor.description}
                   </p>
                 </motion.div>
@@ -123,7 +123,7 @@ export default function ColorPsychology() {
                   animate={{ opacity: 1 }}
                   className="bg-[#181825] rounded-2xl p-6 border border-[#2d2d44] border-dashed"
                 >
-                  <p className="text-[#a6adc8] text-center">
+                  <p className="text-[#cdd6f4]/90 text-center">
                     Renk dairelerinin üzerine gelerek veya tıklayarak
                     psikolojik etkilerini keşfedin.
                   </p>

@@ -89,7 +89,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-24 bg-[#181825]">
+    <section className="relative py-24 bg-[#181825]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -99,9 +99,6 @@ export default function Testimonials() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-[#0040ff]/10 text-[#0040ff] rounded-full text-sm font-semibold mb-4">
-            Müşteri Yorumları
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
             Bizim Hakkımızda{" "}
             <span className="text-[#0040ff]">Ne Dediler?</span>
@@ -113,14 +110,14 @@ export default function Testimonials() {
           {/* Navigation Buttons */}
           <button
             onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-16 z-10 w-12 h-12 bg-[#1e1e2e] rounded-full shadow-lg flex items-center justify-center text-[#cdd6f4] hover:bg-[#0040ff] hover:text-white transition-colors"
+            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-16 z-10 w-12 h-12 bg-[#1e1e2e] rounded-full shadow-lg items-center justify-center text-[#cdd6f4] hover:bg-[#0040ff] hover:text-white transition-colors"
             aria-label="Önceki yorum"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-16 z-10 w-12 h-12 bg-[#1e1e2e] rounded-full shadow-lg flex items-center justify-center text-[#cdd6f4] hover:bg-[#0040ff] hover:text-white transition-colors"
+            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-16 z-10 w-12 h-12 bg-[#1e1e2e] rounded-full shadow-lg items-center justify-center text-[#cdd6f4] hover:bg-[#0040ff] hover:text-white transition-colors"
             aria-label="Sonraki yorum"
           >
             <ChevronRight size={24} />
@@ -137,7 +134,7 @@ export default function Testimonials() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-[#1e1e2e] rounded-3xl p-8 md:p-12 shadow-lg"
+                className="bg-[#1e1e2e] rounded-3xl p-5 sm:p-8 md:p-12 shadow-lg"
               >
                 {/* Quote Icon */}
                 <div className="absolute top-8 right-8 w-16 h-16 bg-[#0040ff]/10 rounded-full flex items-center justify-center">
@@ -168,7 +165,7 @@ export default function Testimonials() {
                     <h4 className="font-bold text-[#cdd6f4] text-lg">
                       {testimonials[currentIndex].name}
                     </h4>
-                    <p className="text-[#a6adc8]">
+                    <p className="text-[#cdd6f4]/90">
                       {testimonials[currentIndex].role} @{" "}
                       {testimonials[currentIndex].company}
                     </p>
@@ -195,6 +192,7 @@ export default function Testimonials() {
           </div>
         </div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );
 }

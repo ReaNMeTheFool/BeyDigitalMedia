@@ -1,0 +1,1 @@
+Portfolio section transition bug fixed. The redundant background gradient overlapping with the About section's top gradient was causing a harsh horizontal line. The gradient from Portfolio.tsx has been removed, aligning perfectly with the overarching pattern of the #181825 colored sections retaining blending ownership over #11111b sections.

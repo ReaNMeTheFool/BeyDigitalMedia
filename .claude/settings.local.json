@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm run:*)",
+      "Bash(cmd.exe /c \"taskkill /F /IM node.exe\")",
+      "Bash(cmd.exe /c \"netstat -ano | findstr :3000\")",
+      "Bash(python3 -c \":*)",
+      "Bash(python -c \":*)",
+      "Bash(grep -n \"className=.*section\\\\|<section\" C:UsersReaNMeDownloadsprojelerbeydigitalsrccomponentssections*.tsx)",
+      "Bash(tail -1 grep -n \"</section>\" /c/Users/ReaNMe/Downloads/projeler/beydigital/src/components/sections/WhyUs.tsx)",
+      "Bash(tail -1 grep -n \"</section>\" /c/Users/ReaNMe/Downloads/projeler/beydigital/src/components/sections/Portfolio.tsx)",
+      "Bash(tail -1 grep -n \"</section>\" /c/Users/ReaNMe/Downloads/projeler/beydigital/src/components/sections/About.tsx)",
+      "Bash(tail -1 grep -n \"</section>\" /c/Users/ReaNMe/Downloads/projeler/beydigital/src/components/sections/ColorPsychology.tsx)",
+      "Bash(tail -1 grep -n \"</section>\" /c/Users/ReaNMe/Downloads/projeler/beydigital/src/components/sections/Testimonials.tsx)",
+      "Bash(__NEW_LINE_5853b5e7966149f7__ sed:*)"
+    ]
+  }
+}

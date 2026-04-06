@@ -13,7 +13,7 @@ const items = [
 
 export default function Marquee() {
   return (
-    <section className="py-8 bg-[#0033aa] overflow-hidden">
+    <section className="py-8 bg-[#313244] overflow-hidden">
       <div className="relative">
         <div
           className="flex whitespace-nowrap animate-marquee"

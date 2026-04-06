@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // React Compiler - Next.js 16'da experimental'dan çıktı
+  // React Compiler - Next.js 16.1.6'da root seviyesinde
   reactCompiler: true,
-  
-  // Turbopack kullanımı (varsayılan)
-  turbopack: {},
+
+  // Turbopack root - birden fazla lockfile uyarısını kapatır
+  turbopack: {
+    root: process.cwd(),
+  },
   
   // Image optimizasyonu
   images: {

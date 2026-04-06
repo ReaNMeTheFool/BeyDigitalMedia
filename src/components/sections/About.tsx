@@ -7,15 +7,15 @@ import { Award, Users, Briefcase, Heart } from "lucide-react";
 const stats = [
   { icon: Award, value: "150+", label: "Tamamlanan Proje" },
   { icon: Users, value: "100+", label: "Memnun Müşteri" },
-  { icon: Briefcase, value: "8+", label: "Yıllık Deneyim" },
   { icon: Heart, value: "%100", label: "Müşteri Memnuniyeti" },
+  { icon: Briefcase, value: "8+", label: "Yıllık Deneyim" },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="py-24 bg-[#1e1e2e]">
+    <section id="about" className="relative py-24 bg-[#181825]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Left Column - Logo/Image */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -36,28 +36,15 @@ export default function About() {
                   background: 'radial-gradient(circle at center, rgba(0,64,255,0.4) 0%, rgba(0,64,255,0.1) 50%, transparent 70%)'
                 }}
               />
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#181825] flex items-center justify-center shadow-[0_0_50px_rgba(0,64,255,0.5)]">
-                {/* Bey Digital Logo */}
-                <div className="relative w-64 h-64 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                  <Image
-                    src="/beydigital_logo.webp"
-                    alt="Bey Digital Media"
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-
-                {/* Decorative Elements */}
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute top-4 right-4 w-20 h-20 bg-[#ffd76e]/20 rounded-2xl backdrop-blur-sm"
-                />
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute bottom-4 left-4 w-16 h-16 bg-[#0040ff]/20 rounded-full backdrop-blur-sm"
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,64,255,0.5)]">
+                <Image
+                  src="/hakkimizda.webp"
+                  alt="Hakkımızda"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                  priority
+                  unoptimized
                 />
               </div>
             </div>
@@ -68,7 +55,7 @@ export default function About() {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5, type: "spring" }}
-              className="absolute -bottom-6 -right-6 bg-[#0040ff] text-[#cdd6f4] rounded-2xl p-6 shadow-xl"
+              className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-[#0040ff] text-[#cdd6f4] rounded-2xl p-4 sm:p-6 shadow-xl"
             >
               <div className="text-4xl font-bold">8+</div>
               <div className="text-sm opacity-90">Yıllık Deneyim</div>
@@ -85,17 +72,17 @@ export default function About() {
             <span className="inline-block px-4 py-2 bg-[#0040ff]/10 text-[#0040ff] rounded-full text-sm font-semibold mb-6">
               Hakkımızda
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6">
               Dijitalde Büyümenin{" "}
               <span className="text-[#0040ff]">Güvenilir Ortağı</span>
             </h2>
 
-            <div className="space-y-4 text-[#a6adc8] text-lg leading-relaxed mb-8">
+            <div className="space-y-4 text-[#cdd6f4]/90 text-lg leading-relaxed mb-8">
               <p>
-                Bey Digital Media, Bursa merkezli bir dijital pazarlama ajansıdır.
-                Sekiz yılı aşkın süredir markaların dijital dünyada büyümesine
-                yardımcı oluyoruz. Sosyal medya yönetimi, Meta Ads, Google Ads,
-                web tasarım ve SEO alanlarında uzman kadromuzla hizmet veriyoruz.
+                Bey Digital Media olarak Sekiz yılı aşkın süredir markaların
+                dijital dünyada büyümesine yardımcı oluyoruz. Sosyal medya
+                yönetimi, Meta Ads, Google Ads, web tasarım, SEO, logo tasarımı,
+                ve kurumsal kimlik alanlarında uzman kadromuzla hizmet veriyoruz.
               </p>
               <p>
                 Her markanın kendine özgü bir hikayesi olduğuna inanıyoruz.
@@ -112,7 +99,7 @@ export default function About() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="flex gap-2 mt-2">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -120,19 +107,20 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="text-center p-4 bg-[#181825] rounded-2xl"
+                  className="flex-1 text-center p-2 bg-[#181825] rounded-2xl"
                 >
-                  <stat.icon className="w-6 h-6 text-[#0040ff] mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-[#cdd6f4]">
+                  <stat.icon className={`w-8 h-8 text-[#0040ff] block mx-auto mb-2 ${index >= 2 ? "-translate-x-[3px]" : "-translate-x-[7px]"}`} />
+                  <div className="text-xl font-bold text-[#cdd6f4]">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-[#a6adc8]">{stat.label}</div>
+                  <div className="text-xs text-[#cdd6f4]/90 leading-tight">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
       </div>
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#11111b] to-transparent pointer-events-none" />
     </section>
   );
 }

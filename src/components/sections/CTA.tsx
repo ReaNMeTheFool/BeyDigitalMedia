@@ -6,7 +6,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 export default function CTA() {
   return (
     <section className="py-24 bg-[#0040ff] relative overflow-hidden">
-      {/* Background decoration */}
+{/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#ffd76e]/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#cdd6f4]/5 rounded-full blur-3xl" />
@@ -34,11 +34,11 @@ export default function CTA() {
             </span>
           </motion.div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#cdd6f4] mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-6">
             Dijital <span className="text-[#ffd76e]">Büyüme</span> Yolculuğuna
             <br className="hidden sm:block" /> Bugün Başlayın
           </h2>
-          <p className="text-[#cdd6f4]/70 text-lg md:text-xl max-w-3xl mx-auto mb-10">
+          <p className="text-[#cdd6f4]/90 text-lg md:text-xl max-w-3xl mx-auto mb-10">
             Markanızı bir üst seviyeye taşımak için uzman kadromuzla çalışın.
             Ücretsiz analiz ve teklif için hemen iletişime geçin.
           </p>
@@ -78,19 +78,19 @@ export default function CTA() {
           >
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">150+</div>
-              <div className="text-[#cdd6f4]/50 text-sm">Proje</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Proje</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">100+</div>
-              <div className="text-[#cdd6f4]/50 text-sm">Müşteri</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Müşteri</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">8+</div>
-              <div className="text-[#cdd6f4]/50 text-sm">Yıl Deneyim</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Yıl Deneyim</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">%100</div>
-              <div className="text-[#cdd6f4]/50 text-sm">Memnuniyet</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Memnuniyet</div>
             </div>
           </motion.div>
         </motion.div>

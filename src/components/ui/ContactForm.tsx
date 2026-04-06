@@ -256,7 +256,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2"
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           Adınız Soyadınız *
         </label>
@@ -280,7 +280,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2"
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           E-posta Adresiniz *
         </label>
@@ -304,7 +304,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="phone"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2"
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           Telefon Numaranız
         </label>
@@ -325,7 +325,7 @@ export default function ContactForm() {
 
       {/* Service Field - Custom Multiple Select Dropdown */}
       <div>
-        <label className="block text-sm font-semibold text-[#cdd6f4] mb-3">
+        <label className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1">
           İlgilendiğiniz Hizmetler
         </label>
         <ServiceDropdown
@@ -338,7 +338,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="message"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2"
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           Mesajınız *
         </label>
@@ -346,7 +346,7 @@ export default function ContactForm() {
           id="message"
           name="message"
           required
-          rows={5}
+          rows={4}
           className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086] resize-none"
           placeholder="Projeniz hakkında kısa bir bilgi verin..."
         />

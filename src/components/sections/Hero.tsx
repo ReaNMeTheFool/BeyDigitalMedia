@@ -2,6 +2,7 @@
 
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Animasyonlu başlık bileşeni - PC'de animasyonlu, mobilde sabit
 function AnimatedHeadline() {
@@ -40,49 +41,40 @@ function AnimatedHeadline() {
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center">
       {/* Üst satır - Dijital */}
-      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Dijital
       </span>
-      
+
       {/* Boşluk - sadece sm ve üstü */}
-      <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
-      
-      {/* Orta - Animasyonlu kelime - Sabit pozisyon */}
-      <span className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
-        {isMobile ? (
-          // Mobilde sabit metin
-          <span
+      <span className="hidden sm:block w-4"></span>
+
+      {/* Orta - Animasyonlu kelime - Sabit genişlik */}
+      <span className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
+        {/* Ghost: en uzun kelime genişliği sabit tutar */}
+        <span className="invisible select-none" aria-hidden="true">Verimliliğinizi</span>
+        {/* AnimatePresence: kelimeler slide-up + fade ile geçiş yapar */}
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={isMobile ? "mobile" : currentIndex}
+            initial={isMobile ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 flex items-center justify-center"
             style={{
               textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
             }}
           >
-            {words[0]}
-          </span>
-        ) : (
-          // PC'de sadece opacity crossfade - pozisyon sabit
-          <>
-            {words.map((word, index) => (
-              <span
-                key={word}
-                className={`transition-opacity duration-500 ${
-                  index === currentIndex ? 'opacity-100' : 'opacity-0 absolute'
-                }`}
-                style={{
-                  textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
-                }}
-              >
-                {word}
-              </span>
-            ))}
-          </>
-        )}
+            {words[isMobile ? 0 : currentIndex]}
+          </motion.span>
+        </AnimatePresence>
       </span>
       
       {/* Boşluk - sadece sm ve üstü */}
-      <span className="hidden sm:block w-4 md:w-8 lg:w-10"></span>
-      
+      <span className="hidden sm:block w-4"></span>
+
       {/* Sağ taraf - Büyütüyoruz */}
-      <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Büyütüyoruz
       </span>
     </div>
@@ -248,8 +240,8 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden w-full max-w-[100vw]"
     >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Gradient + Noise */}
+      <div className="absolute inset-0 z-0 noise">
         <div className="absolute inset-0 bg-gradient-to-b from-[#000066]/90 via-[#00004d]/85 to-[#000033]/95" />
       </div>
 
@@ -266,11 +258,11 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
         <div className="animate-fade-in-up">
           {/* Main Headline */}
-          <div className="mb-8">
+          <div className="mb-8" style={{ transform: 'translateX(5px)' }}>
             <AnimatedHeadline />
           </div>
 
-          <p className="text-lg md:text-xl text-[#cdd6f4]/80 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.
           </p>
 
@@ -296,8 +288,8 @@ export default function Hero() {
           {[
             { number: "150+", label: "Tamamlanan Proje" },
             { number: "100+", label: "Memnun Müşteri" },
-            { number: "8+", label: "Yıllık Deneyim" },
             { number: "%100", label: "Müşteri Memnuniyeti" },
+            { number: "8+", label: "Yıllık Deneyim" },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -306,7 +298,7 @@ export default function Hero() {
               <div className="text-3xl md:text-4xl font-bold text-[#ffd76e] mb-1">
                 {stat.number}
               </div>
-              <div className="text-sm text-[#cdd6f4]/60">{stat.label}</div>
+              <div className="text-sm text-[#cdd6f4]/75">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -320,7 +312,7 @@ export default function Hero() {
             element.scrollIntoView({ behavior: 'smooth' });
           }
         }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#cdd6f4]/50 hover:text-[#cdd6f4] transition-colors cursor-pointer animate-bounce-slow"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#cdd6f4]/60 hover:text-[#cdd6f4] transition-colors cursor-pointer animate-bounce-slow"
       >
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm tracking-wider">Bizi daha fazla keşfet</span>

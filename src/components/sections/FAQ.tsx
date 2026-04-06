@@ -45,7 +45,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-24 bg-[#181825]">
+    <section id="faq" className="relative py-24 bg-[#11111b]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -62,7 +62,7 @@ export default function FAQ() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
             Merak <span className="text-[#0040ff]">Ettikleriniz</span>
           </h2>
-          <p className="text-[#a6adc8] text-lg max-w-2xl mx-auto">
+          <p className="text-[#cdd6f4]/90 text-lg max-w-2xl mx-auto">
             Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.
           </p>
         </motion.div>
@@ -82,11 +82,15 @@ export default function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] overflow-hidden"
+              className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
+                openIndex === index
+                  ? "bg-[#252538] border-[#0040ff]/40 shadow-[0_0_24px_rgba(0,64,255,0.15)]"
+                  : "bg-[#1e1e2e] border-[#2d2d44] hover:border-[#0040ff]/30 hover:bg-[#252538]/60 hover:shadow-[0_0_16px_rgba(0,64,255,0.1)]"
+              }`}
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-[#252538] transition-colors"
+                className="w-full flex items-center justify-between p-4 sm:p-6 text-left transition-colors hover:bg-white/5"
               >
                 <span className="font-semibold text-[#cdd6f4] pr-4">
                   {faq.question}
@@ -107,7 +111,7 @@ export default function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    <div className="px-6 pb-6 text-[#a6adc8] leading-relaxed">
+                    <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-[#cdd6f4]/90 leading-relaxed">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -125,7 +129,7 @@ export default function FAQ() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-center mt-12"
         >
-          <p className="text-[#a6adc8] mb-4">Başka sorularınız mı var?</p>
+          <p className="text-[#cdd6f4]/90 mb-4">Başka sorularınız mı var?</p>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 bg-[#0040ff] text-white px-6 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-lg transition-all"
@@ -134,6 +138,7 @@ export default function FAQ() {
           </a>
         </motion.div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );
 }
