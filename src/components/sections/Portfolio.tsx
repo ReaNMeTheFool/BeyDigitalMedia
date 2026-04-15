@@ -90,7 +90,7 @@ const projects: Project[] = [
     results: "Etkileşim Oranı +500%",
     logo: "/emfa.webp",
     logoScale: 1.35,
-    resultsColor: "#22d3ee",
+    resultsColor: "#fc031c",
   },
 ];
 
