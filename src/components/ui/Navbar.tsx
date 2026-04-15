@@ -26,7 +26,7 @@ const serviceItems = [
   { name: "SEO", href: "/seo" },
   { name: "Logo Tasarımı", href: "/logo-tasarimi" },
   { name: "Kurumsal Kimlik", href: "/kurumsal-kimlik" },
-  { name: "Detaylı Raporlama", href: "/detayli-raporlama" },
+  { name: "Raporlama", href: "/detayli-raporlama" },
 ];
 
 export default function Navbar() {

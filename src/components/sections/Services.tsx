@@ -90,7 +90,7 @@ const services = [
   },
   {
     icon: FileText,
-    title: "Detaylı Raporlama",
+    title: "Raporlama",
     description:
       "Büyümenizi şansa bırakmayın. Şeffaf performans metrikleri, derinlemesine analizler ve veriye dayalı aksiyon planlarıyla stratejinizi sürekli geliştiriyoruz.",
     link: "/detayli-raporlama",

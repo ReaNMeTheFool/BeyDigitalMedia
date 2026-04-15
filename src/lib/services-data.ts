@@ -672,7 +672,7 @@ const servicesData: Record<string, ServiceData> = {
 
   "detayli-raporlama": {
     slug: "detayli-raporlama",
-    title: "Detaylı Raporlama",
+    title: "Raporlama",
     subtitle:
       "Veriye dayalı kararlarla dijital varlığınızı sürekli geliştirin",
     description:
