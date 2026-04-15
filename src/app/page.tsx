@@ -2,6 +2,7 @@ import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
 import Marquee from "@/components/sections/Marquee";
 import Services from "@/components/sections/Services";
+import AiAutomation from "@/components/sections/AiAutomation";
 import WhyUs from "@/components/sections/WhyUs";
 import Portfolio from "@/components/sections/Portfolio";
 import About from "@/components/sections/About";
@@ -17,6 +18,7 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Services />
+        <AiAutomation />
         <WhyUs />
         <Portfolio />
         <About />

@@ -1,0 +1,1 @@
+Task complete. Removed all section pill badges from the designated components without harming the remaining headers.

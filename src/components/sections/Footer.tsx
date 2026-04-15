@@ -2,16 +2,17 @@
 
 import { motion } from "framer-motion";
 import { Instagram, Mail, Phone, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import ContactForm from "../ui/ContactForm";
 
 const footerLinks = {
   services: [
-    { label: "Sosyal Medya Yönetimi", href: "#services" },
-    { label: "Meta Ads", href: "#services" },
-    { label: "Google Ads", href: "#services" },
-    { label: "Web Tasarım", href: "#services" },
-    { label: "SEO", href: "#services" },
-    { label: "Logo & Kurumsal Kimlik", href: "#services" },
+    { label: "Sosyal Medya Yönetimi", href: "/sosyal-medya-yonetimi" },
+    { label: "Meta Ads", href: "/meta-ads" },
+    { label: "Google Ads", href: "/google-ads" },
+    { label: "Web Tasarım", href: "/web-tasarim" },
+    { label: "SEO", href: "/seo" },
+    { label: "Logo & Kurumsal Kimlik", href: "/logo-tasarimi" },
   ],
   company: [
     { label: "Hakkımızda", href: "#about" },
@@ -105,13 +106,13 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-[#cdd6f4]/80 hover:text-[#ffd76e] transition-colors flex items-center gap-1 group"
                   >
                     {link.label}
                     <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

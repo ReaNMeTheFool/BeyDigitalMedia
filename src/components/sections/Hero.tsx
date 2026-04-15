@@ -4,7 +4,7 @@ import { ChevronDown, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-// Animasyonlu başlık bileşeni - PC'de animasyonlu, mobilde sabit
+// Animasyonlu başlık bileşeni - Tüm cihazlarda aktif ve mobilde daha büyük
 function AnimatedHeadline() {
   const words = [
     "Satışlarınızı",
@@ -14,34 +14,19 @@ function AnimatedHeadline() {
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Ekran boyutunu kontrol et
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile) return; // Mobilde animasyon yok
-    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % words.length);
     }, 2500);
 
     return () => clearInterval(interval);
-  }, [words.length, isMobile]);
+  }, [words.length]);
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center">
       {/* Üst satır - Dijital */}
-      <span className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Dijital
       </span>
 
@@ -49,14 +34,14 @@ function AnimatedHeadline() {
       <span className="hidden sm:block w-4"></span>
 
       {/* Orta - Animasyonlu kelime - Sabit genişlik */}
-      <span className="relative inline-flex items-center justify-center text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
+      <span className="relative inline-flex items-center justify-center text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
         {/* Ghost: en uzun kelime genişliği sabit tutar */}
         <span className="invisible select-none" aria-hidden="true">Verimliliğinizi</span>
         {/* AnimatePresence: kelimeler slide-up + fade ile geçiş yapar */}
         <AnimatePresence mode="wait">
           <motion.span
-            key={isMobile ? "mobile" : currentIndex}
-            initial={isMobile ? false : { opacity: 0, y: 20 }}
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
@@ -65,7 +50,7 @@ function AnimatedHeadline() {
               textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
             }}
           >
-            {words[isMobile ? 0 : currentIndex]}
+            {words[currentIndex]}
           </motion.span>
         </AnimatePresence>
       </span>
@@ -74,7 +59,7 @@ function AnimatedHeadline() {
       <span className="hidden sm:block w-4"></span>
 
       {/* Sağ taraf - Büyütüyoruz */}
-      <span className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Büyütüyoruz
       </span>
     </div>
@@ -238,7 +223,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden w-full max-w-[100vw]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden w-full"
     >
       {/* Background Gradient + Noise */}
       <div className="absolute inset-0 z-0 noise">
@@ -250,33 +235,44 @@ export default function Hero() {
 
       {/* Subtle gradient orbs - CSS Animation */}
       <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden hidden sm:block">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#ffd76e]/10 blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-[#0040ff]/10 blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        <div
+          className="absolute top-0 left-0 w-[700px] h-[700px] animate-pulse-slow"
+          style={{
+            background: "radial-gradient(ellipse at 30% 30%, rgba(255,215,110,0.12) 0%, rgba(255,215,110,0.04) 45%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute bottom-0 right-0 w-[600px] h-[600px] animate-pulse-slow"
+          style={{
+            animationDelay: "2s",
+            background: "radial-gradient(ellipse at 70% 70%, rgba(0,64,255,0.12) 0%, rgba(0,64,255,0.04) 45%, transparent 70%)",
+          }}
+        />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center">
         <div className="animate-fade-in-up">
           {/* Main Headline */}
           <div className="mb-8" style={{ transform: 'translateX(5px)' }}>
             <AnimatedHeadline />
           </div>
 
-          <p className="text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-sm xs:text-base sm:text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="-ml-[5px] flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <button
               onClick={scrollToContact}
-              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"
+              className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"
             >
               <span className="relative z-10">Ücretsiz Teklif Al</span>
-              <ArrowRight className="w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-transform group-hover:translate-x-1" />
             </button>
             <button
               onClick={scrollToServices}
-              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#cdd6f4]/10 backdrop-blur-sm text-[#cdd6f4] font-semibold rounded-full border border-[#cdd6f4]/20 transition-all duration-300 hover:bg-[#cdd6f4]/20"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#cdd6f4]/10 backdrop-blur-sm text-[#cdd6f4] font-semibold rounded-full border border-[#cdd6f4]/20 transition-all duration-300 hover:bg-[#cdd6f4]/20"
             >
               Hizmetlerimiz
             </button>
@@ -284,7 +280,7 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+        <div className="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
           {[
             { number: "150+", label: "Tamamlanan Proje" },
             { number: "100+", label: "Memnun Müşteri" },
@@ -295,7 +291,7 @@ export default function Hero() {
               key={stat.label}
               className="text-center"
             >
-              <div className="text-3xl md:text-4xl font-bold text-[#ffd76e] mb-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#ffd76e] mb-1">
                 {stat.number}
               </div>
               <div className="text-sm text-[#cdd6f4]/75">{stat.label}</div>

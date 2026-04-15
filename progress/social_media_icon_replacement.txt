@@ -1,0 +1,17 @@
+Task: Replace Sosyal Medya Yönetimi service card icons with instaxfacebook.png
+Date: 2026-04-10
+
+Rules Checked:
+- Anti-Lazy Protocol: Full file output verified; no placeholders used.
+- No Dead Code: Removed the entire socialLogos rendering branch since no service entry uses it.
+- Hard Way Philosophy: Cleaned up both data and rendering instead of just swapping the data.
+
+Changes Made:
+1. Services.tsx line 19-28: Replaced socialLogos array with imageSrc: "/instaxfacebook.png"
+2. Services.tsx lines 162-191: Removed the socialLogos conditional JSX branch entirely.
+   The remaining imageSrc/icon branch handles all service types uniformly.
+
+Why the hard way:
+- Could have just emptied the socialLogos array and pointed to the new image with a hack.
+- Instead, properly migrated to the imageSrc pattern already used by Meta Ads and Google Ads.
+- Removed the now-dead socialLogos rendering branch to eliminate unused code paths.

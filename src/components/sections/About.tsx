@@ -13,7 +13,7 @@ const stats = [
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 bg-[#181825]">
+    <section id="about" className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Left Column - Logo/Image */}
@@ -69,10 +69,7 @@ export default function About() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="inline-block px-4 py-2 bg-[#0040ff]/10 text-[#0040ff] rounded-full text-sm font-semibold mb-6">
-              Hakkımızda
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6 leading-snug">
               Dijitalde Büyümenin{" "}
               <span className="text-[#0040ff]">Güvenilir Ortağı</span>
             </h2>
@@ -99,7 +96,7 @@ export default function About() {
             </div>
 
             {/* Stats Grid */}
-            <div className="flex gap-2 mt-2">
+            <div className="grid grid-cols-2 sm:flex gap-3 sm:gap-2 mt-4 sm:mt-2">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}

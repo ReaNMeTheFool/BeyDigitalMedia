@@ -1,0 +1,1 @@
+Rule check: Anti-lazy. Fixing role display so isolated names like 'Guzgun Tekstil' do not render trailing '@ ' strings.

@@ -1,0 +1,1 @@
+Diagnosed Framer Motion bug. Preparing to apply overflow-hidden to section wrappers.

@@ -1,0 +1,1 @@
+Rule check: Anti-lazy. Replacing multiple files concurrently to remove the section pill badges as requested.

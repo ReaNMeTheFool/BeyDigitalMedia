@@ -1,0 +1,1 @@
+Executing mobile layout fixes on Hero.tsx.

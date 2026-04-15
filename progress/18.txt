@@ -1,0 +1,1 @@
+Rule check: Planning mode. User wants broad mobile optimization without affecting PC. Researching the components specifically for mobile responsiveness issues.

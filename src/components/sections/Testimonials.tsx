@@ -7,37 +7,46 @@ import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const testimonials = [
   {
     id: 1,
-    name: "Ahmet Yılmaz",
-    company: "Luxe Boutique",
-    role: "İşletme Sahibi",
-    image: "/avatar-1.jpg",
+    name: "Mehmet",
+    company: "Lada Wedding",
+    role: "",
+    image: "/lada_logo.webp",
     rating: 5,
     text: "Bey Digital Media ile çalışmak mükemmel bir deneyimdi. E-ticaret sitemizin satışları %150 arttı. SEO ve sosyal medya stratejileri gerçekten işe yarıyor.",
   },
   {
     id: 2,
-    name: "Zeynep Kaya",
-    company: "Organik Yaşam",
-    role: "Kurucu",
-    image: "/avatar-2.jpg",
+    name: "Erenalp Guzgun",
+    company: "Guzgun Tekstil",
+    role: "",
+    image: "/guzgunlar_logo.webp",
     rating: 5,
-    text: "Sosyal medya yönetimini tamamen Bey Digital Media'ya emanet ettik. İçerikler çok yaratıcı ve etkileşim oranlarımız katlandı. Kesinlikle tavsiye ederim.",
+    text: "Uzun zamandır sosyal medyada böyle düzenli ve yaratıcı içerikler görmemiştik. Bey Digital Media sayesinde sayfamız adeta kendini buldu diyebiliriz 😊 Her detayı özenle takip etmeleri ve bizi biz gibi yansıtmaları işin en güzel yanı. Emeğinize sağlık!",
   },
   {
     id: 3,
-    name: "Mehmet Demir",
-    company: "TechStart",
-    role: "CEO",
-    image: "/avatar-3.jpg",
+    name: "Erkutay Torun",
+    company: "Emfa Pet",
+    role: "",
+    image: "",
     rating: 5,
     text: "Kurumsal web sitemizin yeniden tasarımında gösterdikleri profesyonellik takdire şayan. Modern, hızlı ve kullanıcı dostu bir site oldu.",
   },
   {
+    id: 5,
+    name: "Murat Adlığ",
+    company: "Nil Forklift",
+    role: "",
+    image: "/nilforkliftt.webp",
+    rating: 5,
+    text: "Sosyal medya yönetimi konusunda gerçekten profesyonel bir ekip. Sayfamızın etkileşimi kısa sürede ciddi oranda arttı. Tavsiye ederim.",
+  },
+  {
     id: 4,
-    name: "Ayşe Şahin",
-    company: "Mimarlık Atölyesi",
-    role: "Mimar",
-    image: "/avatar-4.jpg",
+    name: "Ebru Özpehlivan",
+    company: "İşbir Yatak",
+    role: "",
+    image: "/isbir_yatak.webp",
     rating: 5,
     text: "Logo ve kurumsal kimlik çalışmamız tam istediğimiz gibi oldu. Yiğit Bey'in renk psikolojisine hakimiyeti projemizi bir üst seviyeye taşıdı.",
   },
@@ -89,7 +98,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="relative py-24 bg-[#181825]">
+    <section className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -158,17 +167,23 @@ export default function Testimonials() {
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0040ff] to-[#ffd76e] flex items-center justify-center text-white text-xl font-bold">
-                    {testimonials[currentIndex].name.charAt(0)}
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden shrink-0 ${!testimonials[currentIndex].image ? 'bg-gradient-to-br from-[#0040ff] to-[#ffd76e]' : 'bg-[#1e1e2e]'}`}>
+                    {testimonials[currentIndex].image ? (
+                      <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name} className="w-full h-full object-cover" />
+                    ) : (
+                      testimonials[currentIndex].name.charAt(0)
+                    )}
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#cdd6f4] text-lg">
+                    {(testimonials[currentIndex].role || testimonials[currentIndex].company) && (
+                      <p className="font-bold text-[#cdd6f4] text-lg">
+                        {testimonials[currentIndex].role}
+                        {testimonials[currentIndex].company && (testimonials[currentIndex].role ? ` @ ${testimonials[currentIndex].company}` : testimonials[currentIndex].company)}
+                      </p>
+                    )}
+                    <h4 className="text-[#cdd6f4]/90">
                       {testimonials[currentIndex].name}
                     </h4>
-                    <p className="text-[#cdd6f4]/90">
-                      {testimonials[currentIndex].role} @{" "}
-                      {testimonials[currentIndex].company}
-                    </p>
                   </div>
                 </div>
               </motion.div>

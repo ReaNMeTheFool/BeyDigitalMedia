@@ -65,7 +65,7 @@ export default function ColorPsychology() {
   const activeColor = hoveredColor || selectedColor;
 
   return (
-    <section className="relative py-24 bg-[#11111b]">
+    <section className="relative py-24 bg-[#11111b] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left Column - Text */}

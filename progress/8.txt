@@ -1,0 +1,1 @@
+Task complete. Updated testimonial to Guzgun Tekstil. Corrected @ sign rendering bug logic.

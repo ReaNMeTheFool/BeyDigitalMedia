@@ -1,0 +1,1 @@
+Rule check: Hardware opt (N/A). User wants to remove pill-shaped section badges across multiple files. Searching for text to locate elements.

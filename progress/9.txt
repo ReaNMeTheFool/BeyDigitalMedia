@@ -1,0 +1,1 @@
+Rule check: Anti-lazy. Refining Testimonials rendering block to display image instead of letter, and hiding empty roles.

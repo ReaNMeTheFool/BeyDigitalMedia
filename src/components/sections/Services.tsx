@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Users,
   Target,
@@ -18,20 +19,23 @@ import {
 const services = [
   {
     icon: Users,
+    imageSrc: "/instaxfacebook.png",
+    imageStyle: { marginLeft: "2px" },
     title: "Sosyal Medya Yönetimi",
     description:
-      "Instagram, Facebook, LinkedIn ve X platformlarında profesyonel içerik stratejisi, topluluk yönetimi ve etkileşim optimizasyonu.",
-    link: "#contact",
+      "Hedef kitlenizle güçlü bir bağ kurun. Özgün içerik stratejileri ve proaktif topluluk yönetimi ile organik büyümenizi ve marka bilinirliğinizi artırıyoruz.",
+    link: "/sosyal-medya-yonetimi",
     color: "text-blue-600",
     bgColor: "bg-blue-600/10",
   },
   {
     icon: Target,
     imageSrc: "/meta_logo_icon_214665.png",
+    imageStyle: { filter: "brightness(0) invert(1)" },
     title: "Meta Ads",
     description:
-      "Facebook ve Instagram reklamlarıyla hedef kitlenize ulaşın. A/B testleri, lookalike kitleler ve dönüşüm odaklı kampanyalar.",
-    link: "#contact",
+      "Doğru kitleye, doğru bütçeyle ulaşın. Dönüşüm odaklı Meta kampanyaları ve ileri düzey hedefleme algoritmalarıyla reklam getirinizi (ROAS) maksimize edin.",
+    link: "/meta-ads",
     color: "text-indigo-600",
     bgColor: "",
     bgStyle: { backgroundColor: "rgba(24, 119, 242, 0.40)" },
@@ -42,8 +46,8 @@ const services = [
     imageStyle: { marginLeft: "2px" },
     title: "Google Ads",
     description:
-      "Arama motoru reklamcılığında uzman desteği. Anahtar kelime optimizasyonu, reklam metni yazımı ve bütçe yönetimi.",
-    link: "#contact",
+      "Satın alma eğilimi yüksek müşterileri yakalayın. Optimize edilmiş anahtar kelime stratejileriyle arama ağındaki görünürlüğünüzü doğrudan satışa çevirin.",
+    link: "/google-ads",
     color: "text-green-600",
     bgColor: "",
     bgStyle: { backgroundColor: "rgba(66, 133, 244, 0.20)" },
@@ -52,8 +56,8 @@ const services = [
     icon: Globe,
     title: "Web Tasarım",
     description:
-      "Modern, hızlı ve SEO uyumlu web siteleri. Next.js teknolojisiyle mobil öncelikli, kullanıcı dostu arayüzler.",
-    link: "#contact",
+      "Markanızın dijital vitrinini yeniden yaratıyoruz. Sektörünüzde fark yaratan, modern arayüz tasarımlarına sahip, güven veren ve akılda kalıcı kurumsal web deneyimleri.",
+    link: "/web-tasarim",
     color: "text-purple-600",
     bgColor: "bg-purple-600/10",
   },
@@ -61,8 +65,8 @@ const services = [
     icon: Megaphone,
     title: "SEO",
     description:
-      "Organik arama sonuçlarında üst sıralara çıkın. Teknik SEO, içerik optimizasyonu ve backlink stratejileri.",
-    link: "#contact",
+      "Arama motorlarında sektör otoritesi olun. Kapsamlı teknik SEO, kaliteli içerik ve güçlü backlink stratejileriyle sürdürülebilir organik trafik elde edin.",
+    link: "/seo",
     color: "text-orange-600",
     bgColor: "bg-orange-600/10",
   },
@@ -70,8 +74,8 @@ const services = [
     icon: PenTool,
     title: "Logo Tasarımı",
     description:
-      "Markanızı temsil eden özgün ve akılda kalıcı logo tasarımları. Vektörel çalışma ve kurumsal kimlik entegrasyonu.",
-    link: "#contact",
+      "Markanızın hikayesini yansıtan ikonik vizyonlar. İlk bakışta güven veren, akılda kalıcı, modern ve tüm mecralara uyumlu logo çözümleri.",
+    link: "/logo-tasarimi",
     color: "text-pink-600",
     bgColor: "bg-pink-600/10",
   },
@@ -79,8 +83,8 @@ const services = [
     icon: Palette,
     title: "Kurumsal Kimlik",
     description:
-      "Markanızın tüm dokunuş noktalarında tutarlı kimlik. Kartvizit, antetli kağıt, katalog ve ambalaj tasarımları.",
-    link: "#contact",
+      "Profesyonel imajınızı her alanda standartlaştırın. Dijitalden baskıya tüm temas noktalarında markanıza değer katan, bütüncül bir görsel iletişim dili yaratıyoruz.",
+    link: "/kurumsal-kimlik",
     color: "text-rose-600",
     bgColor: "bg-rose-600/10",
   },
@@ -88,8 +92,8 @@ const services = [
     icon: FileText,
     title: "Detaylı Raporlama",
     description:
-      "Aylık performans raporları, analizler ve strateji önerileri. Veriye dayalı kararlarla sürekli iyileştirme.",
-    link: "#contact",
+      "Büyümenizi şansa bırakmayın. Şeffaf performans metrikleri, derinlemesine analizler ve veriye dayalı aksiyon planlarıyla stratejinizi sürekli geliştiriyoruz.",
+    link: "/detayli-raporlama",
     color: "text-cyan-600",
     bgColor: "bg-cyan-600/10",
   },
@@ -120,7 +124,7 @@ const itemVariants = {
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-24 bg-[#11111b]">
+    <section id="services" className="relative py-24 bg-[#11111b] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -130,9 +134,6 @@ export default function Services() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-[#0040ff]/10 text-[#0040ff] rounded-full text-sm font-semibold mb-4">
-            Hizmetlerimiz
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
             Dijital <span className="text-[#0040ff]">Büyüme</span> Çözümleri
           </h2>
@@ -185,7 +186,7 @@ export default function Services() {
               </p>
 
               {/* Link */}
-              <a
+              <Link
                 href={service.link}
                 className="inline-flex items-center gap-2 text-[#0040ff] font-semibold text-sm group/link mt-5 pt-4 border-t border-[#2d2d44]"
               >
@@ -194,7 +195,7 @@ export default function Services() {
                   size={16}
                   className="group-hover/link:translate-x-1 transition-transform"
                 />
-              </a>
+              </Link>
             </motion.div>
           ))}
         </motion.div>

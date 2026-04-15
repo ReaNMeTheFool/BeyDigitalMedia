@@ -1,1 +1,6 @@
-Portfolio section transition bug fixed. The redundant background gradient overlapping with the About section's top gradient was causing a harsh horizontal line. The gradient from Portfolio.tsx has been removed, aligning perfectly with the overarching pattern of the #181825 colored sections retaining blending ownership over #11111b sections.
+2026-04-10: Replaced Sosyal Medya Yönetimi service card icons.
+- Removed three stacked individual icons (Instagram, TikTok, Facebook) from the socialLogos array.
+- Replaced with single combined instaxfacebook.png image via imageSrc property.
+- Removed dead socialLogos rendering branch from JSX — no service uses it anymore.
+- All rendering now flows through the unified imageSrc/icon conditional.
+Started adding Nil Forklift to portfolio.

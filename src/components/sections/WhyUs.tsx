@@ -61,7 +61,7 @@ const itemVariants = {
 
 export default function WhyUs() {
   return (
-    <section id="why-us" className="relative py-24 bg-[#181825]">
+    <section id="why-us" className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -71,9 +71,6 @@ export default function WhyUs() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-[#ffd76e]/10 text-[#ffd76e] rounded-full text-sm font-semibold mb-4">
-            Neden Biz?
-          </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6">
             Farkımız <span className="text-[#0040ff]">Ne?</span>
           </h2>
@@ -112,7 +109,6 @@ export default function WhyUs() {
           ))}
         </motion.div>
       </div>
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#11111b] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );

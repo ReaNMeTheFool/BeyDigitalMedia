@@ -1,0 +1,1 @@
+Rule check: Planning mode accepted. Beginning Execution phase. Creating task artifact and preparing to modify About, Hero, AiAutomation, and Portfolio to improve mobile views and scale down sizing on small screens.

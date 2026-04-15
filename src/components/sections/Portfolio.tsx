@@ -3,15 +3,22 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+
+interface ServiceTag {
+  label: string;
+  slug: string;
+}
 
 interface Project {
   id: number;
   title: string;
   category: string;
-  service: string;
+  services: ServiceTag[];
   color: string;
   results: string;
   logo?: string;
+  logoScale?: number;
   resultsColor?: string;
 }
 
@@ -20,9 +27,17 @@ const projects: Project[] = [
     id: 2,
     title: "Guzgun Tekstil",
     category: "Dijital Pazarlama",
-    service: "Google Ads & SEO",
+    services: [
+      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
+      { label: "Meta Ads", slug: "meta-ads" },
+      { label: "Web Tasarım", slug: "web-tasarim" },
+      { label: "SEO", slug: "seo" },
+      { label: "Google Ads", slug: "google-ads" },
+      { label: "Logo Tasarımı", slug: "logo-tasarimi" },
+      { label: "Kurumsal Kimlik", slug: "kurumsal-kimlik" },
+    ],
     color: "from-emerald-500 to-teal-600",
-    results: "Organik trafik +280%",
+    results: "Etkileşim Oranı +2000%",
     logo: "/guzgunlar_logo.webp",
     resultsColor: "#fefefe",
   },
@@ -30,7 +45,10 @@ const projects: Project[] = [
     id: 4,
     title: "İşbir Yatak",
     category: "Sosyal Medya",
-    service: "İçerik Üretimi",
+    services: [
+      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
+      { label: "Meta Ads", slug: "meta-ads" },
+    ],
     color: "from-violet-500 to-purple-600",
     results: "Etkileşim oranı +150%",
     logo: "/isbir_yatak.webp",
@@ -39,11 +57,40 @@ const projects: Project[] = [
   {
     id: 5,
     title: "Lada Wedding",
-    category: "Web Tasarım",
-    service: "Web Sitesi & SEO",
+    category: "Reklam",
+    services: [
+      { label: "Meta Ads", slug: "meta-ads" },
+    ],
     color: "from-rose-500 to-pink-600",
     results: "Dönüşüm oranı +200%",
     logo: "/lada_logo.webp",
+  },
+  {
+    id: 6,
+    title: "Nil Forklift",
+    category: "Sosyal Medya",
+    services: [
+      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
+      { label: "Meta Ads", slug: "meta-ads" },
+    ],
+    color: "from-amber-500 to-orange-600",
+    results: "Etkileşim Oranı +400%",
+    logo: "/nilforkliftt.webp",
+    resultsColor: "#f59e0b",
+  },
+  {
+    id: 7,
+    title: "Emfa Pet",
+    category: "Sosyal Medya",
+    services: [
+      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
+      { label: "Meta Ads", slug: "meta-ads" },
+    ],
+    color: "from-cyan-500 to-blue-600",
+    results: "Etkileşim Oranı +300%",
+    logo: "/emfa.webp",
+    logoScale: 1.35,
+    resultsColor: "#22d3ee",
   },
 ];
 
@@ -149,6 +196,8 @@ export default function Portfolio() {
       case "Guzgun Tekstil": return "#0040ff";
       case "İşbir Yatak": return "#dc2626";
       case "Lada Wedding": return "#d69f55";
+      case "Nil Forklift": return "#f59e0b";
+      case "Emfa Pet": return "#22d3ee";
       default: return "#0040ff";
     }
   };
@@ -211,7 +260,7 @@ export default function Portfolio() {
                 <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="group relative w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30 overflow-visible"
+                  className="group relative w-[85vw] sm:w-80 md:w-96 bg-gradient-to-br from-[#1e1e2e] to-[#252538] rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-[#0040ff]/10 transition-all duration-500 border border-[#2d2d44]/50 hover:border-[#0040ff]/30 overflow-visible"
                 >
                   <div
                     className="relative aspect-[4/3] overflow-hidden rounded-t-3xl"
@@ -223,6 +272,7 @@ export default function Portfolio() {
                         src={project.logo}
                         alt={project.title}
                         className="absolute inset-0 w-full h-full object-cover"
+                        style={project.logoScale ? { transform: `scale(${project.logoScale})` } : undefined}
                       />
                     ) : (
                       <>
@@ -255,11 +305,20 @@ export default function Portfolio() {
 
                   <div className="p-6 relative rounded-b-3xl">
                     <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#2d2d44] to-transparent" />
-                    <span className="inline-block px-3 py-1 text-xs bg-[#0040ff]/10 text-[#0040ff] rounded-full font-medium mb-3">
-                      {project.service}
-                    </span>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {project.services.map((tag) => (
+                        <Link
+                          key={tag.slug}
+                          href={`/${tag.slug}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-block px-3 py-1 text-xs bg-[#0040ff] rounded-full font-medium hover:bg-[#0033cc] transition-colors duration-200 shadow-md shadow-[#0040ff]/30"
+                          style={{ color: "#ffffff" }}
+                        >
+                          {tag.label}
+                        </Link>
+                      ))}
+                    </div>
                     <h3 className="text-xl font-bold text-[#cdd6f4] mb-1">{project.title}</h3>
-                    <p className="text-[#6c7086] text-sm">{project.category}</p>
                   </div>
                 </motion.div>
               </motion.div>

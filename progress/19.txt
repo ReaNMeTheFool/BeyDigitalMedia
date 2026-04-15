@@ -1,0 +1,1 @@
+Rule check: Researching root cause of mobile issues. Checking app/layout.tsx to verify if standard viewport or body overflow constraints are set.

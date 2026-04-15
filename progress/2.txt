@@ -1,0 +1,1 @@
+Rule check: Anti-Lazy (replacing content effectively). Modifying Portfolio.tsx to include Nil Forklift with placeholder values appropriately so it works natively before image is provided.

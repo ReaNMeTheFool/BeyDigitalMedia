@@ -1,0 +1,1 @@
+Rule check: Analyzing corruption. The fuzzy matcher broke the data array. Rewriting lines 7 to 36 of FAQ.tsx strictly to fix syntax and correctly output the 6 FAQ items.

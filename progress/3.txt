@@ -1,0 +1,1 @@
+Rule check: Hardware opt (N/A). Adding Nil Forklift to getGerçekColor mapping to maintain UI polish and animation.

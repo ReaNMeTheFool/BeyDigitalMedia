@@ -1,0 +1,1 @@
+Rule check: No plan needed for direct styling & bug fix. Fixing Navbar logo align.

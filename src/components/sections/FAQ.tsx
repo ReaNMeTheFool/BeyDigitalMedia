@@ -6,34 +6,34 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "Sosyal medya yönetimi hizmetiniz neleri kapsıyor?",
+    question: "Sosyal medya yönetimi ve AI otomasyonu markama nasıl entegre ediliyor?",
     answer:
-      "Sosyal medya yönetimi hizmetimiz; içerik stratejisi oluşturma, gönderi tasarımı ve paylaşımı, topluluk yönetimi, etkileşim takibi, reklam kampanyası yönetimi ve aylık performans raporlamasını kapsar. Instagram, Facebook, LinkedIn ve X platformlarında profesyonel yönetim sağlıyoruz.",
+      "Geleneksel içerik üretiminin ötesine geçiyoruz. Markanızın dijital varlığını inşa ederken, hedef kitlenizle güçlü ve organik bir bağ kuracak stratejiler geliştiriyoruz. Aynı zamanda operasyonlarınızı yormayacak zeki chatbotlar ve otomasyon algoritmalarıyla etkileşimi 7/24 sürdürülebilir bir noktaya taşıyoruz.",
   },
   {
-    question: "Meta Ads ve Google Ads yönetimi için minimum bütçe nedir?",
+    question: "Meta Ads ve Google Ads yönetiminde nasıl bir strateji izliyorsunuz?",
     answer:
-      "Reklam bütçesi sektörünüze, hedeflerinize ve rekabet düzeyine göre değişir. Genel olarak günlük 200-500 TL'den başlayan bütçelerle etkili kampanyalar yürütebiliriz. Ücretsiz danışmanlık görüşmesinde size özel bir bütçe planlaması yapıyoruz.",
+      "Bütçenizi rastgele yakmıyoruz. Veri bilimi ve ileri düzey hedefleme yöntemlerini kullanarak doğrudan satın alma eğilimi yüksek kitleleri tespit ediyoruz. Amacımız sadece görünürlük değil, markanızı sektör lideri konumuna taşıyacak ve maksimum ROAS'ı (Reklam Getirisi) elde etmenizi sağlayacak kurgular oluşturmaktır.",
   },
   {
-    question: "Web tasarım projeleri ne kadar sürede tamamlanır?",
+    question: "Web tasarım süreçlerinizde nelere dikkat ediyorsunuz?",
     answer:
-      "Kurumsal web sitesi projeleri ortalama 2-4 hafta, e-ticaret projeleri ise 4-8 hafta içinde tamamlanır. Projenin kapsamına, içerik hazırlık sürecine ve onay aşamalarına bağlı olarak bu süre değişebilir. Her aşamada sizi bilgilendiriyoruz.",
+      "Kullanıcıyı yoran, hantal şablonlar yerine; modern, pürüzsüz animasyonlara sahip ve kullanıcı dostu tasarımlar geliştiriyoruz. Her bir pikseli kurumsal kimliğinize uygun işliyor, ziyaretçinin sitenize girdiği an premium bir deneyim yaşamasını hedefliyoruz. Arayüzlerimiz, tamamen sizin dijital merkeziniz olarak kurgulanır.",
   },
   {
-    question: "SEO çalışmaları ne zaman sonuç vermeye başlar?",
+    question: "SEO (Arama Motoru Optimizasyonu) çalışmalarınız ne zaman etki eder?",
     answer:
-      "SEO çalışmaları genellikle 3-6 ay içinde belirgin sonuçlar vermeye başlar. Ancak bu süre sektör rekabetine, mevcut sitenizin durumuna ve hedef anahtar kelimelerin zorluğuna göre değişebilir. Sürekli optimizasyon ve içerik üretimi ile uzun vadeli organik büyüme sağlıyoruz.",
+      "Algoritmaları manipüle eden geçici taktiklerle değil, uzun vadeli ve sağlam bir otorite inşası ile ilerliyoruz. Arama sorgularında otoritenizi sabitlemek, sektörün rekabetine göre ortalama 1-6 ay sürer. Doğru stratejiler kurgulandığında, arama sonuçlarında sarsılmaz bir konuma ulaşırsınız.",
   },
   {
-    question: "Logo ve kurumsal kimlik tasarımı süreci nasıl işler?",
+    question: "Raporlama süreci ve şeffaflık vizyonunuz nedir?",
     answer:
-      "İlk olarak marka brief'i oluşturarak markanızın kimliğini, değerlerini ve hedef kitlenizi anlıyoruz. Ardından 3 farklı konsept tasarım sunuyor, seçilen yönde revizyonlar yapıyor ve final dosyaları teslim ediyoruz. Ortalama süre 1-2 haftadır.",
+      "Sadece kalıplaşmış vaatler değil, salt veri sunuyoruz. Erişim, ROAS, dönüşüm oranları ve büyüme trendlerini size net ve şeffaf grafiklerle raporluyoruz. Neyin iyi dönüştüğünü, hangi hamlenin optimize edilmesi gerektiğini gizlilik perdesi olmadan göreceksiniz. Çünkü markanızın gelişimi, başarımızın yegane kanıtıdır.",
   },
   {
-    question: "Aylık raporlarda hangi metrikleri paylaşıyorsunuz?",
+    question: "Tüm ihtiyacımı tek bir yer (Bey Digital Media) ile çözebilir miyim?",
     answer:
-      "Aylık raporlarımızda; erişim, etkileşim, takipçi büyümesi, web sitesi trafiği, dönüşüm oranları, reklam performans metrikleri (ROAS, CPC, CTR) ve SEO sıralama değişimlerini detaylı şekilde sunuyoruz. Verileri anlaşılır grafiklerle destekliyoruz.",
+      "Kesinlikle. Logo tasarımından yapay zeka yapılarına, performans pazarlamasından kompleks web yazılımlarına kadar dijital varlığınız için gereken her şeyi tek bir yapı içinde sunuyoruz. Dağınık sistemler yerine, tüm platformların birbiriyle konuştuğu kusursuz bir ekosistem inşa ediyoruz.",
   },
 ];
 
@@ -45,7 +45,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="relative py-24 bg-[#11111b]">
+    <section id="faq" className="relative py-24 bg-[#11111b] overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -55,10 +55,6 @@ export default function FAQ() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#0040ff]/10 text-[#0040ff] rounded-full text-sm font-semibold mb-4">
-            <HelpCircle size={16} />
-            Sıkça Sorulan Sorular
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
             Merak <span className="text-[#0040ff]">Ettikleriniz</span>
           </h2>
@@ -82,11 +78,10 @@ export default function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
-                openIndex === index
-                  ? "bg-[#252538] border-[#0040ff]/40 shadow-[0_0_24px_rgba(0,64,255,0.15)]"
-                  : "bg-[#1e1e2e] border-[#2d2d44] hover:border-[#0040ff]/30 hover:bg-[#252538]/60 hover:shadow-[0_0_16px_rgba(0,64,255,0.1)]"
-              }`}
+              className={`rounded-2xl border overflow-hidden transition-all duration-300 ${openIndex === index
+                ? "bg-[#252538] border-[#0040ff]/40 shadow-[0_0_24px_rgba(0,64,255,0.15)]"
+                : "bg-[#1e1e2e] border-[#2d2d44] hover:border-[#0040ff]/30 hover:bg-[#252538]/60 hover:shadow-[0_0_16px_rgba(0,64,255,0.1)]"
+                }`}
             >
               <button
                 onClick={() => toggleFAQ(index)}

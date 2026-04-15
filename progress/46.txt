@@ -1,0 +1,1 @@
+Rule check: Initializing Task artifact for Hero V2 execution.

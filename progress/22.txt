@@ -1,0 +1,1 @@
+Running replace on Hero.tsx to apply mobile font scaling.

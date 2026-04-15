@@ -1,0 +1,1 @@
+Rule check: Anti-Lazy. Updating Portfolio.tsx to use '/nilforkliftt.png' for Nil Forklift.

@@ -1,0 +1,1 @@
+Rule check: Hardware opt (N/A), Anti-Lazy (will output full file, no placeholders), Skeptical reasoning (verifying portfolio format). Exploring beydigital directory.

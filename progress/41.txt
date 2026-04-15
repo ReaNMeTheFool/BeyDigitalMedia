@@ -1,0 +1,1 @@
+Rule check: Executing straightforward style changes in Hero.tsx and removing mobile-blocker for animated texts.
