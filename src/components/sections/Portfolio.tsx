@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import Link from "next/link";
 interface ServiceTag {
   label: string;
   slug: string;
+  breakBefore?: boolean;
 }
 
 interface Project {
@@ -20,6 +21,7 @@ interface Project {
   logo?: string;
   logoScale?: number;
   resultsColor?: string;
+  smallTags?: boolean;
 }
 
 const projects: Project[] = [
@@ -31,15 +33,14 @@ const projects: Project[] = [
       { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
       { label: "Meta Ads", slug: "meta-ads" },
       { label: "Web Tasarım", slug: "web-tasarim" },
+      { label: "Google Ads", slug: "google-ads", breakBefore: true },
       { label: "SEO", slug: "seo" },
-      { label: "Google Ads", slug: "google-ads" },
-      { label: "Logo Tasarımı", slug: "logo-tasarimi" },
-      { label: "Kurumsal Kimlik", slug: "kurumsal-kimlik" },
     ],
     color: "from-emerald-500 to-teal-600",
     results: "Etkileşim Oranı +2000%",
     logo: "/guzgunlar_logo.webp",
     resultsColor: "#fefefe",
+    smallTags: true,
   },
   {
     id: 4,
@@ -197,7 +198,7 @@ export default function Portfolio() {
       case "İşbir Yatak": return "#dc2626";
       case "Lada Wedding": return "#d69f55";
       case "Nil Forklift": return "#f59e0b";
-      case "Emfa Pet": return "#22d3ee";
+      case "Emfa Pet": return "#dc2626";
       default: return "#0040ff";
     }
   };
@@ -303,19 +304,21 @@ export default function Portfolio() {
                     </div>
                   </div>
 
-                  <div className="p-6 relative rounded-b-3xl">
+                  <div className={`${project.smallTags ? "p-4" : "p-6"} relative rounded-b-3xl`}>
                     <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-[#2d2d44] to-transparent" />
-                    <div className="flex flex-wrap gap-2 mb-3">
+                    <div className={`flex flex-wrap ${project.smallTags ? "gap-1 mb-[10px]" : "gap-2 mb-3"}`}>
                       {project.services.map((tag) => (
-                        <Link
-                          key={tag.slug}
-                          href={`/${tag.slug}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="inline-block px-3 py-1 text-xs bg-[#0040ff] rounded-full font-medium hover:bg-[#0033cc] transition-colors duration-200 shadow-md shadow-[#0040ff]/30"
-                          style={{ color: "#ffffff" }}
-                        >
-                          {tag.label}
-                        </Link>
+                        <React.Fragment key={tag.slug}>
+                          {tag.breakBefore && <div className="basis-full h-0" />}
+                          <Link
+                            href={`/${tag.slug}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className={`inline-block bg-[#0040ff] rounded-full font-medium hover:bg-[#0033cc] transition-colors duration-200 shadow-md shadow-[#0040ff]/30 ${project.smallTags ? "px-2 py-0.5 text-[10px]" : "px-3 py-1 text-xs"}`}
+                            style={{ color: "#ffffff" }}
+                          >
+                            {tag.label}
+                          </Link>
+                        </React.Fragment>
                       ))}
                     </div>
                     <h3 className="text-xl font-bold text-[#cdd6f4] mb-1">{project.title}</h3>
