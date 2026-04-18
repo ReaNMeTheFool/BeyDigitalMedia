@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -96,101 +96,232 @@ const projects: Project[] = [
 ];
 
 const extendedProjects = [...projects, ...projects, ...projects];
-const SCROLL_MS = 350;
+const BASE_OFFSET = projects.length;
+const GAP_PX = 24;
+const LERP = 0.22;
+const SETTLE_EPSILON = 0.4;
+const DRAG_THRESHOLD = 5;
+const MOMENTUM_MS = 140;
 
 export default function Portfolio() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [activeHover, setActiveHover] = useState<string | null>(null);
-  const indexRef = useRef(projects.length);
-  const cardWidthRef = useRef(0);
-  const canScrollRef = useRef(true);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const getCardWidth = useCallback(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return 0;
-    const card = container.querySelector(".project-card") as HTMLElement;
-    if (!card) return 0;
-    return card.offsetWidth + 24;
+  const targetIndexRef = useRef(BASE_OFFSET);
+  const currentXRef = useRef(0);
+  const targetXRef = useRef(0);
+  const cardWidthRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  const draggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartCurrentXRef = useRef(0);
+  const dragLastXRef = useRef(0);
+  const dragLastTimeRef = useRef(0);
+  const dragVelocityRef = useRef(0);
+  const dragMovedRef = useRef(false);
+
+  const applyTransform = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
   }, []);
 
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+  const computeX = useCallback((index: number) => -(index * cardWidthRef.current), []);
 
-    const init = () => {
-      cardWidthRef.current = getCardWidth();
-      if (cardWidthRef.current > 0) {
-        container.scrollLeft = indexRef.current * cardWidthRef.current;
-      }
-    };
-
-    const t = setTimeout(init, 50);
-
-    const ro = new ResizeObserver(() => {
-      cardWidthRef.current = getCardWidth();
-      container.scrollLeft = indexRef.current * cardWidthRef.current;
-    });
-    ro.observe(container);
-
-    return () => {
-      clearTimeout(t);
-      ro.disconnect();
-    };
-  }, [getCardWidth]);
-
-  const scrollToIndex = useCallback((index: number, instant = false) => {
-    const container = scrollContainerRef.current;
+  const normalizeIfSettled = useCallback(() => {
+    const len = projects.length;
     const cw = cardWidthRef.current;
-    if (!container || !cw) return;
+    if (!cw) return;
+    let changed = false;
+    while (targetIndexRef.current >= len * 2) {
+      targetIndexRef.current -= len;
+      targetXRef.current += len * cw;
+      currentXRef.current += len * cw;
+      changed = true;
+    }
+    while (targetIndexRef.current < len) {
+      targetIndexRef.current += len;
+      targetXRef.current -= len * cw;
+      currentXRef.current -= len * cw;
+      changed = true;
+    }
+    if (changed) applyTransform();
+  }, [applyTransform]);
 
-    if (instant) {
-      container.style.scrollBehavior = "auto";
-      container.scrollLeft = index * cw;
-      requestAnimationFrame(() => {
-        container.style.scrollBehavior = "";
-      });
-    } else {
-      container.scrollTo({ left: index * cw, behavior: "smooth" });
+  const normalizeDuringDrag = useCallback(() => {
+    const len = projects.length;
+    const cw = cardWidthRef.current;
+    if (!cw) return;
+    let changed = false;
+    while (-currentXRef.current / cw < len) {
+      currentXRef.current -= len * cw;
+      dragStartCurrentXRef.current -= len * cw;
+      targetXRef.current -= len * cw;
+      targetIndexRef.current += len;
+      changed = true;
+    }
+    while (-currentXRef.current / cw >= len * 2) {
+      currentXRef.current += len * cw;
+      dragStartCurrentXRef.current += len * cw;
+      targetXRef.current += len * cw;
+      targetIndexRef.current -= len;
+      changed = true;
+    }
+    if (changed) applyTransform();
+  }, [applyTransform]);
+
+  const tick = useCallback(() => {
+    const diff = targetXRef.current - currentXRef.current;
+    if (Math.abs(diff) < SETTLE_EPSILON) {
+      currentXRef.current = targetXRef.current;
+      applyTransform();
+      normalizeIfSettled();
+      rafRef.current = null;
+      return;
+    }
+    currentXRef.current += diff * LERP;
+    applyTransform();
+    rafRef.current = requestAnimationFrame(tick);
+  }, [applyTransform, normalizeIfSettled]);
+
+  const startAnimation = useCallback(() => {
+    if (rafRef.current != null) return;
+    rafRef.current = requestAnimationFrame(tick);
+  }, [tick]);
+
+  const stopAnimation = useCallback(() => {
+    if (rafRef.current != null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
     }
   }, []);
 
+  const rebaseForNav = useCallback(() => {
+    const len = projects.length;
+    const cw = cardWidthRef.current;
+    if (!cw) return;
+    while (targetIndexRef.current >= len * 2) {
+      targetIndexRef.current -= len;
+      targetXRef.current += len * cw;
+      currentXRef.current += len * cw;
+    }
+    while (targetIndexRef.current < len) {
+      targetIndexRef.current += len;
+      targetXRef.current -= len * cw;
+      currentXRef.current -= len * cw;
+    }
+    applyTransform();
+  }, [applyTransform]);
+
   const navigate = useCallback(
     (direction: 1 | -1) => {
-      if (!canScrollRef.current) return;
-      canScrollRef.current = false;
-
-      if (timerRef.current) clearTimeout(timerRef.current);
-
-      const newIndex = indexRef.current + direction;
-      indexRef.current = newIndex;
-      scrollToIndex(newIndex);
-
-      let handled = false;
-      const handleScrollEnd = () => {
-        if (handled) return;
-        handled = true;
-        if (timerRef.current) clearTimeout(timerRef.current);
-        const container = scrollContainerRef.current;
-        if (container) container.removeEventListener("scrollend", handleScrollEnd);
-
-        let resetIndex: number | null = null;
-        if (indexRef.current >= projects.length * 2) resetIndex = projects.length;
-        else if (indexRef.current < projects.length) resetIndex = projects.length * 2 - 1;
-
-        if (resetIndex !== null) {
-          indexRef.current = resetIndex;
-          scrollToIndex(resetIndex, true);
-        }
-        canScrollRef.current = true;
-      };
-
-      const container = scrollContainerRef.current;
-      if (container) container.addEventListener("scrollend", handleScrollEnd);
-      timerRef.current = setTimeout(handleScrollEnd, 600);
+      if (!cardWidthRef.current) return;
+      targetIndexRef.current += direction;
+      targetXRef.current = computeX(targetIndexRef.current);
+      rebaseForNav();
+      startAnimation();
     },
-    [scrollToIndex]
+    [computeX, rebaseForNav, startAnimation]
   );
+
+  const measure = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector(".project-card") as HTMLElement | null;
+    if (!card) return;
+    const cw = card.offsetWidth + GAP_PX;
+    if (cw <= GAP_PX) return;
+    cardWidthRef.current = cw;
+    targetXRef.current = computeX(targetIndexRef.current);
+    if (!draggingRef.current && rafRef.current == null) {
+      currentXRef.current = targetXRef.current;
+      applyTransform();
+    }
+  }, [computeX, applyTransform]);
+
+  useLayoutEffect(() => {
+    measure();
+    const ro = new ResizeObserver(() => measure());
+    if (trackRef.current) ro.observe(trackRef.current);
+    if (viewportRef.current) ro.observe(viewportRef.current);
+    return () => ro.disconnect();
+  }, [measure]);
+
+  useEffect(() => () => stopAnimation(), [stopAnimation]);
+
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      draggingRef.current = true;
+      dragMovedRef.current = false;
+      dragStartXRef.current = e.clientX;
+      dragStartCurrentXRef.current = currentXRef.current;
+      dragLastXRef.current = e.clientX;
+      dragLastTimeRef.current = performance.now();
+      dragVelocityRef.current = 0;
+    },
+    []
+  );
+
+  const onPointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!draggingRef.current) return;
+      const dx = e.clientX - dragStartXRef.current;
+
+      if (!dragMovedRef.current) {
+        if (Math.abs(dx) <= DRAG_THRESHOLD) return;
+        // Eşik aşıldı → artık gerçekten drag; animasyonu durdur, pointer'ı yakala
+        dragMovedRef.current = true;
+        stopAnimation();
+        try {
+          viewportRef.current?.setPointerCapture(e.pointerId);
+        } catch {}
+      }
+
+      currentXRef.current = dragStartCurrentXRef.current + dx;
+      const now = performance.now();
+      const dt = now - dragLastTimeRef.current;
+      if (dt > 0) {
+        const v = (e.clientX - dragLastXRef.current) / dt;
+        dragVelocityRef.current = Math.max(-3, Math.min(3, v));
+      }
+      dragLastXRef.current = e.clientX;
+      dragLastTimeRef.current = now;
+      normalizeDuringDrag();
+      applyTransform();
+    },
+    [applyTransform, normalizeDuringDrag, stopAnimation]
+  );
+
+  const endDrag = useCallback(
+    (e: React.PointerEvent) => {
+      if (!draggingRef.current) return;
+      const wasDragging = dragMovedRef.current;
+      draggingRef.current = false;
+      try {
+        viewportRef.current?.releasePointerCapture(e.pointerId);
+      } catch {}
+      if (!wasDragging) return; // sadece tıklama, slider'ı oynatma
+      const cw = cardWidthRef.current;
+      if (!cw) return;
+      const projectedX = currentXRef.current + dragVelocityRef.current * MOMENTUM_MS;
+      const idx = Math.round(-projectedX / cw);
+      targetIndexRef.current = idx;
+      targetXRef.current = computeX(idx);
+      startAnimation();
+    },
+    [computeX, startAnimation]
+  );
+
+  const onClickCapture = useCallback((e: React.MouseEvent) => {
+    if (dragMovedRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragMovedRef.current = false;
+    }
+  }, []);
 
   const getGerçekColor = () => {
     switch (activeHover) {
@@ -249,12 +380,21 @@ export default function Portfolio() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="overflow-x-hidden pb-8 pt-4"
-          ref={scrollContainerRef}
+          className="overflow-hidden pb-8 pt-4 select-none touch-pan-y"
+          ref={viewportRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onClickCapture={onClickCapture}
+          onDragStart={(e) => e.preventDefault()}
         >
-          <div className="flex gap-6 px-4 sm:px-6 lg:px-8">
+          <div
+            ref={trackRef}
+            className="flex gap-6 px-4 sm:px-6 lg:px-8 will-change-transform"
+          >
             {extendedProjects.map((project, index) => (
-              <motion.div
+              <div
                 key={`${project.id}-${index}`}
                 className="project-card shrink-0"
               >
@@ -272,7 +412,8 @@ export default function Portfolio() {
                       <img
                         src={project.logo}
                         alt={project.title}
-                        className="absolute inset-0 w-full h-full object-cover"
+                        draggable={false}
+                        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                         style={project.logoScale ? { transform: `scale(${project.logoScale})` } : undefined}
                       />
                     ) : (
@@ -313,6 +454,8 @@ export default function Portfolio() {
                           <Link
                             href={`/${tag.slug}`}
                             onClick={(e) => e.stopPropagation()}
+                            draggable={false}
+                            onDragStart={(e) => e.preventDefault()}
                             className={`inline-block bg-[#0040ff] rounded-full font-medium hover:bg-[#0033cc] transition-colors duration-200 shadow-md shadow-[#0040ff]/30 ${project.smallTags ? "px-2 py-0.5 text-[10px]" : "px-3 py-1 text-xs"}`}
                             style={{ color: "#ffffff" }}
                           >
@@ -324,7 +467,7 @@ export default function Portfolio() {
                     <h3 className="text-xl font-bold text-[#cdd6f4] mb-1">{project.title}</h3>
                   </div>
                 </motion.div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </motion.div>

@@ -30,6 +30,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Yiğit Emre Balaban" }],
   creator: "Bey Digital Media",
   publisher: "Bey Digital Media",
+  icons: {
+    icon: "/beydigital_logo.webp",
+    shortcut: "/beydigital_logo.webp",
+    apple: "/beydigital_logo.webp",
+  },
   formatDetection: {
     email: false,
     address: false,
