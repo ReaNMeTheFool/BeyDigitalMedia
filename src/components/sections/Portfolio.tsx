@@ -391,7 +391,7 @@ export default function Portfolio() {
         >
           <div
             ref={trackRef}
-            className="flex gap-6 px-4 sm:px-6 lg:px-8 will-change-transform"
+            className="flex gap-6 px-2 sm:px-6 lg:px-8 will-change-transform"
           >
             {extendedProjects.map((project, index) => (
               <div
@@ -438,7 +438,7 @@ export default function Portfolio() {
                       </>
                     )}
 
-                    <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 transform translate-y-0 sm:translate-y-2 sm:group-hover:translate-y-0">
                       <p className="font-bold text-center text-sm" style={{ color: project.resultsColor ?? "#ffd76e" }}>
                         {project.results}
                       </p>
@@ -456,7 +456,7 @@ export default function Portfolio() {
                             onClick={(e) => e.stopPropagation()}
                             draggable={false}
                             onDragStart={(e) => e.preventDefault()}
-                            className={`inline-block bg-[#0040ff] rounded-full font-medium hover:bg-[#0033cc] transition-colors duration-200 shadow-md shadow-[#0040ff]/30 ${project.smallTags ? "px-2 py-0.5 text-[10px]" : "px-3 py-1 text-xs"}`}
+                            className={`inline-block bg-[#0040ff] rounded-full font-medium hover:bg-[#0033cc] transition-colors duration-200 shadow-md shadow-[#0040ff]/30 ${project.smallTags ? "px-2 py-0.5 text-xs sm:text-[10px]" : "px-3 py-1 text-xs"}`}
                             style={{ color: "#ffffff" }}
                           >
                             {tag.label}

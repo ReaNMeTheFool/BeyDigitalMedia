@@ -22,7 +22,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
+            className="relative pb-8 pr-4 sm:pb-0 sm:pr-0"
           >
             {/* Background Blur */}
             <div className="absolute -inset-4 bg-[#0040ff]/20 blur-3xl rounded-full -z-10" />
@@ -74,7 +74,7 @@ export default function About() {
               <span className="text-[#0040ff]">Güvenilir Ortağı</span>
             </h2>
 
-            <div className="space-y-4 text-[#cdd6f4]/90 text-lg leading-relaxed mb-8">
+            <div className="space-y-4 text-[#cdd6f4]/90 text-base sm:text-lg leading-relaxed mb-8">
               <p>
                 Bey Digital Media olarak Sekiz yılı aşkın süredir markaların
                 dijital dünyada büyümesine yardımcı oluyoruz. Sosyal medya
@@ -104,7 +104,7 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex-1 text-center p-2 bg-[#181825] rounded-2xl"
+                  className="flex-1 text-center p-3 sm:p-2 bg-[#181825] rounded-2xl"
                 >
                   <stat.icon className={`w-8 h-8 text-[#0040ff] block mx-auto mb-2 ${index >= 2 ? "-translate-x-[3px]" : "-translate-x-[7px]"}`} />
                   <div className="text-xl font-bold text-[#cdd6f4]">

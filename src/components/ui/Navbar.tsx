@@ -110,7 +110,7 @@ export default function Navbar() {
 
             <div className="hidden lg:block w-full h-full">
               <div className="max-w-7xl mx-auto h-full relative">
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -ml-[19px] flex items-center gap-5 xl:gap-7">
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -ml-[34px] flex items-center gap-5 xl:gap-7">
                   {navLinks.map((link) =>
                     link.name === "Hizmetler" ? (
                       <div

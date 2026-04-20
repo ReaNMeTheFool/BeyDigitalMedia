@@ -74,7 +74,7 @@ export default function CTA() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-8 mt-12 pt-12 border-t border-[#cdd6f4]/10"
+            className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-8 sm:mt-12 pt-8 sm:pt-12 border-t border-[#cdd6f4]/10"
           >
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">150+</div>

@@ -1,0 +1,438 @@
+{
+  "name": "Beydigital Media – Lead Generation & AI Email Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "trigger-schedule",
+      "name": "Her Pazartesi 09:00 Çalıştır",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "q", "value": "dijital pazarlama ihtiyacı olan şirketler Türkiye site:linkedin.com OR site:instagram.com" },
+            { "name": "api_key", "value": "={{ $env.SERPAPI_KEY }}" },
+            { "name": "hl", "value": "tr" },
+            { "name": "gl", "value": "tr" },
+            { "name": "num", "value": "10" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "google-search-1",
+      "name": "Google – Genel İşletmeler",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 180]
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "q", "value": "web sitesi yenilemek isteyen KOBİ Bursa site:linkedin.com OR dijital ajans arayan" },
+            { "name": "api_key", "value": "={{ $env.SERPAPI_KEY }}" },
+            { "name": "hl", "value": "tr" },
+            { "name": "gl", "value": "tr" },
+            { "name": "num", "value": "10" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "google-search-2",
+      "name": "Google – KOBİ Web Sitesi",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 340]
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "q", "value": "sosyal medya yönetimi ajans arayan restoran kafe Bursa site:instagram.com OR google.com" },
+            { "name": "api_key", "value": "={{ $env.SERPAPI_KEY }}" },
+            { "name": "hl", "value": "tr" },
+            { "name": "gl", "value": "tr" },
+            { "name": "num", "value": "10" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "google-search-3",
+      "name": "Google – Restoran & Kafe",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 500]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-results",
+      "name": "Sonuçları Birleştir",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [720, 340]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = [];\n\nfor (const item of $input.all()) {\n  const data = item.json;\n  const organicResults = data.organic_results || [];\n  \n  for (const result of organicResults) {\n    const link = result.link || '';\n    const title = result.title || '';\n    const snippet = result.snippet || '';\n    \n    // Skip irrelevant results\n    if (!link || link.includes('wikipedia') || link.includes('youtube')) continue;\n    \n    // Extract domain for company identification\n    let domain = '';\n    try {\n      domain = new URL(link).hostname.replace('www.', '');\n    } catch(e) { continue; }\n    \n    // Determine company type from snippet/title\n    let sectorGuess = 'genel işletme';\n    const text = (title + ' ' + snippet).toLowerCase();\n    if (text.includes('restoran') || text.includes('kafe') || text.includes('yemek')) sectorGuess = 'restoran/kafe';\n    else if (text.includes('mağaza') || text.includes('e-ticaret') || text.includes('satış')) sectorGuess = 'e-ticaret/mağaza';\n    else if (text.includes('hukuk') || text.includes('avukat')) sectorGuess = 'hukuk bürosu';\n    else if (text.includes('klinik') || text.includes('diş') || text.includes('doktor')) sectorGuess = 'sağlık klinik';\n    else if (text.includes('inşaat') || text.includes('emlak')) sectorGuess = 'inşaat/emlak';\n    else if (text.includes('otomotiv') || text.includes('araç')) sectorGuess = 'otomotiv';\n    \n    items.push({\n      json: {\n        company_name: title.split('|')[0].split('-')[0].trim(),\n        website: link,\n        domain: domain,\n        sector: sectorGuess,\n        snippet: snippet,\n        source: 'google_search'\n      }\n    });\n  }\n}\n\nreturn items;"
+      },
+      "id": "extract-leads",
+      "name": "Lead'leri Ayıkla & Sınıflandır",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [960, 340]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false
+          },
+          "conditions": [
+            {
+              "id": "no-beydigital",
+              "leftValue": "={{ $json.domain }}",
+              "rightValue": "beydigital",
+              "operator": { "type": "string", "operation": "notContains" }
+            },
+            {
+              "id": "has-domain",
+              "leftValue": "={{ $json.domain }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-leads",
+      "name": "Kendi Markamızı Filtrele",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [1200, 340]
+    },
+    {
+      "parameters": {
+        "unit": "requests",
+        "maxRequests": 1
+      },
+      "id": "rate-limit",
+      "name": "Rate Limit (1/saniye)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1440, 340]
+    },
+    {
+      "parameters": {
+        "url": "https://api.hunter.io/v2/domain-search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "domain", "value": "={{ $json.domain }}" },
+            { "name": "api_key", "value": "={{ $env.HUNTER_API_KEY }}" },
+            { "name": "limit", "value": "1" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "hunter-email",
+      "name": "Hunter.io – Email Bul",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1680, 340]
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n  const lead = item.json;\n  const hunterData = lead.data || {};\n  const emails = hunterData.emails || [];\n  \n  if (emails.length === 0) continue; // Email bulunamazsa atla\n  \n  const topEmail = emails[0];\n  \n  results.push({\n    json: {\n      company_name: lead.company_name || hunterData.organization || 'Sayın Yetkili',\n      contact_name: topEmail.first_name ? `${topEmail.first_name} ${topEmail.last_name || ''}`.trim() : '',\n      contact_email: topEmail.value,\n      contact_title: topEmail.position || '',\n      website: lead.website,\n      sector: lead.sector,\n      snippet: lead.snippet\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "enrich-lead",
+      "name": "Lead Verisini Zenginleştir",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1920, 340]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Sen Bey Digital Media adına çalışan uzman bir dijital pazarlama danışmanısın. Türkiye'deki işletmelere dijital dönüşüm ve büyüme hizmetleri sunuyorsun.\n\nHİZMETLERİMİZ:\n• Sosyal Medya Yönetimi – Instagram, Facebook, LinkedIn yönetimi\n• Meta Ads & Google Ads – Performans odaklı reklam kampanyaları\n• Web Tasarım – Next.js ile modern, hızlı web siteleri\n• SEO & Yapay Zeka SEO (GEO/AEO) – Hem geleneksel hem AI arama optimizasyonu\n• Logo & Kurumsal Kimlik Tasarımı\n• AI & Otomasyon Çözümleri\n• Detaylı Raporlama & Analiz\n\nMARKA DEĞERLERİ:\n• 8+ yıl deneyim, 150+ tamamlanan proje, 100+ mutlu müşteri\n• Şeffaf raporlama, sonuç odaklı yaklaşım\n• Slogan: \"Dijital Büyümenin Güvenilir Ortağı\"\n\nMAIL YAZMA KURALLARI:\n1. Konu satırı dikkat çekici ve kişiselleştirilmiş olsun (max 60 karakter)\n2. Selam kişisel olsun – isim varsa kullan, yoksa 'Sayın Yetkili'\n3. İlk paragrafta SADECE şirketleri hakkında bir gözlem yap (websitelerinden/sektörden)\n4. İkinci paragrafta bu gözleme bağlı bir fırsat/problem sun\n5. Üçüncü paragrafta ilgili hizmetimizi öner – maksimum 2 hizmet\n6. CTA: Ücretsiz 20 dakikalık keşif görüşmesi teklif et\n7. İmza: Resmi ama sıcak\n8. Dil: Türkçe, profesyonel ama samimi\n9. Uzunluk: 200-250 kelime (ne çok kısa ne çok uzun)\n10. SPAM kelimeleri kullanma: 'ücretsiz hediye', 'acil', 'garantili kazanç' vs.\n\nHer mail BENZERSIZ ve o şirkete ÖZEL olmalı."
+            },
+            {
+              "role": "user",
+              "content": "Aşağıdaki şirket için kişiselleştirilmiş bir soğuk e-posta yaz:\n\nŞirket Adı: {{ $json.company_name }}\nİletişim Kişisi: {{ $json.contact_name || 'Belirtilmemiş' }}\nUnvan: {{ $json.contact_title || 'Belirtilmemiş' }}\nWebsite: {{ $json.website }}\nSektör: {{ $json.sector }}\nŞirket Hakkında Bilgi: {{ $json.snippet }}\n\nLütfen şu formatta döndür (JSON):\n{\n  \"subject\": \"Konu satırı buraya\",\n  \"body\": \"Mail içeriği buraya (HTML değil, düz metin)\"\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 800
+        }
+      },
+      "id": "openai-write-email",
+      "name": "OpenAI – AI Mail Yaz",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [2160, 340]
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n  const aiResponse = item.json.message?.content || item.json.choices?.[0]?.message?.content || '';\n  \n  let parsed;\n  try {\n    // GPT bazen markdown code block içinde döner, temizle\n    const cleaned = aiResponse.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n    parsed = JSON.parse(cleaned);\n  } catch(e) {\n    // JSON parse başarısız olursa ham metni kullan\n    parsed = {\n      subject: 'Bey Digital Media – Dijital Büyüme Fırsatı',\n      body: aiResponse\n    };\n  }\n  \n  results.push({\n    json: {\n      ...item.json,\n      email_subject: parsed.subject,\n      email_body: parsed.body,\n      generated_at: new Date().toISOString()\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "parse-ai-response",
+      "name": "AI Yanıtını Ayrıştır",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2400, 340]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-subject",
+              "leftValue": "={{ $json.email_subject }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            },
+            {
+              "id": "has-body",
+              "leftValue": "={{ $json.email_body }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            },
+            {
+              "id": "has-recipient",
+              "leftValue": "={{ $json.contact_email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "validate-email",
+      "name": "Mail Geçerliliğini Kontrol Et",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [2640, 340]
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@beydigital.com.tr",
+        "fromName": "Bey Digital Media",
+        "toEmail": "={{ $json.contact_email }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "text",
+        "message": "={{ $json.email_body }}\n\n---\nBey Digital Media\n📍 Bursa, Türkiye\n🌐 www.beydigital.com.tr\n📧 info@beydigital.com.tr\n\nBu e-postayı almak istemiyorsanız lütfen bildiriniz.",
+        "options": {
+          "replyTo": "info@beydigital.com.tr"
+        }
+      },
+      "id": "send-email",
+      "name": "Gmail – Maili Gönder",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [2880, 340],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GMAIL_CREDENTIAL_ID",
+          "name": "Beydigital Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.LEADS_SHEET_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Gönderilen Mailler",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Tarih": "={{ $json.generated_at }}",
+            "Şirket": "={{ $json.company_name }}",
+            "Email": "={{ $json.contact_email }}",
+            "Kişi": "={{ $json.contact_name }}",
+            "Sektör": "={{ $json.sector }}",
+            "Website": "={{ $json.website }}",
+            "Konu": "={{ $json.email_subject }}",
+            "Durum": "Gönderildi"
+          }
+        },
+        "options": {}
+      },
+      "id": "log-to-sheets",
+      "name": "Google Sheets – Kayıt Et",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [3120, 240],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GSHEETS_CREDENTIAL_ID",
+          "name": "Beydigital Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "✅ *Lead Mail Gönderildi*\n\n🏢 Şirket: {{ $json.company_name }}\n📧 Email: {{ $json.contact_email }}\n🏭 Sektör: {{ $json.sector }}\n📩 Konu: {{ $json.email_subject }}\n\n_Bey Digital Media Otomasyon_",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "telegram-notify",
+      "name": "Telegram – Bildirim Gönder",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [3120, 440],
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CREDENTIAL_ID",
+          "name": "Beydigital Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.hunter.io/v2/email-verifier",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "email", "value": "={{ $json.contact_email }}" },
+            { "name": "api_key", "value": "={{ $env.HUNTER_API_KEY }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "verify-email",
+      "name": "Email Geçerliliğini Doğrula",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2160, 520]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "email-valid",
+              "leftValue": "={{ $json.data?.result }}",
+              "rightValue": "undeliverable",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ]
+        }
+      },
+      "id": "filter-invalid-emails",
+      "name": "Geçersiz Emailleri Filtrele",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [2400, 520]
+    }
+  ],
+  "connections": {
+    "Her Pazartesi 09:00 Çalıştır": {
+      "main": [
+        [
+          { "node": "Google – Genel İşletmeler", "type": "main", "index": 0 },
+          { "node": "Google – KOBİ Web Sitesi", "type": "main", "index": 0 },
+          { "node": "Google – Restoran & Kafe", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Google – Genel İşletmeler": {
+      "main": [[{ "node": "Sonuçları Birleştir", "type": "main", "index": 0 }]]
+    },
+    "Google – KOBİ Web Sitesi": {
+      "main": [[{ "node": "Sonuçları Birleştir", "type": "main", "index": 1 }]]
+    },
+    "Google – Restoran & Kafe": {
+      "main": [[{ "node": "Sonuçları Birleştir", "type": "main", "index": 2 }]]
+    },
+    "Sonuçları Birleştir": {
+      "main": [[{ "node": "Lead'leri Ayıkla & Sınıflandır", "type": "main", "index": 0 }]]
+    },
+    "Lead'leri Ayıkla & Sınıflandır": {
+      "main": [[{ "node": "Kendi Markamızı Filtrele", "type": "main", "index": 0 }]]
+    },
+    "Kendi Markamızı Filtrele": {
+      "main": [[{ "node": "Rate Limit (1/saniye)", "type": "main", "index": 0 }]]
+    },
+    "Rate Limit (1/saniye)": {
+      "main": [[{ "node": "Hunter.io – Email Bul", "type": "main", "index": 0 }]]
+    },
+    "Hunter.io – Email Bul": {
+      "main": [[{ "node": "Lead Verisini Zenginleştir", "type": "main", "index": 0 }]]
+    },
+    "Lead Verisini Zenginleştir": {
+      "main": [
+        [
+          { "node": "OpenAI – AI Mail Yaz", "type": "main", "index": 0 },
+          { "node": "Email Geçerliliğini Doğrula", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Email Geçerliliğini Doğrula": {
+      "main": [[{ "node": "Geçersiz Emailleri Filtrele", "type": "main", "index": 0 }]]
+    },
+    "OpenAI – AI Mail Yaz": {
+      "main": [[{ "node": "AI Yanıtını Ayrıştır", "type": "main", "index": 0 }]]
+    },
+    "AI Yanıtını Ayrıştır": {
+      "main": [[{ "node": "Mail Geçerliliğini Kontrol Et", "type": "main", "index": 0 }]]
+    },
+    "Mail Geçerliliğini Kontrol Et": {
+      "main": [[{ "node": "Gmail – Maili Gönder", "type": "main", "index": 0 }]]
+    },
+    "Gmail – Maili Gönder": {
+      "main": [
+        [
+          { "node": "Google Sheets – Kayıt Et", "type": "main", "index": 0 },
+          { "node": "Telegram – Bildirim Gönder", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

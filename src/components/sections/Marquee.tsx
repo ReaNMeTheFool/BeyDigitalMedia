@@ -21,7 +21,7 @@ export default function Marquee() {
           {/* Double the items for seamless loop */}
           {[...items, ...items].map((item, index) => (
             <div key={index} className="flex items-center shrink-0">
-              <span className="text-[#cdd6f4]/90 text-lg font-medium px-8 sm:px-16">
+              <span className="text-[#cdd6f4]/90 text-base sm:text-lg font-medium px-4 sm:px-8">
                 {item}
               </span>
               <span className="text-[#ffd76e] text-2xl shrink-0">✦</span>

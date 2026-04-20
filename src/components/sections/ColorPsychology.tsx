@@ -123,9 +123,8 @@ export default function ColorPsychology() {
                   animate={{ opacity: 1 }}
                   className="bg-[#181825] rounded-2xl p-6 border border-[#2d2d44] border-dashed"
                 >
-                  <p className="text-[#cdd6f4]/90 text-center">
-                    Renk dairelerinin üzerine gelerek veya tıklayarak
-                    psikolojik etkilerini keşfedin.
+                  <p className="text-[#cdd6f4]/90 text-center text-sm sm:text-base">
+                    Renk dairelerine tıklayarak psikolojik etkilerini keşfedin.
                   </p>
                 </motion.div>
               )}
@@ -160,10 +159,10 @@ export default function ColorPsychology() {
                     selectedColor?.name === color.name ? null : color
                   )
                 }
-                className={`w-24 h-24 sm:w-28 sm:h-28 ${color.bgClass} rounded-full cursor-pointer shadow-lg hover:shadow-2xl transition-shadow relative group`}
+                className={`w-16 h-16 sm:w-24 sm:h-24 ${color.bgClass} rounded-full cursor-pointer shadow-lg hover:shadow-2xl transition-shadow relative group`}
                 aria-label={`${color.name} - ${color.meaning}`}
               >
-                <span className="absolute inset-0 flex items-center justify-center text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity text-sm sm:text-base">
+                <span className="absolute inset-0 flex items-center justify-center text-white font-bold opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-xs sm:text-sm md:text-base drop-shadow-md">
                   {color.meaning}
                 </span>
               </motion.button>

@@ -26,7 +26,7 @@ function AnimatedHeadline() {
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center">
       {/* Üst satır - Dijital */}
-      <span className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Dijital
       </span>
 
@@ -34,7 +34,7 @@ function AnimatedHeadline() {
       <span className="hidden sm:block w-4"></span>
 
       {/* Orta - Animasyonlu kelime - Sabit genişlik */}
-      <span className="relative inline-flex items-center justify-center text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
+      <span className="relative inline-flex items-center justify-center text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
         {/* Ghost: en uzun kelime genişliği sabit tutar */}
         <span className="invisible select-none" aria-hidden="true">Verimliliğinizi</span>
         {/* AnimatePresence: kelimeler slide-up + fade ile geçiş yapar */}
@@ -59,7 +59,7 @@ function AnimatedHeadline() {
       <span className="hidden sm:block w-4"></span>
 
       {/* Sağ taraf - Büyütüyoruz */}
-      <span className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
+      <span className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         Büyütüyoruz
       </span>
     </div>
@@ -254,15 +254,15 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 text-center">
         <div className="animate-fade-in-up">
           {/* Main Headline */}
-          <div className="mb-8" style={{ transform: 'translateX(5px)' }}>
+          <div className="mb-8">
             <AnimatedHeadline />
           </div>
 
-          <p className="text-sm xs:text-base sm:text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-base sm:text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.
           </p>
 
-          <div className="-ml-[5px] flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <button
               onClick={scrollToContact}
               className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"

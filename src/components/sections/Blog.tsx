@@ -111,7 +111,7 @@ export default function Blog() {
                   className={`absolute inset-0 bg-gradient-to-br ${post.color}`}
                 />
                 <div className="absolute inset-0 flex items-center justify-center text-white">
-                  <span className="text-6xl font-bold opacity-30">
+                  <span className="text-4xl sm:text-6xl font-bold opacity-30">
                     {post.title.charAt(0)}
                   </span>
                 </div>
