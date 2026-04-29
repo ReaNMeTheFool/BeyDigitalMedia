@@ -13,7 +13,23 @@ const features = [
   { icon: BrainCircuit, label: "AI Entegrasyonu", desc: "Sistemleriniz değişmez — sadece çok daha akıllı hale gelir" },
 ];
 
-export default function AiAutomation() {
+export default function AiAutomation({
+  title = 'Zamanınızı Geri Kazanın, <span class="text-[#8b5cf6]">İşinizi Otomatikleştirin</span>',
+  subtitle = "Tekrarlayan işlere değil, büyümeye odaklanın.",
+  description = [
+    "Başarılı işletmeler zamanlarını tekrarlayan görevlere değil; büyümeye, inovasyona ve müşterilerine ayırıyor. Yapay zeka çözümlerimizle iş akışlarınızı otomatikleştiriyor, operasyonel yükü minimize ediyor ve ekibinizin gerçek değer ürettiği alanlara odaklanmasını sağlıyoruz.",
+    "Hazır şablonlar değil — işletmenizin yapısını, süreçlerini ve hedeflerini anlayarak sıfırdan tasarlanmış, gerçekten işe yarayan AI sistemleri kuruyoruz.",
+  ],
+  features: propFeatures,
+  badge = "AI × OTOMASYON",
+}: {
+  title?: string;
+  subtitle?: string;
+  description?: string[];
+  features?: typeof features;
+  badge?: string;
+}) {
+  const activeFeatures = propFeatures && propFeatures.length > 0 ? propFeatures : features;
   return (
     <section id="ai-otomasyon" className="relative py-24 xl:py-36 bg-[#181825] overflow-hidden">
       {/* Background glow */}
@@ -37,14 +53,14 @@ export default function AiAutomation() {
               <div className="flex items-center justify-center gap-2 mb-5 xl:mb-8">
                 <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#8b5cf6]/40" />
                 <span className="text-[#8b5cf6] font-mono text-xs tracking-widest font-semibold">
-                  AI × OTOMASYON
+                  {badge}
                 </span>
                 <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#8b5cf6]/40" />
               </div>
 
               {/* Feature cards 3x2 */}
               <div className="grid grid-cols-2 gap-3 xl:gap-5">
-                {features.map((f, i) => (
+                {activeFeatures.map((f, i) => (
                   <motion.div
                     key={f.label}
                     initial={{ opacity: 0, y: 20 }}
@@ -79,22 +95,16 @@ export default function AiAutomation() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-4 xl:mb-6 leading-tight break-words hyphens-auto">
-              Zamanınızı Geri Kazanın,{" "}
-              <span className="text-[#8b5cf6]">İşinizi Otomatikleştirin</span>
-            </h2>
+            <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-4 xl:mb-6 leading-tight break-words hyphens-auto" dangerouslySetInnerHTML={{ __html: title }} />
 
             <p className="text-[#cdd6f4]/50 text-base xl:text-lg mb-6 xl:mb-8 font-medium">
-              Tekrarlayan işlere değil, büyümeye odaklanın.
+              {subtitle}
             </p>
 
             <div className="space-y-4 text-[#cdd6f4]/70 text-base xl:text-lg leading-relaxed mb-8 xl:mb-10">
-              <p>
-                Başarılı işletmeler zamanlarını tekrarlayan görevlere değil; büyümeye, inovasyona ve müşterilerine ayırıyor. Yapay zeka çözümlerimizle iş akışlarınızı otomatikleştiriyor, operasyonel yükü minimize ediyor ve ekibinizin gerçek değer ürettiği alanlara odaklanmasını sağlıyoruz.
-              </p>
-              <p>
-                Hazır şablonlar değil — işletmenizin yapısını, süreçlerini ve hedeflerini anlayarak sıfırdan tasarlanmış, gerçekten işe yarayan AI sistemleri kuruyoruz.
-              </p>
+              {description.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
 
             <Link

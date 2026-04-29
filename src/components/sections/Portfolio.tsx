@@ -4,99 +4,9 @@ import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { defaultProjects, type Project } from "@/lib/defaultProjects";
 
-interface ServiceTag {
-  label: string;
-  slug: string;
-  breakBefore?: boolean;
-}
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  services: ServiceTag[];
-  color: string;
-  results: string;
-  logo?: string;
-  logoScale?: number;
-  resultsColor?: string;
-  smallTags?: boolean;
-}
-
-const projects: Project[] = [
-  {
-    id: 2,
-    title: "Guzgun Tekstil",
-    category: "Dijital Pazarlama",
-    services: [
-      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
-      { label: "Meta Ads", slug: "meta-ads" },
-      { label: "Web Tasarım", slug: "web-tasarim" },
-      { label: "Google Ads", slug: "google-ads", breakBefore: true },
-      { label: "SEO", slug: "seo" },
-    ],
-    color: "from-emerald-500 to-teal-600",
-    results: "Etkileşim Oranı +2000%",
-    logo: "/guzgunlar_logo.webp",
-    resultsColor: "#fefefe",
-    smallTags: true,
-  },
-  {
-    id: 4,
-    title: "İşbir Yatak",
-    category: "Sosyal Medya",
-    services: [
-      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
-      { label: "Meta Ads", slug: "meta-ads" },
-    ],
-    color: "from-violet-500 to-purple-600",
-    results: "Etkileşim oranı +150%",
-    logo: "/isbir_yatak.webp",
-    resultsColor: "#d93b38",
-  },
-  {
-    id: 5,
-    title: "Lada Wedding",
-    category: "Reklam",
-    services: [
-      { label: "Meta Ads", slug: "meta-ads" },
-    ],
-    color: "from-rose-500 to-pink-600",
-    results: "Dönüşüm oranı +300%",
-    logo: "/lada_logo.webp",
-  },
-  {
-    id: 6,
-    title: "Nil Forklift",
-    category: "Sosyal Medya",
-    services: [
-      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
-      { label: "Meta Ads", slug: "meta-ads" },
-    ],
-    color: "from-amber-500 to-orange-600",
-    results: "Etkileşim Oranı +200%",
-    logo: "/nilforkliftt.webp",
-    resultsColor: "#f59e0b",
-  },
-  {
-    id: 7,
-    title: "Emfa Pet",
-    category: "Sosyal Medya",
-    services: [
-      { label: "Sosyal Medya Yönetimi", slug: "sosyal-medya-yonetimi" },
-      { label: "Meta Ads", slug: "meta-ads" },
-    ],
-    color: "from-cyan-500 to-blue-600",
-    results: "Etkileşim Oranı +500%",
-    logo: "/emfa.webp",
-    logoScale: 1.35,
-    resultsColor: "#fc031c",
-  },
-];
-
-const extendedProjects = [...projects, ...projects, ...projects];
-const BASE_OFFSET = projects.length;
+const BASE_OFFSET = defaultProjects.length;
 const GAP_PX = 24;
 const LERP = 0.22;
 const SETTLE_EPSILON = 0.4;
@@ -106,10 +16,14 @@ const MOMENTUM_MS = 140;
 export default function Portfolio({
   title = 'Gerçek Başarı Hikayeleri',
   subtitle = "Türkiye'nin önde gelen markalarıyla çalışarak dijital dünyada ölçülebilir sonuçlar elde ediyoruz.",
+  projects: propProjects,
 }: {
   title?: string;
   subtitle?: string;
+  projects?: Project[];
 }) {
+  const activeProjects = propProjects && propProjects.length > 0 ? propProjects : defaultProjects;
+  const extendedActiveProjects = [...activeProjects, ...activeProjects, ...activeProjects];
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeHover, setActiveHover] = useState<string | null>(null);
@@ -137,7 +51,7 @@ export default function Portfolio({
   const computeX = useCallback((index: number) => -(index * cardWidthRef.current), []);
 
   const normalizeIfSettled = useCallback(() => {
-    const len = projects.length;
+    const len = activeProjects.length;
     const cw = cardWidthRef.current;
     if (!cw) return;
     let changed = false;
@@ -157,7 +71,7 @@ export default function Portfolio({
   }, [applyTransform]);
 
   const normalizeDuringDrag = useCallback(() => {
-    const len = projects.length;
+    const len = activeProjects.length;
     const cw = cardWidthRef.current;
     if (!cw) return;
     let changed = false;
@@ -209,7 +123,7 @@ export default function Portfolio({
   }, []);
 
   const rebaseForNav = useCallback(() => {
-    const len = projects.length;
+    const len = activeProjects.length;
     const cw = cardWidthRef.current;
     if (!cw) return;
     while (targetIndexRef.current >= len * 2) {
@@ -403,7 +317,7 @@ export default function Portfolio({
             ref={trackRef}
             className="flex gap-6 px-2 sm:px-6 lg:px-8 will-change-transform"
           >
-            {extendedProjects.map((project, index) => (
+            {extendedActiveProjects.map((project, index) => (
               <div
                 key={`${project.id}-${index}`}
                 className="project-card shrink-0"

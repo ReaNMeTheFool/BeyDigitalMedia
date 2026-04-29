@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import BlocksRenderer from "@/components/blocks/BlocksRenderer";

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tailwind v4: src/lib dizinindeki dinamik class'ları tespit et */
+@source "../lib";
+
 @theme {
   /* ============================================
      DARK READER RENK ŞEMASI

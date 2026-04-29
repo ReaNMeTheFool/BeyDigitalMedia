@@ -15,89 +15,18 @@ import {
   FileText,
   ArrowRight,
 } from "lucide-react";
+import { defaultServices, type Service } from "@/lib/defaultServices";
 
-const services = [
-  {
-    icon: Users,
-    imageSrc: "/instaxfacebook.png",
-    imageStyle: { marginLeft: "2px" },
-    title: "Sosyal Medya Yönetimi",
-    description:
-      "Hedef kitlenizle güçlü bir bağ kurun. Özgün içerik stratejileri ve proaktif topluluk yönetimi ile organik büyümenizi ve marka bilinirliğinizi artırıyoruz.",
-    link: "/sosyal-medya-yonetimi",
-    color: "text-blue-600",
-    bgColor: "bg-blue-600/10",
-  },
-  {
-    icon: Target,
-    imageSrc: "/meta_logo_icon_214665.png",
-    imageStyle: { filter: "brightness(0) invert(1)" },
-    title: "Meta Ads",
-    description:
-      "Doğru kitleye, doğru bütçeyle ulaşın. Dönüşüm odaklı Meta kampanyaları ve ileri düzey hedefleme algoritmalarıyla reklam getirinizi (ROAS) maksimize edin.",
-    link: "/meta-ads",
-    color: "text-indigo-600",
-    bgColor: "",
-    bgStyle: { backgroundColor: "rgba(24, 119, 242, 0.40)" },
-  },
-  {
-    icon: Search,
-    imageSrc: "/google-ads-transparent.png",
-    imageStyle: { marginLeft: "2px" },
-    title: "Google Ads",
-    description:
-      "Satın alma eğilimi yüksek müşterileri yakalayın. Optimize edilmiş anahtar kelime stratejileriyle arama ağındaki görünürlüğünüzü doğrudan satışa çevirin.",
-    link: "/google-ads",
-    color: "text-green-600",
-    bgColor: "",
-    bgStyle: { backgroundColor: "rgba(66, 133, 244, 0.20)" },
-  },
-  {
-    icon: Globe,
-    title: "Web Tasarım",
-    description:
-      "Markanızın dijital vitrinini yeniden yaratıyoruz. Sektörünüzde fark yaratan, modern arayüz tasarımlarına sahip, güven veren ve akılda kalıcı kurumsal web deneyimleri.",
-    link: "/web-tasarim",
-    color: "text-purple-600",
-    bgColor: "bg-purple-600/10",
-  },
-  {
-    icon: Megaphone,
-    title: "SEO",
-    description:
-      "Arama motorlarında sektör otoritesi olun. Kapsamlı teknik SEO, kaliteli içerik ve güçlü backlink stratejileriyle sürdürülebilir organik trafik elde edin.",
-    link: "/seo",
-    color: "text-orange-600",
-    bgColor: "bg-orange-600/10",
-  },
-  {
-    icon: PenTool,
-    title: "Logo Tasarımı",
-    description:
-      "Markanızın hikayesini yansıtan ikonik vizyonlar. İlk bakışta güven veren, akılda kalıcı, modern ve tüm mecralara uyumlu logo çözümleri.",
-    link: "/logo-tasarimi",
-    color: "text-pink-600",
-    bgColor: "bg-pink-600/10",
-  },
-  {
-    icon: Palette,
-    title: "Kurumsal Kimlik",
-    description:
-      "Profesyonel imajınızı her alanda standartlaştırın. Dijitalden baskıya tüm temas noktalarında markanıza değer katan, bütüncül bir görsel iletişim dili yaratıyoruz.",
-    link: "/kurumsal-kimlik",
-    color: "text-rose-600",
-    bgColor: "bg-rose-600/10",
-  },
-  {
-    icon: FileText,
-    title: "Raporlama",
-    description:
-      "Büyümenizi şansa bırakmayın. Şeffaf performans metrikleri, derinlemesine analizler ve veriye dayalı aksiyon planlarıyla stratejinizi sürekli geliştiriyoruz.",
-    link: "/detayli-raporlama",
-    color: "text-cyan-600",
-    bgColor: "bg-cyan-600/10",
-  },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Users,
+  Target,
+  Search,
+  Globe,
+  Megaphone,
+  PenTool,
+  Palette,
+  FileText,
+};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -125,13 +54,16 @@ const itemVariants = {
 export default function Services({
   showAll = true,
   selectedSlugs,
+  services: propServices,
 }: {
   showAll?: boolean;
   selectedSlugs?: string[];
+  services?: Service[];
 }) {
+  const sourceServices = propServices || defaultServices;
   const displayedServices = showAll
-    ? services
-    : services.filter((s) => selectedSlugs?.includes(s.link.replace(/^\//, "")));
+    ? sourceServices
+    : sourceServices.filter((s) => selectedSlugs?.includes(s.link.replace(/^\//, "")));
   return (
     <section id="services" className="relative py-24 bg-[#11111b] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -168,21 +100,33 @@ export default function Services({
             >
               {/* Icon */}
               <div
-                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 ${"bgStyle" in service ? "" : service.bgColor}`}
-                style={"bgStyle" in service ? (service.bgStyle as React.CSSProperties) : undefined}
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+                style={{
+                  backgroundColor: service.bgStyle ? undefined : service.bgColor,
+                  ...(service.bgStyle as React.CSSProperties || {}),
+                }}
               >
-                {"imageSrc" in service && service.imageSrc ? (
+                {service.imageSrc ? (
                   <Image
                     src={service.imageSrc}
                     alt={service.title}
                     width={32}
                     height={32}
                     className="object-contain"
-                    style={"imageStyle" in service ? (service.imageStyle as React.CSSProperties) : undefined}
+                    style={service.imageStyle}
                     unoptimized
                   />
+                ) : service.icon ? (
+                  (() => {
+                    const IconComponent = iconMap[service.icon];
+                    return IconComponent ? (
+                      <IconComponent className={`w-6 h-6 ${service.color}`} />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full" style={{ backgroundColor: service.bgColor }} />
+                    );
+                  })()
                 ) : (
-                  <service.icon className={`w-6 h-6 ${service.color}`} />
+                  <div className="w-6 h-6 rounded-full" style={{ backgroundColor: service.bgColor }} />
                 )}
               </div>
 

@@ -59,7 +59,16 @@ const itemVariants = {
   },
 };
 
-export default function WhyUs() {
+export default function WhyUs({
+  title = 'Farkımız <span class="text-[#0040ff]">Ne?</span>',
+  subtitle = "Bey Digital Media olarak sadece bir ajans değil, dijital büyüme ortağınız olmayı hedefliyoruz.",
+  reasons: propReasons,
+}: {
+  title?: string;
+  subtitle?: string;
+  reasons?: typeof reasons;
+}) {
+  const activeReasons = propReasons && propReasons.length > 0 ? propReasons : reasons;
   return (
     <section id="why-us" className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,11 +80,9 @@ export default function WhyUs() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6">
-            Farkımız <span className="text-[#0040ff]">Ne?</span>
-          </h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
           <p className="text-[#cdd6f4]/90 text-lg max-w-3xl mx-auto">
-            Bey Digital Media olarak sadece bir ajans değil, dijital büyüme ortağınız olmayı hedefliyoruz.
+            {subtitle}
           </p>
         </motion.div>
 
@@ -87,7 +94,7 @@ export default function WhyUs() {
           viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {reasons.map((reason) => (
+          {activeReasons.map((reason) => (
             <motion.div
               key={reason.title}
               variants={itemVariants}

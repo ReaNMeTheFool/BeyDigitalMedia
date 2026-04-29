@@ -37,8 +37,8 @@ class Particle {
 }
 
 // Animasyonlu başlık bileşeni - Tüm cihazlarda aktif ve mobilde daha büyük
-function AnimatedHeadline() {
-  const words = [
+function AnimatedHeadline({ words }: { words: string[] }) {
+  const safeWords = words.length > 0 ? words : [
     "Satışlarınızı",
     "Kazancınızı",
     "Verimliliğinizi",
@@ -49,11 +49,11 @@ function AnimatedHeadline() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % words.length);
+      setCurrentIndex((prev) => (prev + 1) % safeWords.length);
     }, 2500);
 
     return () => clearInterval(interval);
-  }, [words.length]);
+  }, [safeWords.length]);
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center">
@@ -68,7 +68,7 @@ function AnimatedHeadline() {
       {/* Orta - Animasyonlu kelime - Sabit genişlik */}
       <span className="relative inline-flex items-center justify-center text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
         {/* Ghost: en uzun kelime genişliği sabit tutar */}
-        <span className="invisible select-none" aria-hidden="true">Verimliliğinizi</span>
+        <span className="invisible select-none" aria-hidden="true">{safeWords.reduce((a, b) => a.length > b.length ? a : b, "")}</span>
         {/* AnimatePresence: kelimeler slide-up + fade ile geçiş yapar */}
         <AnimatePresence mode="wait">
           <motion.span
@@ -82,7 +82,7 @@ function AnimatedHeadline() {
               textShadow: "0 0 30px rgba(255,215,110,0.8), 0 0 60px rgba(255,215,110,0.4), 0 0 90px rgba(255,215,110,0.2)"
             }}
           >
-            {words[currentIndex]}
+            {safeWords[currentIndex]}
           </motion.span>
         </AnimatePresence>
       </span>
@@ -205,13 +205,22 @@ function ParticleCanvas() {
 }
 
 export default function Hero({
+  titleWords = ["Satışlarınızı", "Kazancınızı", "Verimliliğinizi", "Geleceğinizi"],
   description = "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
   primaryCta,
   secondaryCta,
+  stats = [
+    { number: "150+", label: "Tamamlanan Proje" },
+    { number: "100+", label: "Memnun Müşteri" },
+    { number: "%100", label: "Müşteri Memnuniyeti" },
+    { number: "8+", label: "Yıllık Deneyim" },
+  ],
 }: {
+  titleWords?: string[];
   description?: string;
   primaryCta?: { text: string; link: string };
   secondaryCta?: { text: string; link: string };
+  stats?: { number: string; label: string }[];
 }) {
   return (
     <section
@@ -248,7 +257,7 @@ export default function Hero({
         <div className="animate-fade-in-up">
           {/* Main Headline */}
           <div className="mb-8">
-            <AnimatedHeadline />
+            <AnimatedHeadline words={titleWords} />
           </div>
 
           <p className="text-base sm:text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -282,12 +291,7 @@ export default function Hero({
 
         {/* Stats */}
         <div className="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-          {[
-            { number: "150+", label: "Tamamlanan Proje" },
-            { number: "100+", label: "Memnun Müşteri" },
-            { number: "%100", label: "Müşteri Memnuniyeti" },
-            { number: "8+", label: "Yıllık Deneyim" },
-          ].map((stat) => (
+          {stats.map((stat) => (
             <div
               key={stat.label}
               className="text-center"

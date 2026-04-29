@@ -41,12 +41,16 @@ export default function FAQ({
   title = 'Merak <span class="text-[#0040ff]">Ettikleriniz</span>',
   subtitle = 'Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.',
   showAll = true,
+  faqs: propFaqs,
 }: {
   title?: string;
   subtitle?: string;
   showAll?: boolean;
+  faqs?: { question: string; answer: string }[];
 }) {
-  const displayedFaqs = showAll ? faqs : faqs.slice(0, 5);
+  const displayedFaqs = propFaqs
+    ? (showAll ? propFaqs : propFaqs.slice(0, 5))
+    : (showAll ? faqs : faqs.slice(0, 5));
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -113,9 +117,10 @@ export default function FAQ({
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-[#cdd6f4]/90 leading-relaxed">
-                      {faq.answer}
-                    </div>
+                    <div
+                      className="px-4 sm:px-6 pb-4 sm:pb-6 text-[#cdd6f4]/90 leading-relaxed prose prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>

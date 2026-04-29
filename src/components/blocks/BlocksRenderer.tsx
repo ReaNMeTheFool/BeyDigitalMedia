@@ -1,12 +1,12 @@
-import Hero from "@/components/sections/Hero";
+import HeroServer from "@/components/sections/HeroServer";
 import Marquee from "@/components/sections/Marquee";
-import Services from "@/components/sections/Services";
-import Portfolio from "@/components/sections/Portfolio";
-import Testimonials from "@/components/sections/Testimonials";
-import FAQ from "@/components/sections/FAQ";
-import About from "@/components/sections/About";
-import AiAutomation from "@/components/sections/AiAutomation";
-import WhyUs from "@/components/sections/WhyUs";
+import ServicesServer from "@/components/sections/ServicesServer";
+import PortfolioServer from "@/components/sections/PortfolioServer";
+import TestimonialsServer from "@/components/sections/TestimonialsServer";
+import FAQServer from "@/components/sections/FAQServer";
+import AboutServer from "@/components/sections/AboutServer";
+import AiAutomationServer from "@/components/sections/AiAutomationServer";
+import WhyUsServer from "@/components/sections/WhyUsServer";
 
 interface Block {
   blockType: string;
@@ -55,9 +55,9 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
         switch (block.blockType) {
           case "hero":
             return (
-              <Hero
+              <HeroServer
                 key={index}
-                description={(block.description as string) || ""}
+                description={(block.description as string) || undefined}
                 primaryCta={
                   (block.primaryCta as {
                     text: string;
@@ -85,7 +85,7 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
             );
           case "servicesGrid":
             return (
-              <Services
+              <ServicesServer
                 key={index}
                 showAll={Boolean(block.showAllServices)}
                 selectedSlugs={
@@ -97,7 +97,7 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
             );
           case "portfolioSlider":
             return (
-              <Portfolio
+              <PortfolioServer
                 key={index}
                 title={(block.title as string) || undefined}
                 subtitle={(block.subtitle as string) || undefined}
@@ -105,31 +105,44 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
             );
           case "testimonialsCarousel":
             return (
-              <Testimonials
+              <TestimonialsServer
                 key={index}
                 title={(block.title as string) || undefined}
               />
             );
           case "faqAccordion":
             return (
-              <FAQ
+              <FAQServer
                 key={index}
                 title={(block.title as string) || undefined}
                 subtitle={(block.subtitle as string) || undefined}
                 showAll={Boolean(block.showAllFaqs)}
+                selectedFaqs={(block.selectedFaqs as any[]) || undefined}
               />
             );
           case "about":
             return (
-              <About
+              <AboutServer
                 key={index}
                 image={(block.image as string) || undefined}
               />
             );
           case "aiAutomation":
-            return <AiAutomation key={index} />;
+            return (
+              <AiAutomationServer
+                key={index}
+                title={(block.title as string) || undefined}
+                subtitle={(block.subtitle as string) || undefined}
+              />
+            );
           case "whyUs":
-            return <WhyUs key={index} />;
+            return (
+              <WhyUsServer
+                key={index}
+                title={(block.title as string) || undefined}
+                subtitle={(block.subtitle as string) || undefined}
+              />
+            );
           default:
             return null;
         }

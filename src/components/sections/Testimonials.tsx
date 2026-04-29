@@ -54,16 +54,19 @@ const testimonials = [
 
 export default function Testimonials({
   title = 'Bizim Hakkımızda Ne Dediler?',
+  testimonials: propTestimonials,
 }: {
   title?: string;
+  testimonials?: typeof testimonials;
 }) {
+  const activeTestimonials = propTestimonials && propTestimonials.length > 0 ? propTestimonials : testimonials;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setDirection(1);
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setCurrentIndex((prev) => (prev + 1) % activeTestimonials.length);
     }, 5000);
 
     return () => clearInterval(timer);
@@ -153,7 +156,7 @@ export default function Testimonials({
 
                 {/* Stars */}
                 <div className="flex gap-1 mb-6">
-                  {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+                  {[...Array(activeTestimonials[currentIndex].rating)].map((_, i) => (
                     <Star
                       key={i}
                       className="w-5 h-5 text-[#ffd76e] fill-[#ffd76e]"
@@ -163,30 +166,30 @@ export default function Testimonials({
 
                 {/* Text */}
                 <p className="text-lg md:text-xl text-[#cdd6f4] italic leading-relaxed mb-8">
-                  &quot;{testimonials[currentIndex].text}&quot;
+                  &quot;{activeTestimonials[currentIndex].text}&quot;
                 </p>
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden shrink-0 ${!testimonials[currentIndex].image ? 'bg-gradient-to-br from-[#0040ff] to-[#ffd76e]' : 'bg-[#1e1e2e]'}`}>
-                    {testimonials[currentIndex].image ? (
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden shrink-0 ${!activeTestimonials[currentIndex].image ? 'bg-gradient-to-br from-[#0040ff] to-[#ffd76e]' : 'bg-[#1e1e2e]'}`}>
+                    {activeTestimonials[currentIndex].image ? (
                       <>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name} className="w-full h-full object-cover" />
+                        <img src={activeTestimonials[currentIndex].image} alt={activeTestimonials[currentIndex].name} className="w-full h-full object-cover" />
                       </>
                     ) : (
-                      testimonials[currentIndex].name.charAt(0)
+                      activeTestimonials[currentIndex].name.charAt(0)
                     )}
                   </div>
                   <div>
-                    {(testimonials[currentIndex].role || testimonials[currentIndex].company) && (
+                    {(activeTestimonials[currentIndex].role || activeTestimonials[currentIndex].company) && (
                       <p className="font-bold text-[#cdd6f4] text-lg">
-                        {testimonials[currentIndex].role}
-                        {testimonials[currentIndex].company && (testimonials[currentIndex].role ? ` @ ${testimonials[currentIndex].company}` : testimonials[currentIndex].company)}
+                        {activeTestimonials[currentIndex].role}
+                        {activeTestimonials[currentIndex].company && (activeTestimonials[currentIndex].role ? ` @ ${activeTestimonials[currentIndex].company}` : activeTestimonials[currentIndex].company)}
                       </p>
                     )}
                     <h4 className="text-[#cdd6f4]/90">
-                      {testimonials[currentIndex].name}
+                      {activeTestimonials[currentIndex].name}
                     </h4>
                   </div>
                 </div>
@@ -196,7 +199,7 @@ export default function Testimonials({
 
           {/* Dots */}
           <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
+            {activeTestimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}

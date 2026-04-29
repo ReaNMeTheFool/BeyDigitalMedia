@@ -13,8 +13,23 @@ const stats = [
 
 export default function About({
   image = '/hakkimizda.webp',
+  title = 'Dijitalde Büyümenin <span class="text-[#0040ff]">Güvenilir Ortağı</span>',
+  paragraphs = [
+    "Bey Digital Media olarak Sekiz yılı aşkın süredir markaların dijital dünyada büyümesine yardımcı oluyoruz. Sosyal medya yönetimi, Meta Ads, Google Ads, web tasarım, SEO, logo tasarımı, ve kurumsal kimlik alanlarında uzman kadromuzla hizmet veriyoruz.",
+    "Her markanın kendine özgü bir hikayesi olduğuna inanıyoruz. Renklerin psikolojisinden ilham alarak, markaların kimliğini en iyi şekilde yansıtan stratejiler geliştiriyoruz. Amacımız, sadece görsel olarak değil, duygusal bağ kurarak akılda kalıcı markalar yaratmak.",
+    "100'den fazla mutlu müşteri ve 150'nin üzerinde tamamlanan proje ile Türkiye'nin dört bir yanından markalarla çalışma fırsatı bulduk. Siz de dijital dönüşüm yolculuğunuzda bize güvenebilirsiniz.",
+  ],
+  stats = [
+    { icon: Award, value: "150+", label: "Tamamlanan Proje" },
+    { icon: Users, value: "100+", label: "Memnun Müşteri" },
+    { icon: Heart, value: "%100", label: "Müşteri Memnuniyeti" },
+    { icon: Briefcase, value: "8+", label: "Yıllık Deneyim" },
+  ],
 }: {
   image?: string;
+  title?: string;
+  paragraphs?: string[];
+  stats?: { icon: React.ElementType; value: string; label: string }[];
 }) {
   return (
     <section id="about" className="relative py-24 bg-[#181825] overflow-hidden">
@@ -73,30 +88,12 @@ export default function About({
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6 leading-snug">
-              Dijitalde Büyümenin{" "}
-              <span className="text-[#0040ff]">Güvenilir Ortağı</span>
-            </h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6 leading-snug" dangerouslySetInnerHTML={{ __html: title }} />
 
             <div className="space-y-4 text-[#cdd6f4]/90 text-base sm:text-lg leading-relaxed mb-8">
-              <p>
-                Bey Digital Media olarak Sekiz yılı aşkın süredir markaların
-                dijital dünyada büyümesine yardımcı oluyoruz. Sosyal medya
-                yönetimi, Meta Ads, Google Ads, web tasarım, SEO, logo tasarımı,
-                ve kurumsal kimlik alanlarında uzman kadromuzla hizmet veriyoruz.
-              </p>
-              <p>
-                Her markanın kendine özgü bir hikayesi olduğuna inanıyoruz.
-                Renklerin psikolojisinden ilham alarak, markaların kimliğini
-                en iyi şekilde yansıtan stratejiler geliştiriyoruz. Amacımız,
-                sadece görsel olarak değil, duygusal bağ kurarak akılda kalıcı
-                markalar yaratmak.
-              </p>
-              <p>
-                100&apos;den fazla mutlu müşteri ve 150&apos;nin üzerinde tamamlanan proje ile
-                Türkiye&apos;nin dört bir yanından markalarla çalışma fırsatı bulduk.
-                Siz de dijital dönüşüm yolculuğunuzda bize güvenebilirsiniz.
-              </p>
+              {paragraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
 
             {/* Stats Grid */}
