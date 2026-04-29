@@ -103,7 +103,13 @@ const SETTLE_EPSILON = 0.4;
 const DRAG_THRESHOLD = 5;
 const MOMENTUM_MS = 140;
 
-export default function Portfolio() {
+export default function Portfolio({
+  title = 'Gerçek Başarı Hikayeleri',
+  subtitle = "Türkiye'nin önde gelen markalarıyla çalışarak dijital dünyada ölçülebilir sonuçlar elde ediyoruz.",
+}: {
+  title?: string;
+  subtitle?: string;
+}) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeHover, setActiveHover] = useState<string | null>(null);
@@ -172,24 +178,28 @@ export default function Portfolio() {
     if (changed) applyTransform();
   }, [applyTransform]);
 
-  const tick = useCallback(() => {
-    const diff = targetXRef.current - currentXRef.current;
-    if (Math.abs(diff) < SETTLE_EPSILON) {
-      currentXRef.current = targetXRef.current;
+  const tickRef = useRef<() => void>(() => {});
+
+  useEffect(() => {
+    tickRef.current = () => {
+      const diff = targetXRef.current - currentXRef.current;
+      if (Math.abs(diff) < SETTLE_EPSILON) {
+        currentXRef.current = targetXRef.current;
+        applyTransform();
+        normalizeIfSettled();
+        rafRef.current = null;
+        return;
+      }
+      currentXRef.current += diff * LERP;
       applyTransform();
-      normalizeIfSettled();
-      rafRef.current = null;
-      return;
-    }
-    currentXRef.current += diff * LERP;
-    applyTransform();
-    rafRef.current = requestAnimationFrame(tick);
-  }, [applyTransform, normalizeIfSettled]);
+      rafRef.current = requestAnimationFrame(tickRef.current);
+    };
+  });
 
   const startAnimation = useCallback(() => {
     if (rafRef.current != null) return;
-    rafRef.current = requestAnimationFrame(tick);
-  }, [tick]);
+    rafRef.current = requestAnimationFrame(tickRef.current);
+  }, []);
 
   const stopAnimation = useCallback(() => {
     if (rafRef.current != null) {
@@ -346,12 +356,12 @@ export default function Portfolio() {
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
             <span style={{ color: getGerçekColor(), transition: "color 300ms ease-in-out" }}>
-              Gerçek
+              {title.split(' ')[0]}
             </span>{" "}
-            Başarı Hikayeleri
+            {title.split(' ').slice(1).join(' ')}
           </h2>
           <p className="text-[#cdd6f4]/90 text-lg max-w-2xl mx-auto">
-            Türkiye&apos;nin önde gelen markalarıyla çalışarak dijital dünyada ölçülebilir sonuçlar elde ediyoruz.
+            {subtitle}
           </p>
         </motion.div>
       </div>
@@ -409,13 +419,16 @@ export default function Portfolio() {
                     onMouseLeave={() => setActiveHover(null)}
                   >
                     {project.logo ? (
-                      <img
-                        src={project.logo}
-                        alt={project.title}
-                        draggable={false}
-                        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-                        style={project.logoScale ? { transform: `scale(${project.logoScale})` } : undefined}
-                      />
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={project.logo}
+                          alt={project.title}
+                          draggable={false}
+                          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                          style={project.logoScale ? { transform: `scale(${project.logoScale})` } : undefined}
+                        />
+                      </>
                     ) : (
                       <>
                         <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`} />

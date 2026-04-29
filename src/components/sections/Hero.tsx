@@ -4,6 +4,38 @@ import { ChevronDown, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+class Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  opacity: number;
+
+  constructor(canvasW: number, canvasH: number) {
+    this.x = Math.random() * canvasW;
+    this.y = Math.random() * canvasH;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.size = Math.random() * 2 + 1;
+    this.opacity = Math.random() * 0.5 + 0.2;
+  }
+
+  update(canvasW: number, canvasH: number) {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > canvasW) this.vx *= -1;
+    if (this.y < 0 || this.y > canvasH) this.vy *= -1;
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 215, 110, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
 // Animasyonlu başlık bileşeni - Tüm cihazlarda aktif ve mobilde daha büyük
 function AnimatedHeadline() {
   const words = [
@@ -90,39 +122,6 @@ function ParticleCanvas() {
       canvas!.height = window.innerHeight;
     };
 
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-
-      constructor(canvasW: number, canvasH: number) {
-        this.x = Math.random() * canvasW;
-        this.y = Math.random() * canvasH;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.size = Math.random() * 2 + 1;
-        this.opacity = Math.random() * 0.5 + 0.2;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas!.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas!.height) this.vy *= -1;
-      }
-
-      draw(ctx: CanvasRenderingContext2D) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 215, 110, ${this.opacity})`;
-        ctx.fill();
-      }
-    }
-
     const initParticles = () => {
       particles = [];
       const isMobile = canvas!.width < 768;
@@ -171,7 +170,7 @@ function ParticleCanvas() {
       ctx.clearRect(0, 0, canvas!.width, canvas!.height);
       
       particles.forEach((particle) => {
-        particle.update();
+        particle.update(canvas!.width, canvas!.height);
         particle.draw(ctx);
       });
       
@@ -205,21 +204,15 @@ function ParticleCanvas() {
   );
 }
 
-export default function Hero() {
-  const scrollToServices = () => {
-    const element = document.getElementById('services');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const scrollToContact = () => {
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+export default function Hero({
+  description = "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
+  primaryCta,
+  secondaryCta,
+}: {
+  description?: string;
+  primaryCta?: { text: string; link: string };
+  secondaryCta?: { text: string; link: string };
+}) {
   return (
     <section
       id="hero"
@@ -259,22 +252,30 @@ export default function Hero() {
           </div>
 
           <p className="text-base sm:text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.
+            {description}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <button
-              onClick={scrollToContact}
+              onClick={() => {
+                const id = primaryCta?.link?.startsWith('#') ? primaryCta.link.slice(1) : 'contact';
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"
             >
-              <span className="relative z-10">Ücretsiz Teklif Al</span>
+              <span className="relative z-10">{primaryCta?.text || 'Ücretsiz Teklif Al'}</span>
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-transform group-hover:translate-x-1" />
             </button>
             <button
-              onClick={scrollToServices}
+              onClick={() => {
+                const id = secondaryCta?.link?.startsWith('#') ? secondaryCta.link.slice(1) : 'services';
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#cdd6f4]/10 backdrop-blur-sm text-[#cdd6f4] font-semibold rounded-full border border-[#cdd6f4]/20 transition-all duration-300 hover:bg-[#cdd6f4]/20"
             >
-              Hizmetlerimiz
+              {secondaryCta?.text || 'Hizmetlerimiz'}
             </button>
           </div>
         </div>

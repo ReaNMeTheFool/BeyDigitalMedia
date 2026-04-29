@@ -355,10 +355,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background-color: #181825 !important;
   color: #cdd6f4 !important;

@@ -97,7 +97,7 @@ export default function Blog() {
           viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {posts.map((post, index) => (
+          {posts.map((post) => (
             <motion.article
               key={post.id}
               variants={itemVariants}

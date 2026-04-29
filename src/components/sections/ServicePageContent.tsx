@@ -98,14 +98,21 @@ export default function ServicePageContent({
             transition={{ duration: 0.7 }}
             className="max-w-3xl"
           >
-            {service.longDescription.map((para, i) => (
-              <p
-                key={i}
-                className="text-[#cdd6f4]/80 text-lg leading-relaxed mb-5 last:mb-0"
-              >
-                {para}
-              </p>
-            ))}
+            {service.longDescriptionHtml ? (
+              <div
+                className="text-[#cdd6f4]/80 text-lg leading-relaxed space-y-5 [&_p]:text-[#cdd6f4]/80 [&_p]:text-lg [&_p]:leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: service.longDescriptionHtml }}
+              />
+            ) : (
+              service.longDescription.map((para, i) => (
+                <p
+                  key={i}
+                  className="text-[#cdd6f4]/80 text-lg leading-relaxed mb-5 last:mb-0"
+                >
+                  {para}
+                </p>
+              ))
+            )}
           </motion.div>
         </div>
       </section>

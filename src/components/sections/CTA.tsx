@@ -3,7 +3,17 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-export default function CTA() {
+export default function CTA({
+  title = 'Dijital <span class="text-[#ffd76e]">Büyüme</span> Yolculuğuna Bugün Başlayın',
+  subtitle = 'Markanızı bir üst seviyeye taşımak için uzman kadromuzla çalışın. Ücretsiz analiz ve teklif için hemen iletişime geçin.',
+  ctaText = 'Ücretsiz Teklif Al',
+  ctaLink = '#contact',
+}: {
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}) {
   return (
     <section className="py-24 bg-[#0040ff] relative overflow-hidden">
 {/* Background decoration */}
@@ -34,13 +44,9 @@ export default function CTA() {
             </span>
           </motion.div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-6">
-            Dijital <span className="text-[#ffd76e]">Büyüme</span> Yolculuğuna
-            <br className="hidden sm:block" /> Bugün Başlayın
-          </h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
           <p className="text-[#cdd6f4]/90 text-lg md:text-xl max-w-3xl mx-auto mb-10">
-            Markanızı bir üst seviyeye taşımak için uzman kadromuzla çalışın.
-            Ücretsiz analiz ve teklif için hemen iletişime geçin.
+            {subtitle}
           </p>
 
           <motion.div
@@ -51,10 +57,10 @@ export default function CTA() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
-              href="#contact"
+              href={ctaLink}
               className="group bg-[#ffd76e] text-[#181825] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 hover:shadow-lg hover:shadow-[#ffd76e]/25 transition-all duration-300 flex items-center gap-2"
             >
-              Ücretsiz Teklif Al
+              {ctaText}
               <ArrowRight
                 size={20}
                 className="group-hover:translate-x-1 transition-transform"

@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -37,7 +37,16 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
+export default function FAQ({
+  title = 'Merak <span class="text-[#0040ff]">Ettikleriniz</span>',
+  subtitle = 'Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.',
+  showAll = true,
+}: {
+  title?: string;
+  subtitle?: string;
+  showAll?: boolean;
+}) {
+  const displayedFaqs = showAll ? faqs : faqs.slice(0, 5);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -55,11 +64,9 @@ export default function FAQ() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
-            Merak <span className="text-[#0040ff]">Ettikleriniz</span>
-          </h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
           <p className="text-[#cdd6f4]/90 text-lg max-w-2xl mx-auto">
-            Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.
+            {subtitle}
           </p>
         </motion.div>
 
@@ -71,7 +78,7 @@ export default function FAQ() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="space-y-4"
         >
-          {faqs.map((faq, index) => (
+          {displayedFaqs.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

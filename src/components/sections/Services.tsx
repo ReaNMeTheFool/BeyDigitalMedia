@@ -122,7 +122,16 @@ const itemVariants = {
   },
 };
 
-export default function Services() {
+export default function Services({
+  showAll = true,
+  selectedSlugs,
+}: {
+  showAll?: boolean;
+  selectedSlugs?: string[];
+}) {
+  const displayedServices = showAll
+    ? services
+    : services.filter((s) => selectedSlugs?.includes(s.link.replace(/^\//, "")));
   return (
     <section id="services" className="relative py-24 bg-[#11111b] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,7 +159,7 @@ export default function Services() {
           viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
-          {services.map((service) => (
+          {displayedServices.map((service) => (
             <motion.div
               key={service.title}
               variants={itemVariants}

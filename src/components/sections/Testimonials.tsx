@@ -28,7 +28,7 @@ const testimonials = [
     name: "Erkutay Torun",
     company: "Emfa Pet",
     role: "",
-    image: "",
+    image: "/emfa.webp",
     rating: 5,
     text: "Kurumsal web sitemizin yeniden tasarımında gösterdikleri profesyonellik takdire şayan. Modern, hızlı ve kullanıcı dostu bir site oldu.",
   },
@@ -52,7 +52,11 @@ const testimonials = [
   },
 ];
 
-export default function Testimonials() {
+export default function Testimonials({
+  title = 'Bizim Hakkımızda Ne Dediler?',
+}: {
+  title?: string;
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -108,10 +112,7 @@ export default function Testimonials() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
-            Bizim Hakkımızda{" "}
-            <span className="text-[#0040ff]">Ne Dediler?</span>
-          </h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
         </motion.div>
 
         {/* Carousel */}
@@ -162,14 +163,17 @@ export default function Testimonials() {
 
                 {/* Text */}
                 <p className="text-lg md:text-xl text-[#cdd6f4] italic leading-relaxed mb-8">
-                  "{testimonials[currentIndex].text}"
+                  &quot;{testimonials[currentIndex].text}&quot;
                 </p>
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
                   <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden shrink-0 ${!testimonials[currentIndex].image ? 'bg-gradient-to-br from-[#0040ff] to-[#ffd76e]' : 'bg-[#1e1e2e]'}`}>
                     {testimonials[currentIndex].image ? (
-                      <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name} className="w-full h-full object-cover" />
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={testimonials[currentIndex].image} alt={testimonials[currentIndex].name} className="w-full h-full object-cover" />
+                      </>
                     ) : (
                       testimonials[currentIndex].name.charAt(0)
                     )}

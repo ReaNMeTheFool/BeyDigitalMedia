@@ -15,6 +15,7 @@ export type ServiceData = {
   subtitle: string;
   description: string;
   longDescription: string[];
+  longDescriptionHtml?: string;
   features: ServiceFeature[];
   process: ServiceProcess[];
   accentColor: string;

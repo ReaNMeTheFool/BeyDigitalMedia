@@ -1,0 +1,515 @@
+/* ============================================
+   Bey Digital Media — Modern Admin Theme
+   ============================================ */
+
+/* Root variables override */
+:root {
+  --theme-bg: #0f1117;
+  --theme-input-bg: #181b24;
+  --theme-text: #e8eaf0;
+  --theme-text-secondary: #9ca3af;
+  --theme-border-color: #2a2e3b;
+  --theme-success-400: #34d399;
+  --theme-error-400: #f87171;
+  --theme-warning-400: #fbbf24;
+  --theme-primary-500: #3b82f6;
+  --theme-primary-600: #2563eb;
+  --theme-primary-700: #1d4ed8;
+  --theme-primary-50: rgba(59, 130, 246, 0.08);
+  --theme-primary-100: rgba(59, 130, 246, 0.12);
+  --theme-primary-200: rgba(59, 130, 246, 0.2);
+  --theme-primary-400: #60a5fa;
+  --theme-elevation-0: #0f1117;
+  --theme-elevation-100: #181b24;
+  --theme-elevation-200: #1e2230;
+  --theme-elevation-300: #252a3a;
+  --theme-elevation-400: #2d3347;
+  --theme-elevation-50: #13151c;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   GENERAL LAYOUT & TYPOGRAPHY
+   ============================================ */
+html,
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar modern */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--theme-elevation-400);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-text-secondary);
+}
+
+/* ============================================
+   SIDEBAR / NAV
+   ============================================ */
+.nav {
+  background: var(--theme-elevation-100) !important;
+  border-right: 1px solid var(--theme-border-color) !important;
+}
+
+.nav__brand {
+  padding: 20px 16px !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+}
+
+.nav__wrap {
+  padding: 8px !important;
+}
+
+.nav__link {
+  border-radius: var(--radius-md) !important;
+  padding: 10px 14px !important;
+  margin-bottom: 2px !important;
+  transition: all var(--transition-fast) !important;
+  color: var(--theme-text-secondary) !important;
+}
+
+.nav__link:hover {
+  background: var(--theme-primary-50) !important;
+  color: var(--theme-primary-400) !important;
+}
+
+.nav__link--active {
+  background: var(--theme-primary-100) !important;
+  color: var(--theme-primary-400) !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================
+   CARDS / TABLES / LISTS
+   ============================================ */
+.table {
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--theme-border-color) !important;
+}
+
+.table thead th {
+  background: var(--theme-elevation-200) !important;
+  color: var(--theme-text-secondary) !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+}
+
+.table tbody tr {
+  transition: background var(--transition-fast) !important;
+}
+
+.table tbody tr:hover {
+  background: var(--theme-primary-50) !important;
+}
+
+.table tbody td {
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  color: var(--theme-text) !important;
+}
+
+/* List rows (collection list) */
+.collection-list__wrap .table {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 10px 18px !important;
+  transition: all var(--transition-fast) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.btn--style-primary {
+  background: linear-gradient(135deg, var(--theme-primary-600), var(--theme-primary-700)) !important;
+  box-shadow: 0 4px 14px -4px rgba(59, 130, 246, 0.4) !important;
+  border: none !important;
+}
+
+.btn--style-primary:hover {
+  background: linear-gradient(135deg, var(--theme-primary-500), var(--theme-primary-600)) !important;
+  box-shadow: 0 6px 20px -4px rgba(59, 130, 246, 0.55) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn--style-secondary {
+  background: var(--theme-elevation-200) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  color: var(--theme-text) !important;
+}
+
+.btn--style-secondary:hover {
+  background: var(--theme-elevation-300) !important;
+  border-color: var(--theme-primary-200) !important;
+}
+
+.btn--style-transparent {
+  color: var(--theme-text-secondary) !important;
+}
+
+.btn--style-transparent:hover {
+  color: var(--theme-text) !important;
+  background: var(--theme-elevation-200) !important;
+}
+
+/* ============================================
+   FORM INPUTS
+   ============================================ */
+.field-type.text input,
+.field-type.textarea textarea,
+.field-type.number input,
+.field-type.email input,
+.field-type.code .input,
+.select__control,
+.react-select__control {
+  background: var(--theme-input-bg) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  color: var(--theme-text) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.field-type.text input:focus,
+.field-type.textarea textarea:focus,
+.field-type.number input:focus,
+.field-type.email input:focus,
+.select__control--is-focused,
+.react-select__control--is-focused {
+  border-color: var(--theme-primary-500) !important;
+  box-shadow: 0 0 0 3px var(--theme-primary-100) !important;
+  outline: none !important;
+}
+
+.field-label {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--theme-text) !important;
+  margin-bottom: 6px !important;
+}
+
+/* ============================================
+   TOOLTIPS
+   ============================================ */
+.field-description {
+  font-size: 12px !important;
+  color: var(--theme-text-secondary) !important;
+  margin-top: 6px !important;
+  padding: 8px 12px !important;
+  background: var(--theme-elevation-200) !important;
+  border-radius: var(--radius-sm) !important;
+  border-left: 3px solid var(--theme-primary-500) !important;
+  line-height: 1.5 !important;
+}
+
+/* Custom tooltip on hover for icons / buttons */
+[data-tooltip] {
+  position: relative !important;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip) !important;
+  position: absolute !important;
+  bottom: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(0.95) !important;
+  background: var(--theme-elevation-400) !important;
+  color: var(--theme-text) !important;
+  padding: 6px 12px !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: all var(--transition-fast) !important;
+  box-shadow: var(--shadow-md) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  z-index: 9999 !important;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1 !important;
+  transform: translateX(-50%) scale(1) !important;
+}
+
+/* Collection description banner */
+.collection-edit__header .collection-description,
+.collection-list__header .collection-description {
+  background: var(--theme-primary-50) !important;
+  border: 1px solid var(--theme-primary-200) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 12px 16px !important;
+  margin-bottom: 20px !important;
+  font-size: 13px !important;
+  color: var(--theme-text-secondary) !important;
+  line-height: 1.6 !important;
+}
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+.login__form {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: var(--radius-xl) !important;
+  padding: 40px !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.login__brand {
+  margin-bottom: 32px !important;
+}
+
+.login__brand h1 {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: var(--theme-text) !important;
+}
+
+/* ============================================
+   DOCUMENT HEADER
+   ============================================ */
+.doc-header {
+  background: var(--theme-elevation-100) !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  padding: 20px 24px !important;
+}
+
+.doc-header__title {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: var(--theme-text) !important;
+}
+
+/* ============================================
+   TABS & COLLAPSIBLES
+   ============================================ */
+.tab-container__tab {
+  border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
+  padding: 10px 18px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--theme-text-secondary) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.tab-container__tab--active {
+  color: var(--theme-primary-400) !important;
+  background: var(--theme-primary-50) !important;
+  border-bottom: 2px solid var(--theme-primary-500) !important;
+}
+
+.collapsible__toggle {
+  border-radius: var(--radius-md) !important;
+  background: var(--theme-elevation-200) !important;
+  padding: 14px 18px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  border: 1px solid var(--theme-border-color) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.collapsible__toggle:hover {
+  background: var(--theme-elevation-300) !important;
+}
+
+.collapsible--opened .collapsible__toggle {
+  border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
+  border-bottom-color: transparent !important;
+}
+
+.collapsible__content {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-top: none !important;
+  border-radius: 0 0 var(--radius-md) var(--radius-md) !important;
+  padding: 20px !important;
+}
+
+/* ============================================
+   PAGINATION & SEARCH
+   ============================================ */
+.paginator {
+  gap: 4px !important;
+}
+
+.paginator__button {
+  border-radius: var(--radius-sm) !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.paginator__button--active {
+  background: var(--theme-primary-500) !important;
+  color: #fff !important;
+}
+
+.search-filter__input {
+  background: var(--theme-input-bg) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 10px 14px !important;
+  color: var(--theme-text) !important;
+}
+
+/* ============================================
+   RICH TEXT / LEXICAL
+   ============================================ */
+.lexical-editor {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  overflow: hidden !important;
+}
+
+.lexical-editor__toolbar {
+  background: var(--theme-elevation-200) !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  padding: 8px !important;
+}
+
+.lexical-editor__toolbar button {
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.lexical-editor__toolbar button:hover {
+  background: var(--theme-elevation-300) !important;
+}
+
+/* ============================================
+   MODAL / DRAWER
+   ============================================ */
+.modal {
+  border-radius: var(--radius-xl) !important;
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.modal__content {
+  padding: 28px !important;
+}
+
+.drawer {
+  background: var(--theme-elevation-100) !important;
+  border-left: 1px solid var(--theme-border-color) !important;
+}
+
+.drawer__header {
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  padding: 20px 24px !important;
+}
+
+/* ============================================
+   TOAST / NOTIFICATIONS
+   ============================================ */
+.toast-container {
+  gap: 8px !important;
+}
+
+.toast {
+  border-radius: var(--radius-lg) !important;
+  padding: 14px 18px !important;
+  box-shadow: var(--shadow-md) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+}
+
+.toast--success {
+  background: rgba(52, 211, 153, 0.12) !important;
+  border: 1px solid rgba(52, 211, 153, 0.25) !important;
+  color: var(--theme-success-400) !important;
+}
+
+.toast--error {
+  background: rgba(248, 113, 113, 0.12) !important;
+  border: 1px solid rgba(248, 113, 113, 0.25) !important;
+  color: var(--theme-error-400) !important;
+}
+
+/* ============================================
+   BADGES / STATUS
+   ============================================ */
+.status {
+  border-radius: 20px !important;
+  padding: 4px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ============================================
+   UPLOAD / MEDIA
+   ============================================ */
+.file-field__upload {
+  border-radius: var(--radius-lg) !important;
+  border: 2px dashed var(--theme-border-color) !important;
+  background: var(--theme-elevation-50) !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.file-field__upload:hover {
+  border-color: var(--theme-primary-500) !important;
+  background: var(--theme-primary-50) !important;
+}
+
+/* ============================================
+   DASHBOARD
+   ============================================ */
+.dashboard {
+  padding: 24px !important;
+}
+
+.dashboard__card {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 24px !important;
+  transition: all var(--transition-base) !important;
+}
+
+.dashboard__card:hover {
+  border-color: var(--theme-primary-200) !important;
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-2px) !important;
+}

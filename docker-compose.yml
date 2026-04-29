@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - bey_net
+
+  app:
+    build: .
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URI=mongodb://mongo:27017/beydigital
+      - PAYLOAD_SECRET=${PAYLOAD_SECRET}
+      - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - RECIPIENT_EMAIL=${RECIPIENT_EMAIL}
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - mongo
+    networks:
+      - bey_net
+
+volumes:
+  mongo_data:
+
+networks:
+  bey_net:
+    driver: bridge

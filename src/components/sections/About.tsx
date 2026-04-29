@@ -11,7 +11,11 @@ const stats = [
   { icon: Briefcase, value: "8+", label: "Yıllık Deneyim" },
 ];
 
-export default function About() {
+export default function About({
+  image = '/hakkimizda.webp',
+}: {
+  image?: string;
+}) {
   return (
     <section id="about" className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,7 +42,7 @@ export default function About() {
               />
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,64,255,0.5)]">
                 <Image
-                  src="/hakkimizda.webp"
+                  src={image}
                   alt="Hakkımızda"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -89,8 +93,8 @@ export default function About() {
                 markalar yaratmak.
               </p>
               <p>
-                100'den fazla mutlu müşteri ve 150'nin üzerinde tamamlanan proje ile
-                Türkiye'nin dört bir yanından markalarla çalışma fırsatı bulduk.
+                100&apos;den fazla mutlu müşteri ve 150&apos;nin üzerinde tamamlanan proje ile
+                Türkiye&apos;nin dört bir yanından markalarla çalışma fırsatı bulduk.
                 Siz de dijital dönüşüm yolculuğunuzda bize güvenebilirsiniz.
               </p>
             </div>
