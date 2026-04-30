@@ -9,6 +9,39 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: "ctaTitle",
+      type: "text",
+      label: "CTA Başlık",
+      defaultValue: 'Dijital <span class="text-[#ffd76e]">Dönüşüm</span> İçin <br /><span style="color: #04a5e5">Hazır mısınız?</span>',
+      admin: {
+        description: "Footer CTA bölümünün başlığı. HTML etiketleri kullanabilirsiniz.",
+      },
+    },
+    {
+      name: "ctaSubtitle",
+      type: "textarea",
+      label: "CTA Açıklama",
+      defaultValue: "Markanızı bir üst seviyeye taşımak için hemen bizimle iletişime geçin. Ücretsiz danışmanlık için formu doldurun.",
+    },
+    {
+      name: "ctaButtonText",
+      type: "text",
+      label: "CTA Buton Metni",
+      defaultValue: "Ücretsiz Teklif Alın",
+    },
+    {
+      name: "ctaButtonHref",
+      type: "text",
+      label: "CTA Buton Linki",
+      defaultValue: "#contact",
+    },
+    {
+      name: "brandTagline",
+      type: "text",
+      label: "Marka Sloganı",
+      defaultValue: "Built for Digital Growth.",
+    },
+    {
       name: "columns",
       type: "array",
       label: "Sütunlar",

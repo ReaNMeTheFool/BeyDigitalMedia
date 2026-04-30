@@ -105,5 +105,45 @@ export const SiteSettings: GlobalConfig = {
         },
       ],
     },
+    {
+      name: "theme",
+      type: "group",
+      label: "Tema Renkleri",
+      admin: {
+        description: "Sitenin genel renk şemasını buradan değiştirebilirsiniz.",
+      },
+      fields: [
+        {
+          name: "primaryColor",
+          type: "text",
+          label: "Ana Renk (Primary)",
+          defaultValue: "#0040ff",
+        },
+        {
+          name: "accentColor",
+          type: "text",
+          label: "Vurgu Rengi (Accent)",
+          defaultValue: "#ffd76e",
+        },
+        {
+          name: "surfaceColor",
+          type: "text",
+          label: "Yüzey Rengi (Surface)",
+          defaultValue: "#1e1e2e",
+        },
+        {
+          name: "backgroundColor",
+          type: "text",
+          label: "Arka Plan Rengi",
+          defaultValue: "#181825",
+        },
+        {
+          name: "textColor",
+          type: "text",
+          label: "Metin Rengi",
+          defaultValue: "#cdd6f4",
+        },
+      ],
+    },
   ],
 };

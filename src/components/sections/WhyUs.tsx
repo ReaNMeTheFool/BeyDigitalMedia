@@ -3,38 +3,47 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, TrendingUp, Clock, Users, Award, Zap } from "lucide-react";
 
-const reasons = [
+const defaultReasons = [
   {
-    icon: TrendingUp,
+    icon: "TrendingUp",
     title: "Sonuç Odaklı Yaklaşım",
     description: "Her projede ölçülebilir KPI'lar belirliyor ve düzenli raporlarla ilerlemeyi takip ediyoruz.",
   },
   {
-    icon: Clock,
+    icon: "Clock",
     title: "7/24 Destek",
     description: "Müşterilerimize haftanın her günü, günün her saati destek sağlıyoruz.",
   },
   {
-    icon: Users,
+    icon: "Users",
     title: "Deneyimli Ekip",
     description: "8+ yıllık sektör deneyimiyle uzman kadromuz hizmetinizde.",
   },
   {
-    icon: Award,
+    icon: "Award",
     title: "Profesyonel İş Ahlakı",
     description: "Şeffaf iletişim, dürüst fiyatlandırma ve zamanında teslimat ilkelerimizdir.",
   },
   {
-    icon: Zap,
+    icon: "Zap",
     title: "Hızlı Dönüş",
     description: "Taleplerinize en hızlı şekilde yanıt veriyor ve aksiyon alıyoruz.",
   },
   {
-    icon: CheckCircle2,
+    icon: "CheckCircle2",
     title: "Özelleştirilmiş Stratejiler",
     description: "Her marka farklıdır. Size özel, kişiselleştirilmiş çözümler sunuyoruz.",
   },
 ];
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  TrendingUp,
+  Clock,
+  Users,
+  Award,
+  Zap,
+  CheckCircle2,
+};
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -66,9 +75,9 @@ export default function WhyUs({
 }: {
   title?: string;
   subtitle?: string;
-  reasons?: typeof reasons;
+  reasons?: { icon: string; title: string; description: string }[];
 }) {
-  const activeReasons = propReasons && propReasons.length > 0 ? propReasons : reasons;
+  const activeReasons = propReasons && propReasons.length > 0 ? propReasons : defaultReasons;
   return (
     <section id="why-us" className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,7 +112,12 @@ export default function WhyUs({
             >
               <div className="flex items-center gap-5 mb-5 w-full">
                 <div className="w-14 h-14 shrink-0 bg-[#0040ff]/10 rounded-xl flex items-center justify-center group-hover:bg-[#0040ff] group-hover:scale-110 transition-all duration-300">
-                  <reason.icon className="w-7 h-7 text-[#0040ff] group-hover:text-[#cdd6f4] transition-colors" />
+                  {(() => {
+                    const IconComponent = iconMap[reason.icon];
+                    return IconComponent ? (
+                      <IconComponent className="w-7 h-7 text-[#0040ff] group-hover:text-[#cdd6f4] transition-colors" />
+                    ) : null;
+                  })()}
                 </div>
                 <h3 className="flex-1 text-lg font-bold text-[#a6adc8] leading-tight">
                   {reason.title}

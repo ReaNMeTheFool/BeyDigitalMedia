@@ -52,6 +52,34 @@ export const Navigation: GlobalConfig = {
             description: "Menüdeki soldan sağa sıralaması. 1, 2, 3... şeklinde numaralandırın.",
           },
         },
+        {
+          name: "children",
+          type: "array",
+          label: "Alt Linkler",
+          admin: {
+            description: "Bu linkin altında açılır menü olarak gösterilecek linkler. Örn: Hizmetler menüsü altındaki alt hizmetler.",
+          },
+          fields: [
+            {
+              name: "label",
+              type: "text",
+              label: "Etiket",
+              required: true,
+            },
+            {
+              name: "href",
+              type: "text",
+              label: "Link",
+              required: true,
+            },
+            {
+              name: "isExternal",
+              type: "checkbox",
+              label: "Dış Link",
+              defaultValue: false,
+            },
+          ],
+        },
       ],
     },
     {

@@ -37,7 +37,15 @@ class Particle {
 }
 
 // Animasyonlu başlık bileşeni - Tüm cihazlarda aktif ve mobilde daha büyük
-function AnimatedHeadline({ words }: { words: string[] }) {
+function AnimatedHeadline({
+  words,
+  prefix = "Dijital",
+  suffix = "Büyütüyoruz",
+}: {
+  words: string[];
+  prefix?: string;
+  suffix?: string;
+}) {
   const safeWords = words.length > 0 ? words : [
     "Satışlarınızı",
     "Kazancınızı",
@@ -59,7 +67,7 @@ function AnimatedHeadline({ words }: { words: string[] }) {
     <div className="flex flex-col sm:flex-row items-center justify-center">
       {/* Üst satır - Dijital */}
       <span className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
-        Dijital
+        {prefix}
       </span>
 
       {/* Boşluk - sadece sm ve üstü */}
@@ -92,7 +100,7 @@ function AnimatedHeadline({ words }: { words: string[] }) {
 
       {/* Sağ taraf - Büyütüyoruz */}
       <span className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
-        Büyütüyoruz
+        {suffix}
       </span>
     </div>
   );
@@ -205,7 +213,10 @@ function ParticleCanvas() {
 }
 
 export default function Hero({
-  titleWords = ["Satışlarınızı", "Kazancınızı", "Verimliliğinizi", "Geleceğinizi"],
+  titlePrefix = "Dijital",
+  titleSuffix = "Çözümleri",
+  animatedWords = ["Satışlarınızı", "Kazancınızı", "Verimliliğinizi", "Geleceğinizi"],
+  subtitle = "Bursa'nın önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
   description = "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
   primaryCta,
   secondaryCta,
@@ -216,7 +227,10 @@ export default function Hero({
     { number: "8+", label: "Yıllık Deneyim" },
   ],
 }: {
-  titleWords?: string[];
+  titlePrefix?: string;
+  titleSuffix?: string;
+  animatedWords?: string[];
+  subtitle?: string;
   description?: string;
   primaryCta?: { text: string; link: string };
   secondaryCta?: { text: string; link: string };
@@ -257,7 +271,7 @@ export default function Hero({
         <div className="animate-fade-in-up">
           {/* Main Headline */}
           <div className="mb-8">
-            <AnimatedHeadline words={titleWords} />
+            <AnimatedHeadline words={animatedWords} prefix={titlePrefix} suffix={titleSuffix} />
           </div>
 
           <p className="text-base sm:text-lg md:text-xl text-[#cdd6f4]/90 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>

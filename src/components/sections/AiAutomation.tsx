@@ -4,14 +4,23 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Bot, Zap, BarChart3, MessageSquare, Workflow, BrainCircuit } from "lucide-react";
 
-const features = [
-  { icon: Workflow, label: "Süreç Otomasyonu", desc: "Bir kez kurulur, sonsuza kadar çalışır — ekibiniz asıl işine bakar" },
-  { icon: Bot, label: "AI Asistan", desc: "Müşteri taleplerini anlar, yönlendirir ve çözer — sizin yerinize" },
-  { icon: BarChart3, label: "Akıllı Analitik", desc: "Neyin işe yaradığını görün, neyin yaramadığını anlayın" },
-  { icon: MessageSquare, label: "Chatbot", desc: "Ziyaretçiyi müşteriye dönüştüren akıllı sohbet deneyimi" },
-  { icon: Zap, label: "Hız & Verimlilik", desc: "Saatlik işleri dakikaya, günlük işleri saate indirin" },
-  { icon: BrainCircuit, label: "AI Entegrasyonu", desc: "Sistemleriniz değişmez — sadece çok daha akıllı hale gelir" },
+const defaultFeatures = [
+  { icon: "Workflow", label: "Süreç Otomasyonu", desc: "Bir kez kurulur, sonsuza kadar çalışır — ekibiniz asıl işine bakar" },
+  { icon: "Bot", label: "AI Asistan", desc: "Müşteri taleplerini anlar, yönlendirir ve çözer — sizin yerinize" },
+  { icon: "BarChart3", label: "Akıllı Analitik", desc: "Neyin işe yaradığını görün, neyin yaramadığını anlayın" },
+  { icon: "MessageSquare", label: "Chatbot", desc: "Ziyaretçiyi müşteriye dönüştüren akıllı sohbet deneyimi" },
+  { icon: "Zap", label: "Hız & Verimlilik", desc: "Saatlik işleri dakikaya, günlük işleri saate indirin" },
+  { icon: "BrainCircuit", label: "AI Entegrasyonu", desc: "Sistemleriniz değişmez — sadece çok daha akıllı hale gelir" },
 ];
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Workflow,
+  Bot,
+  BarChart3,
+  MessageSquare,
+  Zap,
+  BrainCircuit,
+};
 
 export default function AiAutomation({
   title = 'Zamanınızı Geri Kazanın, <span class="text-[#8b5cf6]">İşinizi Otomatikleştirin</span>',
@@ -26,10 +35,10 @@ export default function AiAutomation({
   title?: string;
   subtitle?: string;
   description?: string[];
-  features?: typeof features;
+  features?: { icon: string; label: string; desc: string }[];
   badge?: string;
 }) {
-  const activeFeatures = propFeatures && propFeatures.length > 0 ? propFeatures : features;
+  const activeFeatures = propFeatures && propFeatures.length > 0 ? propFeatures : defaultFeatures;
   return (
     <section id="ai-otomasyon" className="relative py-24 xl:py-36 bg-[#181825] overflow-hidden">
       {/* Background glow */}
@@ -72,7 +81,12 @@ export default function AiAutomation({
                     {/* İkon + başlık: mobilde dikey, sm+'da yatay */}
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3 mb-2 xl:mb-3">
                       <div className="w-10 h-10 xl:w-14 xl:h-14 rounded-xl bg-[#8b5cf6]/15 flex items-center justify-center shrink-0">
-                        <f.icon className="w-5 h-5 xl:w-7 xl:h-7 text-[#8b5cf6]" />
+                        {(() => {
+                          const IconComponent = iconMap[f.icon];
+                          return IconComponent ? (
+                            <IconComponent className="w-5 h-5 xl:w-7 xl:h-7 text-[#8b5cf6]" />
+                          ) : null;
+                        })()}
                       </div>
                       <p className="text-[#94e2d5] text-sm xl:text-base font-semibold leading-tight">
                         {f.label}

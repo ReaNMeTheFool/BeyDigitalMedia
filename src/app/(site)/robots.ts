@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
         "/_next/",
       ],
     },
-    sitemap: "https://beydigitalmedia.com/sitemap.xml",
-    host: "https://beydigitalmedia.com",
+    sitemap: "https://www.beydigitalmedia.com/sitemap.xml",
+    host: "https://www.beydigitalmedia.com",
   };
 }

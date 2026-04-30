@@ -2,12 +2,20 @@ import { getPayloadClient } from "@/lib/payload";
 import Hero from "./Hero";
 
 interface HeroServerProps {
+  titlePrefix?: string;
+  titleSuffix?: string;
+  animatedWords?: string[];
+  subtitle?: string;
   description?: string;
   primaryCta?: { text: string; link: string };
   secondaryCta?: { text: string; link: string };
 }
 
 export default async function HeroServer({
+  titlePrefix,
+  titleSuffix,
+  animatedWords,
+  subtitle,
   description,
   primaryCta,
   secondaryCta,
@@ -31,6 +39,10 @@ export default async function HeroServer({
 
   return (
     <Hero
+      titlePrefix={titlePrefix}
+      titleSuffix={titleSuffix}
+      animatedWords={animatedWords}
+      subtitle={subtitle}
       description={description}
       primaryCta={primaryCta}
       secondaryCta={secondaryCta}
