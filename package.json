@@ -10,6 +10,7 @@
     "payload:seed": "tsx src/payload/seed.ts",
     "start:all": "bash scripts/start-dev.sh",
     "deploy": "bash scripts/deploy.sh",
+    "sync": "bash scripts/sync-from-server.sh",
     "seed": "bash scripts/seed.sh"
   },
   "dependencies": {
