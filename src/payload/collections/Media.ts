@@ -8,7 +8,7 @@ export const Media: CollectionConfig = {
   },
   admin: {
     group: "Medya",
-    description: "Sitede kullanılan tüm görseller, videolar ve dosyalar buradan yönetilir. Yüklenen her medya otomatik olarak thumbnail, card ve tablet boyutlarında optimize edilir.",
+    description: "Görsel ve dosyaları yönetin.",
   },
   upload: {
     staticDir: "public/media",

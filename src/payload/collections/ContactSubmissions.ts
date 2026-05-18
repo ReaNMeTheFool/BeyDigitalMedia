@@ -10,7 +10,7 @@ export const ContactSubmissions: CollectionConfig = {
     useAsTitle: "name",
     group: "İletişim",
     defaultColumns: ["name", "email", "createdAt", "read"],
-    description: "İletişim formu üzerinden gönderilen tüm mesajlar burada listelenir. Okunmamış mesajları takip etmek için 'Okundu' sütununu kullanın.",
+    description: "Gelen mesajları görüntüleyin.",
   },
   access: {
     create: () => true,
@@ -25,7 +25,7 @@ export const ContactSubmissions: CollectionConfig = {
       label: "Ad Soyad",
       required: true,
       admin: {
-        description: "Gönderen kişinin adı ve soyadı.",
+        description: "Gönderenin adı ve soyadı.",
       },
     },
     {
@@ -34,7 +34,7 @@ export const ContactSubmissions: CollectionConfig = {
       label: "E-posta",
       required: true,
       admin: {
-        description: "Geri dönüş yapılacak e-posta adresi.",
+        description: "Geri dönüş e-posta adresi.",
       },
     },
     {
@@ -42,7 +42,7 @@ export const ContactSubmissions: CollectionConfig = {
       type: "text",
       label: "Telefon",
       admin: {
-        description: "Opsiyonel telefon numarası.",
+        description: "Telefon numarası.",
       },
     },
     {
@@ -50,7 +50,7 @@ export const ContactSubmissions: CollectionConfig = {
       type: "text",
       label: "İlgilenilen Hizmetler",
       admin: {
-        description: "Ziyaretçinin ilgilendiği hizmetlerin virgülle ayrılmış listesi.",
+        description: "İlgilenilen hizmetler.",
       },
     },
     {
@@ -59,7 +59,7 @@ export const ContactSubmissions: CollectionConfig = {
       label: "Mesaj",
       required: true,
       admin: {
-        description: "Ziyaretçinin gönderdiği detaylı mesaj.",
+        description: "Mesaj içeriği.",
       },
     },
     {
@@ -68,7 +68,7 @@ export const ContactSubmissions: CollectionConfig = {
       label: "Okundu",
       defaultValue: false,
       admin: {
-        description: "Mesajı okuduğunuzda bu kutuyu işaretleyin. Okunmamış mesajlar vurgulu gösterilir.",
+        description: "Okundu olarak işaretle.",
       },
     },
   ],

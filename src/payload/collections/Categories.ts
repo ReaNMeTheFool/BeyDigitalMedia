@@ -9,7 +9,8 @@ export const Categories: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     group: "Blog",
-    description: "Blog yazıları için kategorileri oluşturun ve yönetin. Her kategori benzersiz bir slug'a sahip olmalıdır.",
+    defaultColumns: ["name", "slug", "createdAt"],
+    description: "Blog kategorilerini yönetin.",
   },
   fields: [
     {

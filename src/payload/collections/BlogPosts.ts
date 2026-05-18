@@ -9,44 +9,18 @@ export const BlogPosts: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "Blog",
-    description: "Blog yazılarınızı buradan oluşturun, düzenleyin ve yayınlayın. Her yazı otomatik olarak kendi sayfasını oluşturur.",
+    defaultColumns: ["title", "publishedDate", "createdAt"],
+    description: "Blog yazılarını yönetin.",
   },
   fields: [
     {
-      name: "slug",
-      type: "text",
-      label: "Slug",
-      required: true,
-      unique: true,
+      name: "featuredImage",
+      type: "upload",
+      relationTo: "media",
+      label: "Kapak Görseli",
       admin: {
-        description: "Blog yazısının URL adresi. Örn: sosyal-medya-trendleri-2024",
-      },
-    },
-    {
-      name: "title",
-      type: "text",
-      label: "Başlık",
-      required: true,
-      admin: {
-        description: "Yazının ana başlığı. Hem sayfada hem arama sonuçlarında görünür.",
-      },
-    },
-    {
-      name: "excerpt",
-      type: "textarea",
-      label: "Özet",
-      required: true,
-      admin: {
-        description: "Blog listeleme sayfasında görünen kısa özet. 2-3 cümle önerilir.",
-      },
-    },
-    {
-      name: "content",
-      type: "richText",
-      label: "İçerik",
-      required: true,
-      admin: {
-        description: "Yazının ana içeriği. Başlıklar, paragraflar, listeler ve bağlantılar ekleyebilirsiniz.",
+        position: "sidebar",
+        description: "Kapak görseli. 1200x630px önerilir.",
       },
     },
     {
@@ -55,34 +29,8 @@ export const BlogPosts: CollectionConfig = {
       relationTo: "categories",
       label: "Kategori",
       admin: {
-        description: "Yazının ait olduğu kategori. Kategoriler 'Categories' koleksiyonundan yönetilir.",
-      },
-    },
-    {
-      name: "publishedDate",
-      type: "date",
-      label: "Yayın Tarihi",
-      required: true,
-      admin: {
-        description: "Yazının yayınlanma tarihi. Gelecek tarihli yazılar otomatik olarak listelenmez.",
-      },
-    },
-    {
-      name: "featuredImage",
-      type: "upload",
-      relationTo: "media",
-      label: "Kapak Görseli",
-      admin: {
-        description: "Blog listeleme ve detay sayfasında görünecek ana görsel. 1200x630px önerilir.",
-      },
-    },
-    {
-      name: "author",
-      type: "relationship",
-      relationTo: "users",
-      label: "Yazar",
-      admin: {
-        description: "Yazıyı yazan kişi. Kullanıcılar 'Users' koleksiyonundan seçilir.",
+        position: "sidebar",
+        description: "Yazının kategorisi.",
       },
     },
     {
@@ -90,7 +38,8 @@ export const BlogPosts: CollectionConfig = {
       type: "text",
       label: "SEO Başlığı",
       admin: {
-        description: "Arama motorlarında görünen başlık. Boş bırakılırsa yazı başlığı kullanılır.",
+        position: "sidebar",
+        description: "SEO başlığı.",
       },
     },
     {
@@ -98,8 +47,78 @@ export const BlogPosts: CollectionConfig = {
       type: "textarea",
       label: "SEO Açıklaması",
       admin: {
-        description: "Arama sonuçlarında görünen açıklama. 160 karakteri geçmemeye özen gösterin.",
+        position: "sidebar",
+        description: "SEO açıklaması (max 160 karakter).",
       },
+    },
+    {
+      type: "tabs",
+      tabs: [
+        {
+          label: "İçerik",
+          fields: [
+            {
+              name: "slug",
+              type: "text",
+              label: "Slug",
+              required: true,
+              unique: true,
+              admin: {
+                description: "URL adresi. Örn: sosyal-medya-trendleri-2024",
+              },
+            },
+            {
+              name: "title",
+              type: "text",
+              label: "Başlık",
+              required: true,
+              admin: {
+                description: "Yazının ana başlığı.",
+              },
+            },
+            {
+              name: "excerpt",
+              type: "textarea",
+              label: "Özet",
+              required: true,
+              admin: {
+                description: "Listeleme sayfasında görünen kısa özet.",
+              },
+            },
+            {
+              name: "content",
+              type: "richText",
+              label: "İçerik",
+              required: true,
+              admin: {
+                description: "Yazının ana içeriği.",
+              },
+            },
+            {
+              name: "publishedDate",
+              type: "date",
+              label: "Yayın Tarihi",
+              required: true,
+              admin: {
+                description: "Yayınlanma tarihi.",
+              },
+            },
+            {
+              name: "author",
+              type: "relationship",
+              relationTo: "users",
+              label: "Yazar",
+              admin: {
+                description: "Yazıyı yazan kişi.",
+              },
+            },
+          ],
+        },
+        {
+          label: "SEO",
+          fields: [],
+        },
+      ],
     },
   ],
 };

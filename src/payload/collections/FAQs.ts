@@ -9,16 +9,27 @@ export const FAQs: CollectionConfig = {
   admin: {
     useAsTitle: "question",
     group: "Referanslar",
-    description: "Sıkça sorulan soruları buradan yönetin. Sorular ana sayfadaki akordeon bileşeninde listelenir.",
+    defaultColumns: ["question", "order", "createdAt"],
+    description: "Sık sorulan soruları yönetin.",
   },
   fields: [
+    {
+      name: "order",
+      type: "number",
+      label: "Sıralama",
+      defaultValue: 0,
+      admin: {
+        position: "sidebar",
+        description: "Görünüm sırası. Küçük = üstte.",
+      },
+    },
     {
       name: "question",
       type: "text",
       label: "Soru",
       required: true,
       admin: {
-        description: "Ziyaretçilerin sık sorduğu soruyu yazın. Net ve anlaşılır olun.",
+        description: "Sık sorulan soru.",
       },
     },
     {
@@ -27,16 +38,7 @@ export const FAQs: CollectionConfig = {
       label: "Cevap",
       required: true,
       admin: {
-        description: "Sorunun detaylı cevabı. Paragraflar, listeler ve vurgular kullanabilirsiniz.",
-      },
-    },
-    {
-      name: "order",
-      type: "number",
-      label: "Sıralama",
-      defaultValue: 0,
-      admin: {
-        description: "Soruların listedeki görünüm sırası. Küçük numara = üstte göster.",
+        description: "Sorunun detaylı cevabı.",
       },
     },
   ],

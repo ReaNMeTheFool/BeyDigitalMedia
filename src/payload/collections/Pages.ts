@@ -11,9 +11,27 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "İçerik",
-    description: "Dinamik sayfalarınızı yönetin. 'home' slug'lu sayfa ana sayfa olarak kullanılır.",
+    description: "Sayfaları yönetin. 'home' slug'ı ana sayfadır.",
   },
   fields: [
+    {
+      name: "metaTitle",
+      type: "text",
+      label: "SEO Başlığı",
+      admin: {
+        position: "sidebar",
+        description: "SEO başlığı.",
+      },
+    },
+    {
+      name: "metaDescription",
+      type: "textarea",
+      label: "SEO Açıklaması",
+      admin: {
+        position: "sidebar",
+        description: "SEO açıklaması.",
+      },
+    },
     {
       name: "slug",
       type: "text",
@@ -21,7 +39,7 @@ export const Pages: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: "Sayfanın URL adresi. 'home' özel olarak ana sayfayı temsil eder.",
+        description: "URL adresi. 'home' ana sayfayı temsil eder.",
       },
     },
     {
@@ -30,23 +48,7 @@ export const Pages: CollectionConfig = {
       label: "Sayfa Başlığı",
       required: true,
       admin: {
-        description: "Yönetim panelinde görünen sayfa adı.",
-      },
-    },
-    {
-      name: "metaTitle",
-      type: "text",
-      label: "SEO Başlığı",
-      admin: {
-        description: "Tarayıcı sekmesinde ve arama sonuçlarında görünen başlık.",
-      },
-    },
-    {
-      name: "metaDescription",
-      type: "textarea",
-      label: "SEO Açıklaması",
-      admin: {
-        description: "Arama motorlarında görünen sayfa açıklaması.",
+        description: "Panelde görünen sayfa adı.",
       },
     },
     {
@@ -54,7 +56,7 @@ export const Pages: CollectionConfig = {
       type: "blocks",
       label: "Sayfa İçeriği",
       admin: {
-        description: "Sayfayı oluşturan bloklar. Blok sıralaması site tarafından sabitlenmiştir, sadece içerikleri değiştirebilirsiniz.",
+        description: "Sayfa blokları.",
       },
       blocks: [
         HeroBlock,

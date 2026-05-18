@@ -9,7 +9,7 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: "username",
     group: "Sistem",
-    description: "Sistem yöneticileri ve editör kullanıcıları buradan yönetilir. Kullanıcı adı ve şifre ile giriş yapılır.",
+    description: "Kullanıcı hesaplarını yönetin.",
   },
   auth: {
     loginWithUsername: {
@@ -24,7 +24,7 @@ export const Users: CollectionConfig = {
       type: "text",
       label: "Ad Soyad",
       admin: {
-        description: "Kullanıcının görünen adı",
+        description: "Görünen ad.",
       },
     },
     {
@@ -33,7 +33,7 @@ export const Users: CollectionConfig = {
       label: "Rol",
       defaultValue: "editor",
       admin: {
-        description: "Admin: Tam yetki | Editor: Sadece içerik yönetimi",
+        description: "Admin: Tam yetki | Editor: İçerik yönetimi",
       },
       options: [
         { label: "Admin", value: "admin" },
