@@ -1,16 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { HeroBlock } from "../blocks/Hero";
-import { MarqueeBlock } from "../blocks/Marquee";
-import { ServicesGridBlock } from "../blocks/ServicesGrid";
-import { PortfolioSliderBlock } from "../blocks/PortfolioSlider";
-import { TestimonialsCarouselBlock } from "../blocks/TestimonialsCarousel";
-import { FAQAccordionBlock } from "../blocks/FAQAccordion";
-import { AboutBlock } from "../blocks/About";
-import { AiAutomationBlock } from "../blocks/AiAutomation";
-import { WhyUsBlock } from "../blocks/WhyUs";
-import { PricingBlock } from "../blocks/Pricing";
-import { PartnerBadgesBlock } from "../blocks/PartnerBadges";
+import { HeroBlock, MarqueeBlock, ServicesGridBlock, PortfolioSliderBlock, TestimonialsCarouselBlock, FAQAccordionBlock, AboutBlock, AiAutomationBlock, WhyUsBlock, PricingBlock, PartnerBadgesBlock } from "../blocks";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -20,7 +10,7 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Ana Site",
+    group: "İçerik",
     description: "Dinamik sayfalarınızı yönetin. 'home' slug'lu sayfa ana sayfa olarak kullanılır.",
   },
   fields: [

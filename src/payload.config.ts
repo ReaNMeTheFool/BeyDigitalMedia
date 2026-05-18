@@ -7,20 +7,9 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
 
-import { Users } from "./payload/collections/Users";
-import { Media } from "./payload/collections/Media";
-import { Categories } from "./payload/collections/Categories";
-import { Services } from "./payload/collections/Services";
-import { BlogPosts } from "./payload/collections/BlogPosts";
-import { Projects } from "./payload/collections/Projects";
-import { Testimonials } from "./payload/collections/Testimonials";
-import { FAQs } from "./payload/collections/FAQs";
-import { ContactSubmissions } from "./payload/collections/ContactSubmissions";
-import { Pages } from "./payload/collections/Pages";
+import { Users, Media, Categories, Services, BlogPosts, Projects, Testimonials, FAQs, ContactSubmissions, Pages } from "./payload/collections";
 
-import { SiteSettings } from "./payload/globals/SiteSettings";
-import { Navigation } from "./payload/globals/Navigation";
-import { Footer } from "./payload/globals/Footer";
+import { SiteSettings, Navigation, Footer } from "./payload/globals";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

@@ -10,4 +10,4 @@ if ! nc -z localhost 27017 2>/dev/null; then
   exit 1
 fi
 
-npx tsx src/payload/seed.ts
+npx tsx src/payload/seed/index.ts

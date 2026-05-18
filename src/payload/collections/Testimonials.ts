@@ -8,7 +8,7 @@ export const Testimonials: CollectionConfig = {
   },
   admin: {
     useAsTitle: "name",
-    group: "Ana Site",
+    group: "Referanslar",
     description: "Müşteri yorumlarınızı ve referanslarınızı buradan yönetin. Yorumlar ana sayfadaki carousel'de otomatik döner.",
   },
   fields: [

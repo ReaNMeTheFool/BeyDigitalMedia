@@ -8,7 +8,7 @@ export const Projects: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Ana Site",
+    group: "Portfolyo",
     description: "Referans projelerinizi buradan yönetin. Her proje portfolyo slider'ında ve proje detay sayfalarında görüntülenir.",
   },
   fields: [

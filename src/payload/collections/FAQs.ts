@@ -8,7 +8,7 @@ export const FAQs: CollectionConfig = {
   },
   admin: {
     useAsTitle: "question",
-    group: "Ana Site",
+    group: "Referanslar",
     description: "Sıkça sorulan soruları buradan yönetin. Sorular ana sayfadaki akordeon bileşeninde listelenir.",
   },
   fields: [

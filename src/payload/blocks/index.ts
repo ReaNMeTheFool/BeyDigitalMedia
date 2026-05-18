@@ -1,0 +1,12 @@
+export { HeroBlock } from "./Hero";
+export { MarqueeBlock } from "./Marquee";
+export { ServicesGridBlock } from "./ServicesGrid";
+export { PortfolioSliderBlock } from "./PortfolioSlider";
+export { TestimonialsCarouselBlock } from "./TestimonialsCarousel";
+export { FAQAccordionBlock } from "./FAQAccordion";
+export { AboutBlock } from "./About";
+export { AiAutomationBlock } from "./AiAutomation";
+export { WhyUsBlock } from "./WhyUs";
+export { PricingBlock } from "./Pricing";
+export { PartnerBadgesBlock } from "./PartnerBadges";
+export { CTABlock } from "./CTA";
