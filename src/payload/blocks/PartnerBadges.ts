@@ -2,32 +2,36 @@ import type { Block } from "payload";
 
 export const PartnerBadgesBlock: Block = {
   slug: "partnerBadges",
+  interfaceName: "PartnerBadgesBlock",
   fields: [
     {
       name: "title",
       type: "text",
-      label: "Baslik",
-      defaultValue: "Birlikte Calistigimiz Platformlar",
+      label: "Başlık",
+      defaultValue: "Birlikte Çalıştığımız Platformlar",
     },
     {
       name: "badges",
       type: "array",
       label: "Partner Rozetleri",
       admin: {
-        description: "Partner platform rozetlerini buradan duzenleyin.",
+        description: "Partner platform rozetlerini buradan düzenleyin.",
       },
       fields: [
         {
           name: "name",
           type: "text",
-          label: "Platform Adi",
+          label: "Platform Adı",
           required: true,
         },
         {
           name: "icon",
           type: "upload",
           relationTo: "media",
-          label: "Ikon",
+          label: "İkon",
+          admin: {
+            position: "sidebar",
+          },
         },
       ],
     },

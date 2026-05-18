@@ -2,6 +2,7 @@ import type { Block } from "payload";
 
 export const PortfolioSliderBlock: Block = {
   slug: "portfolioSlider",
+  interfaceName: "PortfolioSliderBlock",
   fields: [
     {
       name: "title",

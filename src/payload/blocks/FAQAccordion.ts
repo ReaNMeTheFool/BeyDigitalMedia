@@ -2,6 +2,7 @@ import type { Block } from "payload";
 
 export const FAQAccordionBlock: Block = {
   slug: "faqAccordion",
+  interfaceName: "FaqAccordionBlock",
   fields: [
     {
       name: "title",
