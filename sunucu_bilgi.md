@@ -100,3 +100,31 @@ step 3:
 We updated robots.txt to reference /api/sitemap instead of sitemap.ts static file
 
 This pattern applies to any Next.js file that calls CMS during static generation inside Docker builder. Move CMS-dependent logic to runtime API endpoints
+
+## 3. Docker build killed by OOM killer (SIGKILL) on 4GB server
+
+During `docker compose build` or `docker build` the Next.js build process was getting killed with SIGKILL because the Docker build container had no memory limit and the Linux OOM killer intervened when available RAM ran out. Server has 4GB RAM + 8GB swap but Next.js Turbopack build consumes all available memory in spikes.
+
+# solving steps:
+
+step 1:
+
+Clean Docker build cache to free up space (old cache was 4.2GB):
+```
+docker builder prune -f
+```
+
+step 2:
+
+Build with explicit memory limits using `docker build --memory=3g --memory-swap=5g` instead of `docker compose build` (which does not support memory limits). This caps the build container at 3GB RAM with 5GB max (RAM + swap).
+
+```
+docker build --memory=3g --memory-swap=5g -t beydigital-app .
+docker compose up -d --no-build
+```
+
+step 3:
+
+Created `scripts/push-to-server.sh` which dynamically checks available server RAM via SSH and calculates appropriate `--memory` and `--memory-swap` values before building. This prevents manual guesswork and adapts to whatever memory is free at deploy time.
+
+Key takeaway: Never use `docker compose build` on low-memory servers. Always set explicit `--memory` limits based on available RAM. The Next.js page that caused the DB connection error during build was also made `force-dynamic` (see section 2 pattern).
