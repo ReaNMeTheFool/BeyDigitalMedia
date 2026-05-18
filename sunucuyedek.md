@@ -73,30 +73,5 @@ so npm became able to solve xxx-app-1 hostname oover domains
 
 step 2:
 
-we set HOSTNAME=0.0.0.0 in docker-compose.yml environment variables so Next.js standalone server listens on all interfaces not just container hostname
 
-step 3:
 
-we updated npm sqlite database forward_host from 127.0.0.1 to xxx-app-1 via:
-
-sqlite3 /data/database.sqlite "UPDATE proxy_host SET forward_host='xxx-app-1' WHERE id=1;"
-
-## 2. Docker build failing with getaddrinfo ENOTFOUND mongo
-
-During docker compose build npm run build was trying to connect to Payload CMS which needs MongoDB but builder stage cannot resolve mongo hostname because docker compose services are not available at build time only at runtime
-
-# solving steps:
-
-step 1:
-
-We refactored sitemap.ts to only return static hardcoded pages at build time. No database calls during build
-
-step 2:
-
-We created a dynamic /api/sitemap route handler that connects to Payload CMS at runtime and fetches blog posts and projects from MongoDB then returns XML
-
-step 3:
-
-We updated robots.txt to reference /api/sitemap instead of sitemap.ts static file
-
-This pattern applies to any Next.js file that calls CMS during static generation inside Docker builder. Move CMS-dependent logic to runtime API endpoints
