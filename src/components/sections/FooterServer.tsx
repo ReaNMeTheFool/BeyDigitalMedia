@@ -7,16 +7,12 @@ export default async function FooterServer() {
 
   try {
     const payload = await getPayloadClient();
-    footerData = await payload.findGlobal({ slug: "footer" });
+    [footerData, siteSettings] = await Promise.all([
+      payload.findGlobal({ slug: "footer" }).catch(() => ({})),
+      payload.findGlobal({ slug: "siteSettings" }).catch(() => ({})),
+    ]);
   } catch {
-    footerData = {};
-  }
-
-  try {
-    const payload = await getPayloadClient();
-    siteSettings = await payload.findGlobal({ slug: "siteSettings" });
-  } catch {
-    siteSettings = {};
+    // fallback to empty defaults
   }
 
   const columns = footerData?.columns || [];
@@ -32,12 +28,26 @@ export default async function FooterServer() {
         ["Şirket", "Company", "şirket", "company", "Hakkımızda", "About"].includes(c.title)
       )?.links?.map((l: any) => ({ label: l.label, href: l.href })) ||
       undefined,
-    social:
-      siteSettings?.socialLinks?.map((s: any) => ({
+    social: (() => {
+      const raw = footerData?.socialLinks || siteSettings?.socialLinks;
+      if (!raw) return undefined;
+      const order: Record<string, number> = {
+        instagram: 0,
+        youtube: 1,
+        facebook: 2,
+        tiktok: 3,
+      };
+      const mapped = raw.map((s: any) => ({
         label: s.platform,
         href: s.url,
         platform: s.platform?.toLowerCase() || "",
-      })) || undefined,
+      }));
+      mapped.sort(
+        (a: any, b: any) =>
+          (order[a.platform] ?? 999) - (order[b.platform] ?? 999)
+      );
+      return mapped;
+    })(),
   };
 
   return (

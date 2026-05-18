@@ -42,6 +42,47 @@ export const Footer: GlobalConfig = {
       defaultValue: "Built for Digital Growth.",
     },
     {
+      name: "socialLinks",
+      type: "array",
+      label: "Sosyal Medya Linkleri",
+      admin: {
+        description:
+          "Footer'da gösterilecek sosyal medya ikonları. Instagram, YouTube, Facebook, TikTok sırasıyla ekleyin.",
+      },
+      defaultValue: [
+        {
+          platform: "Instagram",
+          url: "https://instagram.com/beydigitalmedia",
+        },
+        {
+          platform: "YouTube",
+          url: "https://www.youtube.com/@beydigitalmedia",
+        },
+        {
+          platform: "Facebook",
+          url: "https://www.facebook.com/beydigitalmedia",
+        },
+        {
+          platform: "TikTok",
+          url: "https://www.tiktok.com/@beydigitalmedia",
+        },
+      ],
+      fields: [
+        {
+          name: "platform",
+          type: "text",
+          required: true,
+          label: "Platform",
+        },
+        {
+          name: "url",
+          type: "text",
+          required: true,
+          label: "URL",
+        },
+      ],
+    },
+    {
       name: "columns",
       type: "array",
       label: "Sütunlar",

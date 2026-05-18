@@ -414,9 +414,9 @@ async function seed() {
         data: {
           slug: "home",
           title: "Ana Sayfa",
-          metaTitle: "Bey Digital Media | Bursa Dijital Pazarlama Ajansı",
+          metaTitle: "Bey Digital Media | Dijital Pazarlama Ajansi",
           metaDescription:
-            "Bursa merkezli dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.",
+            "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.",
           content: [
             {
               blockType: "hero",
@@ -455,7 +455,7 @@ async function seed() {
         slug: "siteSettings",
         data: {
           siteName: "Bey Digital Media",
-          tagline: "Bursa Dijital Pazarlama Ajansı",
+          tagline: "Dijital Pazarlama Ajansi",
           contactEmail: "info@beydigitalmedia.com",
         },
       });
@@ -504,6 +504,24 @@ async function seed() {
       await payload.updateGlobal({
         slug: "footer",
         data: {
+          socialLinks: [
+            {
+              platform: "Instagram",
+              url: "https://instagram.com/beydigitalmedia",
+            },
+            {
+              platform: "YouTube",
+              url: "https://www.youtube.com/@beydigitalmedia",
+            },
+            {
+              platform: "Facebook",
+              url: "https://www.facebook.com/beydigitalmedia",
+            },
+            {
+              platform: "TikTok",
+              url: "https://www.tiktok.com/@beydigitalmedia",
+            },
+          ],
           bottomText: "© 2024 Bey Digital Media. Tüm hakları saklıdır.",
           showNewsletter: false,
         },
