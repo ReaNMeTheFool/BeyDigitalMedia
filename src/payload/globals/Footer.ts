@@ -89,6 +89,28 @@ export const Footer: GlobalConfig = {
       admin: {
         description: "Footer'daki link sütunları. Her sütunun bir başlığı ve altında birden fazla linki olabilir.",
       },
+      defaultValue: [
+        {
+          title: "Hizmetler",
+          links: [
+            { label: "Sosyal Medya Yönetimi", href: "/sosyal-medya-yonetimi" },
+            { label: "Meta Ads", href: "/meta-ads" },
+            { label: "Google Ads", href: "/google-ads" },
+            { label: "Web Tasarım", href: "/web-tasarim" },
+            { label: "SEO", href: "/seo" },
+            { label: "Logo & Kurumsal Kimlik", href: "/logo-tasarimi" },
+          ],
+        },
+        {
+          title: "Şirket",
+          links: [
+            { label: "Hakkımızda", href: "#about" },
+            { label: "Portfolyo", href: "/portfolyo" },
+            { label: "SSS", href: "#faq" },
+            { label: "İletişim", href: "/iletisim" },
+          ],
+        },
+      ],
       fields: [
         {
           name: "title",
