@@ -31,9 +31,7 @@ export default buildConfig({
       ],
     },
     components: {
-      beforeLogin: [],
       afterLogin: ["@/payload/components/PasswordToggle#PasswordToggle"],
-      afterDashboard: [],
       graphics: {
         Icon: "@/payload/components/AdminIcon#AdminIcon",
         Logo: "@/payload/components/AdminLogo#AdminLogo",
@@ -44,31 +42,6 @@ export default buildConfig({
   i18n: {
     fallbackLanguage: "tr",
     supportedLanguages: { tr, en },
-    translations: {
-      tr: {
-        authentication: {
-          lockUntil: "Kilitleme Tarihi",
-        },
-        fields: {
-          chooseBetweenCustomTextOrDocument:
-            "Özel metin URL'si girme veya başka bir dokümana bağlantı verme arasında seçim yapın",
-          itemsAndMore: "{{items}} ve {{count}} tane daha",
-          labelRelationship: "{{label}} İlişkisi",
-          relationTo: "İlişki",
-        },
-        general: {
-          aboutToDeleteCount: "Silmek üzere olduğunuz öğe sayısı",
-          editingLabel: "Düzenleniyor",
-          of: " / ",
-          or: "veya",
-          order: "Sıra",
-        },
-        version: {
-          changedFieldsCount: "Değiştirilen alan sayısı",
-          confirmRevertToSaved: "Kaydedilen sürüme dönmeyi onayla",
-        },
-      },
-    },
   },
   collections: [
     Users,
