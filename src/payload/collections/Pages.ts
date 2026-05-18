@@ -9,6 +9,8 @@ import { FAQAccordionBlock } from "../blocks/FAQAccordion";
 import { AboutBlock } from "../blocks/About";
 import { AiAutomationBlock } from "../blocks/AiAutomation";
 import { WhyUsBlock } from "../blocks/WhyUs";
+import { PricingBlock } from "../blocks/Pricing";
+import { PartnerBadgesBlock } from "../blocks/PartnerBadges";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -74,6 +76,8 @@ export const Pages: CollectionConfig = {
         AboutBlock,
         AiAutomationBlock,
         WhyUsBlock,
+        PricingBlock,
+        PartnerBadgesBlock,
       ],
     },
   ],

@@ -6,6 +6,8 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import { getPayloadClient } from "@/lib/payload";
 import { lexicalToHtml } from "@/lib/lexicalToHtml";
+import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
+import { ArticleJsonLd } from "@/components/SEO/JsonLd";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -34,13 +36,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       limit: 1,
     });
     const post = result.docs[0];
-    if (!post) return { title: "Sayfa Bulunamadı | Bey Digital Media" };
-    return {
-      title: (post.metaTitle as string) || (post.title as string),
-      description: (post.metaDescription as string) || (post.excerpt as string),
-    };
+    if (!post) return { title: "Sayfa Bulunamadi | Bey Digital Media" };
+
+    const title = (post.metaTitle as string) || (post.title as string);
+    const description =
+      (post.metaDescription as string) || (post.excerpt as string);
+    const image = (post.featuredImage as { url?: string })?.url || "";
+
+    return mergeMetadata(defaultSeoFields, {
+      title,
+      description,
+      alternates: {
+        canonical: `/blog/${slug}`,
+      },
+      openGraph: {
+        title,
+        description,
+        url: `https://beydigitalmedia.com/blog/${slug}`,
+        type: "article",
+        ...(image ? { images: [{ url: image, width: 1200, height: 630 }] } : {}),
+      },
+      twitter: {
+        title,
+        description,
+        ...(image ? { images: [image] } : {}),
+      },
+    });
   } catch {
-    return { title: "Sayfa Bulunamadı | Bey Digital Media" };
+    return { title: "Sayfa Bulunamadi | Bey Digital Media" };
   }
 }
 
@@ -69,12 +92,25 @@ export default async function BlogPostPage({ params }: Props) {
     <>
       <Navbar />
       <main className="min-h-screen bg-[#181825] pt-32 pb-24">
+        <ArticleJsonLd
+          title={title}
+          url={`https://beydigitalmedia.com/blog/${slug}`}
+          description={excerpt}
+          image={image || undefined}
+          datePublished={
+            post.publishedDate
+              ? new Date(post.publishedDate as string).toISOString()
+              : undefined
+          }
+          authorName={author || undefined}
+          publisherName="Bey Digital Media"
+        />
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
             className="text-[#0040ff] text-sm font-medium mb-6 inline-block hover:underline"
           >
-            ← Tüm Yazılar
+            Tum Yazilar
           </Link>
 
           <div className="flex items-center gap-2 text-sm text-[#cdd6f4]/60 mb-4">
@@ -84,7 +120,7 @@ export default async function BlogPostPage({ params }: Props) {
               </span>
             )}
             <span>{date}</span>
-            {author && <span>• {author}</span>}
+            {author && <span>- {author}</span>}
           </div>
 
           <h1 className="text-3xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
@@ -103,7 +139,6 @@ export default async function BlogPostPage({ params }: Props) {
                 fill
                 className="object-cover"
                 priority
-                unoptimized
               />
             </div>
           )}

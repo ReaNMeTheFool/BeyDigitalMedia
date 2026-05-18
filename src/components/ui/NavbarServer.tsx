@@ -7,16 +7,12 @@ export default async function NavbarServer() {
 
   try {
     const payload = await getPayloadClient();
-    navData = await payload.findGlobal({ slug: "navigation" });
+    [navData, siteSettings] = await Promise.all([
+      payload.findGlobal({ slug: "navigation" }).catch(() => ({})),
+      payload.findGlobal({ slug: "siteSettings" }).catch(() => ({})),
+    ]);
   } catch {
-    navData = {};
-  }
-
-  try {
-    const payload = await getPayloadClient();
-    siteSettings = await payload.findGlobal({ slug: "siteSettings" });
-  } catch {
-    siteSettings = {};
+    // fallback to empty defaults
   }
 
   const links = (navData?.links || [])

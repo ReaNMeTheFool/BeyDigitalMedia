@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Bot, Zap, BarChart3, MessageSquare, Workflow, BrainCircuit } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { iconMap } from "@/lib/icon-map";
 
 const defaultFeatures = [
   { icon: "Workflow", label: "Süreç Otomasyonu", desc: "Bir kez kurulur, sonsuza kadar çalışır — ekibiniz asıl işine bakar" },
@@ -12,15 +13,6 @@ const defaultFeatures = [
   { icon: "Zap", label: "Hız & Verimlilik", desc: "Saatlik işleri dakikaya, günlük işleri saate indirin" },
   { icon: "BrainCircuit", label: "AI Entegrasyonu", desc: "Sistemleriniz değişmez — sadece çok daha akıllı hale gelir" },
 ];
-
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Workflow,
-  Bot,
-  BarChart3,
-  MessageSquare,
-  Zap,
-  BrainCircuit,
-};
 
 export default function AiAutomation({
   title = 'Zamanınızı Geri Kazanın, <span class="text-[#8b5cf6]">İşinizi Otomatikleştirin</span>',

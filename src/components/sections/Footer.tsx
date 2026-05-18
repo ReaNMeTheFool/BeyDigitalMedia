@@ -1,17 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Instagram, Mail, Phone, ArrowUpRight, Youtube, Facebook } from "lucide-react";
-
-function TikTokIcon({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z" />
-    </svg>
-  );
-}
+import { Mail, Phone, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import ContactForm from "../ui/ContactForm";
+import { iconMap } from "@/lib/icon-map";
 
 const defaultFooterLinks = {
   services: [
@@ -36,13 +29,6 @@ const defaultFooterLinks = {
   ],
 };
 
-const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
-  instagram: Instagram,
-  youtube: Youtube,
-  facebook: Facebook,
-  tiktok: TikTokIcon,
-};
-
 interface FooterProps {
   ctaTitle?: string;
   ctaSubtitle?: string;
@@ -58,11 +44,11 @@ interface FooterProps {
 
 export default function Footer({
   ctaTitle = 'Dijital <span class="text-[#ffd76e]">Dönüşüm</span> İçin <br /><span style="color: #04a5e5">Hazır mısınız?</span>',
-  ctaSubtitle = "Markanızı bir üst seviyeye taşımak için hemen bizimle iletişime geçin. Ücretsiz danışmanlık için formu doldurun.",
-  ctaButtonText = "Ücretsiz Teklif Alın",
-  ctaButtonHref = "#contact",
+  ctaSubtitle = "Dijitalde buyumek icin ilk adimi atin. Uzman ekibimizle ucretsiz danismanlik icin formu doldurun.",
+  ctaButtonText = "Ucretsiz Teklif Alin",
+  ctaButtonHref = "#contact-form",
   brandName = 'Bey <span class="text-[#ffd76e]">Digital</span> Media',
-  brandTagline = "Built for Digital Growth.",
+  brandTagline = "Dijitalde Buyuyoruz.",
   footerLinks = defaultFooterLinks,
   contactEmail = "Beydigitalmedia@gmail.com",
   contactPhone = "+90 544 376 03 39",
@@ -176,13 +162,13 @@ export default function Footer({
             <ul className="space-y-3">
               {footerLinks.company?.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-[#cdd6f4]/80 hover:text-[#ffd76e] transition-colors flex items-center gap-1 group"
                   >
                     {link.label}
                     <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

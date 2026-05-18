@@ -36,23 +36,23 @@ class Particle {
   }
 }
 
-// Animasyonlu başlık bileşeni - Tüm cihazlarda aktif ve mobilde daha büyük
+// Animasyonlu baslik bileseni - Tum cihazlarda aktif ve mobilde daha buyuk
 function AnimatedHeadline({
   words,
   prefix = "Dijital",
-  suffix = "Büyütüyoruz",
+  suffix = "Buyutuyoruz",
 }: {
   words: string[];
   prefix?: string;
   suffix?: string;
 }) {
   const safeWords = words.length > 0 ? words : [
-    "Satışlarınızı",
-    "Kazancınızı",
-    "Verimliliğinizi",
-    "Geleceğinizi"
+    "Satislarinizi",
+    "Kazancinizi",
+    "Verimliliginizi",
+    "Geleceginizi"
   ];
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -65,19 +65,19 @@ function AnimatedHeadline({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center">
-      {/* Üst satır - Dijital */}
+      {/* Ust satir - Dijital */}
       <span className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         {prefix}
       </span>
 
-      {/* Boşluk - sadece sm ve üstü */}
+      {/* Bosluk - sadece sm ve ustu */}
       <span className="hidden sm:block w-4"></span>
 
-      {/* Orta - Animasyonlu kelime - Sabit genişlik */}
+      {/* Orta - Animasyonlu kelime - Sabit genislik */}
       <span className="relative inline-flex items-center justify-center text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold my-1 sm:my-0 text-[#ffd76e] whitespace-nowrap">
-        {/* Ghost: en uzun kelime genişliği sabit tutar */}
+        {/* Ghost: en uzun kelime genisligi sabit tutar */}
         <span className="invisible select-none" aria-hidden="true">{safeWords.reduce((a, b) => a.length > b.length ? a : b, "")}</span>
-        {/* AnimatePresence: kelimeler slide-up + fade ile geçiş yapar */}
+        {/* AnimatePresence: kelimeler slide-up + fade ile gecis yapar */}
         <AnimatePresence mode="wait">
           <motion.span
             key={currentIndex}
@@ -94,11 +94,11 @@ function AnimatedHeadline({
           </motion.span>
         </AnimatePresence>
       </span>
-      
-      {/* Boşluk - sadece sm ve üstü */}
+
+      {/* Bosluk - sadece sm ve ustu */}
       <span className="hidden sm:block w-4"></span>
 
-      {/* Sağ taraf - Büyütüyoruz */}
+      {/* Sag taraf - Buyutuyoruz */}
       <span className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#cdd6f4] whitespace-nowrap">
         {suffix}
       </span>
@@ -106,14 +106,14 @@ function AnimatedHeadline({
   );
 }
 
-// Canvas Particle Network - Sadece masaüstünde
+// Canvas Particle Network - Sadece masaustunde
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    // Mobilde canvas'ı devre dışı bırak
+    // Mobilde canvas'i devre disi birak
     if (window.innerWidth < 768) return;
-    
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -165,7 +165,7 @@ function ParticleCanvas() {
 
     const animate = (currentTime: number) => {
       const isMobile = canvas!.width < 768;
-      
+
       if (isMobile) {
         const deltaTime = currentTime - lastTime;
         if (deltaTime < frameInterval) {
@@ -174,14 +174,14 @@ function ParticleCanvas() {
         }
         lastTime = currentTime;
       }
-      
+
       ctx.clearRect(0, 0, canvas!.width, canvas!.height);
-      
+
       particles.forEach((particle) => {
         particle.update(canvas!.width, canvas!.height);
         particle.draw(ctx);
       });
-      
+
       drawConnections();
       animationId = requestAnimationFrame(animate);
     };
@@ -214,17 +214,17 @@ function ParticleCanvas() {
 
 export default function Hero({
   titlePrefix = "Dijital",
-  titleSuffix = "Çözümleri",
-  animatedWords = ["Satışlarınızı", "Kazancınızı", "Verimliliğinizi", "Geleceğinizi"],
-  subtitle = "Bursa'nın önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
-  description = "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
+  titleSuffix = "Cozumleri",
+  animatedWords = ["Satislarinizi", "Kazancinizi", "Verimliliginizi", "Geleceginizi"],
+  subtitle = "Turkiye'nin onde gelen dijital pazarlama ajansi olarak markanizi buyutmek icin buradayiz.",
+  description = "Bey Digital Media olarak markanizi dijital dunyada buyutmek icin Meta Ads, Google Ads, Sosyal Medya Yonetimi ve daha fazlasini sunuyoruz.",
   primaryCta,
   secondaryCta,
   stats = [
     { number: "150+", label: "Tamamlanan Proje" },
-    { number: "100+", label: "Memnun Müşteri" },
-    { number: "%100", label: "Müşteri Memnuniyeti" },
-    { number: "8+", label: "Yıllık Deneyim" },
+    { number: "100+", label: "Memnun Musteri" },
+    { number: "4.8/5", label: "Musteri Puani" },
+    { number: "8+", label: "Yillik Deneyim" },
   ],
 }: {
   titlePrefix?: string;
@@ -241,6 +241,8 @@ export default function Hero({
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden w-full"
     >
+      <h1 className="sr-only">Bey Digital Media - Dijital Pazarlama Ajansi</h1>
+
       {/* Background Gradient + Noise */}
       <div className="absolute inset-0 z-0 noise">
         <div className="absolute inset-0 bg-gradient-to-b from-[#000066]/90 via-[#00004d]/85 to-[#000033]/95" />
@@ -287,7 +289,7 @@ export default function Hero({
               }}
               className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"
             >
-              <span className="relative z-10">{primaryCta?.text || 'Ücretsiz Teklif Al'}</span>
+              <span className="relative z-10">{primaryCta?.text || 'Ucretsiz Analiz Al'}</span>
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-transform group-hover:translate-x-1" />
             </button>
             <button
@@ -330,7 +332,7 @@ export default function Hero({
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#cdd6f4]/60 hover:text-[#cdd6f4] transition-colors cursor-pointer animate-bounce-slow"
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-sm tracking-wider">Bizi daha fazla keşfet</span>
+          <span className="text-sm tracking-wider">Bizi daha fazla kesfet</span>
           <ChevronDown className="w-6 h-6" />
         </div>
       </button>

@@ -2,35 +2,32 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Award, Users, Briefcase, Heart } from "lucide-react";
+import { BarChart3, Award, Star, Clock } from "lucide-react";
 
-const stats = [
-  { icon: Award, value: "150+", label: "Tamamlanan Proje" },
-  { icon: Users, value: "100+", label: "Memnun Müşteri" },
-  { icon: Heart, value: "%100", label: "Müşteri Memnuniyeti" },
-  { icon: Briefcase, value: "8+", label: "Yıllık Deneyim" },
+const defaultStats = [
+  { icon: BarChart3, value: "10+", label: "Sektor" },
+  { icon: Award, value: "500+", label: "Kampanya" },
+  { icon: Star, value: "4.8/5", label: "Musteri Puani" },
+  { icon: Clock, value: "8+", label: "Yil Deneyim" },
 ];
 
 export default function About({
   image = '/hakkimizda.webp',
-  title = 'Dijitalde Büyümenin <span class="text-[#0040ff]">Güvenilir Ortağı</span>',
+  title = 'Dijitalde Buyumenin <span class="text-[#0040ff]">Guvenilir Ortagi</span>',
   paragraphs = [
-    "Bey Digital Media olarak Sekiz yılı aşkın süredir markaların dijital dünyada büyümesine yardımcı oluyoruz. Sosyal medya yönetimi, Meta Ads, Google Ads, web tasarım, SEO, logo tasarımı, ve kurumsal kimlik alanlarında uzman kadromuzla hizmet veriyoruz.",
-    "Her markanın kendine özgü bir hikayesi olduğuna inanıyoruz. Renklerin psikolojisinden ilham alarak, markaların kimliğini en iyi şekilde yansıtan stratejiler geliştiriyoruz. Amacımız, sadece görsel olarak değil, duygusal bağ kurarak akılda kalıcı markalar yaratmak.",
-    "100'den fazla mutlu müşteri ve 150'nin üzerinde tamamlanan proje ile Türkiye'nin dört bir yanından markalarla çalışma fırsatı bulduk. Siz de dijital dönüşüm yolculuğunuzda bize güvenebilirsiniz.",
+    "Bey Digital Media olarak 8 yili askin suredir markalarin dijital dunyada buyumesine yardimci oluyoruz. Kurucumuz Yigit Emre Balaban liderliginde; sosyal medya yonetimi, Meta Ads, Google Ads, web tasarim, SEO, logo tasarimi ve kurumsal kimlik alanlarinda uzman kadromuzla hizmet veriyoruz.",
+    "Her markanin kendine ozgu bir hikayesi var, biz de bu hikayeyi en iyi sekilde anlatmaya odaklaniyoruz. Renklerin psikolojisinden ilham aliyor, markanizin kimligini hem gorsel hem duygusal olarak guclendirecek stratejiler gelistiriyoruz. Amacimiz sadece guzel gorunmek degil, akilda kalmak.",
+    "10'dan fazla sektorde, 500'un uzerinde kampanya yonettik. Turkiye'nin dort bir yanindan markalarla calistik, hepsinden bir sey ogrendik. Siz de dijitalde buyumek istiyorsaniz dogru yerdesiniz.",
   ],
-  stats = [
-    { icon: Award, value: "150+", label: "Tamamlanan Proje" },
-    { icon: Users, value: "100+", label: "Memnun Müşteri" },
-    { icon: Heart, value: "%100", label: "Müşteri Memnuniyeti" },
-    { icon: Briefcase, value: "8+", label: "Yıllık Deneyim" },
-  ],
+  stats: propStats,
 }: {
   image?: string;
   title?: string;
   paragraphs?: string[];
   stats?: { icon: React.ElementType; value: string; label: string }[];
 }) {
+  const activeStats = propStats || defaultStats;
+
   return (
     <section id="about" className="relative py-24 bg-[#181825] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,12 +55,10 @@ export default function About({
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,64,255,0.5)]">
                 <Image
                   src={image}
-                  alt="Hakkımızda"
+                  alt="Hakkimizda"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
-                  priority
-                  unoptimized
                 />
               </div>
             </div>
@@ -77,7 +72,7 @@ export default function About({
               className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-[#0040ff] text-[#cdd6f4] rounded-2xl p-4 sm:p-6 shadow-xl"
             >
               <div className="text-4xl font-bold">8+</div>
-              <div className="text-sm opacity-90">Yıllık Deneyim</div>
+              <div className="text-sm opacity-90">Yillik Deneyim</div>
             </motion.div>
           </motion.div>
 
@@ -98,7 +93,7 @@ export default function About({
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 sm:flex gap-3 sm:gap-2 mt-4 sm:mt-2">
-              {stats.map((stat, index) => (
+              {activeStats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}

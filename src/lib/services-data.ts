@@ -100,9 +100,9 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#60a5fa",
-    metaTitle: "Sosyal Medya Yönetimi | Bey Digital Media - Bursa",
+    metaTitle: "Sosyal Medya Yönetimi | Bey Digital Media",
     metaDescription:
-      "Bursa'da profesyonel sosyal medya yönetimi. Instagram, Facebook ve TikTok platformlarında içerik stratejisi, topluluk yönetimi ve etkileşim optimizasyonu.",
+      "Profesyonel sosyal medya yonetimi. Instagram, Facebook ve TikTok platformlarinda icerik stratejisi, topluluk yonetimi ve etkilesim optimizasyonu.",
   },
 
   "meta-ads": {
@@ -181,7 +181,7 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#818cf8",
-    metaTitle: "Meta Ads Yönetimi | Bey Digital Media - Bursa",
+    metaTitle: "Meta Ads Yönetimi | Bey Digital Media",
     metaDescription:
       "Facebook ve Instagram reklam yönetimi. A/B testleri, lookalike kitleler ve dönüşüm odaklı Meta Ads kampanyaları ile hedef kitlenize ulaşın.",
   },
@@ -261,7 +261,7 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#4ade80",
-    metaTitle: "Google Ads Yönetimi | Bey Digital Media - Bursa",
+    metaTitle: "Google Ads Yönetimi | Bey Digital Media",
     metaDescription:
       "Uzman Google Ads yönetimi. Anahtar kelime optimizasyonu, dönüşüm takibi ve bütçe verimliliği ile Google'da üst sıralarda görünün.",
   },
@@ -342,9 +342,9 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#a78bfa",
-    metaTitle: "Web Tasarım & Geliştirme | Bey Digital Media - Bursa",
+    metaTitle: "Web Tasarım & Geliştirme | Bey Digital Media",
     metaDescription:
-      "Bursa'da modern web tasarım hizmetleri. Next.js ile mobil öncelikli, hızlı ve SEO uyumlu web siteleri. Özel tasarım ve geliştirme.",
+      "Modern web tasarim hizmetleri. Next.js ile mobil oncelikli, hizli ve SEO uyumlu web siteleri. Ozel tasarim ve gelistirme.",
   },
 
   seo: {
@@ -424,9 +424,9 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#fb923c",
-    metaTitle: "SEO & Yapay Zeka SEO Hizmetleri | Bey Digital Media - Bursa",
+    metaTitle: "SEO & Yapay Zeka SEO Hizmetleri | Bey Digital Media",
     metaDescription:
-      "Bursa'da profesyonel SEO hizmetleri. Teknik SEO, içerik optimizasyonu, backlink stratejileri ve ChatGPT/Gemini gibi yapay zeka aramalarında öne çıkmanızı sağlayan GEO/AEO optimizasyonu.",
+      "Profesyonel SEO hizmetleri. Teknik SEO, içerik optimizasyonu, backlink stratejileri ve ChatGPT/Gemini gibi yapay zeka aramalarında öne çıkmanızı sağlayan GEO/AEO optimizasyonu.",
   },
 
   "logo-tasarimi": {
@@ -504,7 +504,7 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#f472b6",
-    metaTitle: "Logo Tasarımı | Bey Digital Media - Bursa",
+    metaTitle: "Logo Tasarımı | Bey Digital Media",
     metaDescription:
       "Profesyonel logo tasarımı hizmetleri. Özgün ve akılda kalıcı logolar, vektörel dosyalar ve marka kılavuzu ile markanızı güçlendirin.",
   },
@@ -585,7 +585,7 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#fb7185",
-    metaTitle: "Kurumsal Kimlik Tasarımı | Bey Digital Media - Bursa",
+    metaTitle: "Kurumsal Kimlik Tasarımı | Bey Digital Media",
     metaDescription:
       "Profesyonel kurumsal kimlik tasarımı. Kartvizit, antetli kağıt, katalog, ambalaj ve marka kılavuzu ile tutarlı bir marka imajı oluşturun.",
   },
@@ -747,7 +747,7 @@ const servicesData: Record<string, ServiceData> = {
       },
     ],
     accentColor: "#22d3ee",
-    metaTitle: "Detaylı Dijital Raporlama | Bey Digital Media - Bursa",
+    metaTitle: "Detaylı Dijital Raporlama | Bey Digital Media",
     metaDescription:
       "Aylık dijital performans raporları, KPI takibi, rakip analizi ve strateji önerileri. Veriye dayalı kararlarla markanızı büyütün.",
   },

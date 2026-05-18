@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import ServicePageContent from "@/components/sections/ServicePageContent";
+import BlocksRenderer from "@/components/blocks/BlocksRenderer";
 import { getPayloadClient } from "@/lib/payload";
 import { lexicalToHtml } from "@/lib/lexicalToHtml";
+import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 import type { ServiceData } from "@/lib/services-data";
 
 type Props = {
@@ -34,19 +36,56 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       limit: 1,
     });
     const service = result.docs[0];
-    if (!service) {
-      return { title: "Sayfa Bulunamadı | Bey Digital Media" };
+    if (service) {
+      const title =
+        (service.metaTitle as string) || (service.title as string);
+      const description = service.metaDescription as string;
+      return mergeMetadata(defaultSeoFields, {
+        title,
+        description,
+        alternates: { canonical: `/${slug}` },
+        openGraph: {
+          title,
+          description,
+          url: `https://beydigitalmedia.com/${slug}`,
+        },
+        twitter: { title, description },
+      });
     }
-    return {
-      title: (service.metaTitle as string) || service.title,
-      description: service.metaDescription as string,
-      alternates: {
-        canonical: `/${slug}`,
-      },
-    };
   } catch {
-    return { title: "Sayfa Bulunamadı | Bey Digital Media" };
+    // fallback to pages
   }
+
+  // Fallback: pages koleksiyonunda ara
+  try {
+    const payload = await getPayloadClient();
+    const result = await payload.find({
+      collection: "pages",
+      where: { slug: { equals: slug } },
+      limit: 1,
+    });
+    const page = result.docs[0];
+    if (page) {
+      const title =
+        (page.metaTitle as string) || (page.title as string) || slug;
+      const description = page.metaDescription as string;
+      return mergeMetadata(defaultSeoFields, {
+        title,
+        description,
+        alternates: { canonical: `/${slug}` },
+        openGraph: {
+          title,
+          description,
+          url: `https://beydigitalmedia.com/${slug}`,
+        },
+        twitter: { title, description },
+      });
+    }
+  } catch {
+    // fallback
+  }
+
+  return { title: "Sayfa Bulunamadi | Bey Digital Media" };
 }
 
 function mapPayloadServiceToServiceData(doc: Record<string, unknown>): ServiceData {
@@ -84,10 +123,10 @@ function mapPayloadServiceToServiceData(doc: Record<string, unknown>): ServiceDa
   };
 }
 
-export default async function ServicePage({ params }: Props) {
+export default async function DynamicPage({ params }: Props) {
   const { slug } = await params;
-  let service: ServiceData | null = null;
 
+  // Once services koleksiyonunda dene
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
@@ -97,21 +136,56 @@ export default async function ServicePage({ params }: Props) {
     });
     const doc = result.docs[0];
     if (doc) {
-      service = mapPayloadServiceToServiceData(doc);
+      const service = mapPayloadServiceToServiceData(doc);
+      return (
+        <>
+          <Navbar />
+          <ServicePageContent service={service} />
+          <Footer />
+        </>
+      );
     }
   } catch {
-    service = null;
+    // fallback to pages
   }
 
-  if (!service) {
-    notFound();
+  // pages koleksiyonunda dene
+  try {
+    const payload = await getPayloadClient();
+    const result = await payload.find({
+      collection: "pages",
+      where: { slug: { equals: slug } },
+      limit: 1,
+    });
+    const page = result.docs[0];
+    if (page) {
+      const blocks = page.content || [];
+      return (
+        <>
+          <Navbar />
+          <main>
+            {Array.isArray(blocks) && blocks.length > 0 ? (
+              <BlocksRenderer blocks={blocks} />
+            ) : (
+              <div className="min-h-screen flex items-center justify-center bg-[#181825] text-[#cdd6f4]">
+                <div className="text-center px-4">
+                  <h1 className="text-3xl sm:text-4xl font-bold mb-4">
+                    {(page.title as string) || slug}
+                  </h1>
+                  <p className="text-lg text-[#cdd6f4]/80">
+                    Bu sayfada henuz icerik bulunmuyor.
+                  </p>
+                </div>
+              </div>
+            )}
+          </main>
+          <Footer />
+        </>
+      );
+    }
+  } catch {
+    // not found
   }
 
-  return (
-    <>
-      <Navbar />
-      <ServicePageContent service={service} />
-      <Footer />
-    </>
-  );
+  notFound();
 }

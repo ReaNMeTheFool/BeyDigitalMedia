@@ -5,14 +5,16 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function CTA({
   title = 'Dijital <span class="text-[#ffd76e]">Büyüme</span> Yolculuğuna Bugün Başlayın',
-  subtitle = 'Markanızı bir üst seviyeye taşımak için uzman kadromuzla çalışın. Ücretsiz analiz ve teklif için hemen iletişime geçin.',
+  subtitle = 'Dijitalde büyümek için ilk adımı atın. Uzman ekibimizle ücretsiz analiz ve teklif için hemen iletişime geçin.',
   ctaText = 'Ücretsiz Teklif Al',
   ctaLink = '#contact',
+  contactPhone,
 }: {
   title?: string;
   subtitle?: string;
   ctaText?: string;
   ctaLink?: string;
+  contactPhone?: string;
 }) {
   return (
     <section className="py-24 bg-[#0040ff] relative overflow-hidden">
@@ -40,7 +42,7 @@ export default function CTA({
           >
             <Sparkles className="w-4 h-4 text-[#ffd76e]" />
             <span className="text-[#cdd6f4]/90 text-sm font-medium">
-              Sınırlı Kontenjan - Hemen Başvurun
+              Ücretsiz Analiz - Hemen Başlayın
             </span>
           </motion.div>
 
@@ -66,12 +68,14 @@ export default function CTA({
                 className="group-hover:translate-x-1 transition-transform"
               />
             </a>
-            <a
-              href="tel:+905001234567"
-              className="border-2 border-[#cdd6f4]/50 text-[#cdd6f4] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#cdd6f4] hover:text-[#181825] hover:scale-105 transition-all duration-300"
-            >
-              Hemen Ara
-            </a>
+            {contactPhone && (
+              <a
+                href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                className="border-2 border-[#cdd6f4]/50 text-[#cdd6f4] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#cdd6f4] hover:text-[#181825] hover:scale-105 transition-all duration-300"
+              >
+                Hemen Ara
+              </a>
+            )}
           </motion.div>
 
           {/* Trust badges */}
@@ -87,16 +91,16 @@ export default function CTA({
               <div className="text-[#cdd6f4]/70 text-sm">Proje</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">100+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Müşteri</div>
+              <div className="text-2xl font-bold text-[#cdd6f4]">4.8/5</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Müşteri Puanı</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">8+</div>
               <div className="text-[#cdd6f4]/70 text-sm">Yıl Deneyim</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">%100</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Memnuniyet</div>
+              <div className="text-2xl font-bold text-[#cdd6f4]">500+</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Kampanya</div>
             </div>
           </motion.div>
         </motion.div>

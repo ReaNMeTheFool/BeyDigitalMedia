@@ -10,10 +10,13 @@ const nextConfig: NextConfig = {
   // React Compiler - Next.js 16.1.6'da root seviyesinde
   reactCompiler: true,
 
-  // Docker için standalone output
+  // Docker icin standalone output
   output: "standalone",
 
-  // Turbopack root - birden fazla lockfile uyarısını kapatır
+  // URL trailing slash kapali (SEO)
+  trailingSlash: false,
+
+  // Turbopack root - birden fazla lockfile uyarisini kapatir
   turbopack: {
     root: path.resolve(dirname),
   },
@@ -31,6 +34,9 @@ const nextConfig: NextConfig = {
       {
         pathname: "/api/media/file/**",
       },
+      {
+        pathname: "/**",
+      },
     ],
   },
 
@@ -43,7 +49,24 @@ const nextConfig: NextConfig = {
     return webpackConfig;
   },
 
-  // Header yapılandırması - güvenlik ve performans
+  // www -> non-www redirect
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.beydigitalmedia.com",
+          },
+        ],
+        destination: "https://beydigitalmedia.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
+  // Header yapilandirmasi - guvenlik ve performans
   async headers() {
     return [
       {

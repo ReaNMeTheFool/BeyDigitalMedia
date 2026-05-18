@@ -123,7 +123,6 @@ export default function Navbar({
                 height={48}
                 className="object-contain"
                 priority
-                unoptimized
               />
               <span className="font-bold text-xl text-[#cdd6f4]">
                 {brandName}
@@ -143,6 +142,7 @@ export default function Navbar({
                       >
                         <button
                           onClick={() => scrollToSection(link.href)}
+                          aria-label="Hizmetler menüsü"
                           className={`shrink-0 whitespace-nowrap text-sm font-medium transition-colors hover:text-[#7da5ff] ${
                             activeSection === "services"
                               ? "text-[#7da5ff] font-semibold"
@@ -218,7 +218,6 @@ export default function Navbar({
                 height={40}
                 className="object-contain"
                 priority
-                unoptimized
               />
               <span className="font-bold text-lg text-[#cdd6f4]">
                 {brandName}
@@ -229,6 +228,9 @@ export default function Navbar({
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden absolute right-0 p-2 rounded-lg text-[#cdd6f4]"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label="Menüyü aç"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -240,6 +242,7 @@ export default function Navbar({
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

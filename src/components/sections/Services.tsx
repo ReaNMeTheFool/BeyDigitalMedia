@@ -4,52 +4,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Users,
-  Target,
-  Search,
-  Globe,
-  Megaphone,
-  PenTool,
-  Palette,
-  FileText,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { defaultServices, type Service } from "@/lib/defaultServices";
-
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Users,
-  Target,
-  Search,
-  Globe,
-  Megaphone,
-  PenTool,
-  Palette,
-  FileText,
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
+import { iconMap } from "@/lib/icon-map";
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function Services({
   showAll = true,
@@ -114,7 +72,6 @@ export default function Services({
                     height={32}
                     className="object-contain"
                     style={service.imageStyle}
-                    unoptimized
                   />
                 ) : service.icon ? (
                   (() => {

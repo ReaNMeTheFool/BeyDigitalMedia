@@ -7,6 +7,8 @@ import FAQServer from "@/components/sections/FAQServer";
 import AboutServer from "@/components/sections/AboutServer";
 import AiAutomationServer from "@/components/sections/AiAutomationServer";
 import WhyUsServer from "@/components/sections/WhyUsServer";
+import Pricing from "@/components/sections/Pricing";
+import PartnerBadges from "@/components/sections/PartnerBadges";
 
 interface Block {
   blockType: string;
@@ -21,6 +23,8 @@ const blockOrder = [
   "whyUs",
   "portfolioSlider",
   "about",
+  "pricing",
+  "partnerBadges",
   "testimonialsCarousel",
   "faqAccordion",
 ];
@@ -141,6 +145,40 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
                 key={index}
                 title={(block.title as string) || undefined}
                 subtitle={(block.subtitle as string) || undefined}
+              />
+            );
+          case "pricing":
+            return (
+              <Pricing
+                key={index}
+                title={(block.title as string) || undefined}
+                subtitle={(block.subtitle as string) || undefined}
+                packages={
+                  ((block.packages as {
+                    name: string;
+                    price: string;
+                    features: { text: string }[];
+                    highlighted?: boolean;
+                    ctaText: string;
+                    ctaLink: string;
+                  }[]) || []).map((pkg) => ({
+                    ...pkg,
+                    features: (pkg.features || []).map((f) => f.text),
+                  }))
+                }
+              />
+            );
+          case "partnerBadges":
+            return (
+              <PartnerBadges
+                key={index}
+                title={(block.title as string) || undefined}
+                badges={
+                  (block.badges as {
+                    name: string;
+                    icon: string;
+                  }[]) || undefined
+                }
               />
             );
           default:

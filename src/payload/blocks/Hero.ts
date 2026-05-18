@@ -35,7 +35,7 @@ export const HeroBlock: Block = {
       name: "subtitle",
       type: "text",
       label: "Alt Başlık",
-      defaultValue: "Bursa'nın önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
+      defaultValue: "Turkiye'nin onde gelen dijital pazarlama ajansi olarak markanizi buyutmek icin buradayiz.",
     },
     {
       name: "description",

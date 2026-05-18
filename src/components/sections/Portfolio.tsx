@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from
 import { motion } from "framer-motion";
 import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { defaultProjects, type Project } from "@/lib/defaultProjects";
 
 const BASE_OFFSET = defaultProjects.length;
@@ -334,10 +335,11 @@ export default function Portfolio({
                   >
                     {project.logo ? (
                       <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <Image
                           src={project.logo}
                           alt={project.title}
+                          fill
+                          sizes="(max-width: 768px) 85vw, 384px"
                           draggable={false}
                           className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                           style={project.logoScale ? { transform: `scale(${project.logoScale})` } : undefined}

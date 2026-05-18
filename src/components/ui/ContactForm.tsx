@@ -56,6 +56,9 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Hizmet seçin"
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
         className={`w-full px-4 py-3 rounded-xl border transition-all bg-[#181825] text-[#cdd6f4] flex items-center justify-between ${
           isOpen
             ? "border-[#0040ff] ring-2 ring-[#0040ff]/20"
@@ -81,6 +84,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
+            role="listbox"
             className="absolute z-50 w-full mt-2 bg-[#181825] border border-[#2d2d44] rounded-xl shadow-xl overflow-hidden"
           >
             <div className="max-h-64 overflow-y-auto py-1">
@@ -89,6 +93,8 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                 return (
                   <label
                     key={service.id}
+                    role="option"
+                    aria-selected={isSelected}
                     className="flex items-center gap-3 px-4 py-3 cursor-pointer transition-all hover:bg-[#0040ff]/5"
                   >
                     <input

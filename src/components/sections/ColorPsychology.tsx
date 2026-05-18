@@ -162,7 +162,10 @@ export default function ColorPsychology() {
                 className={`w-16 h-16 sm:w-24 sm:h-24 ${color.bgClass} rounded-full cursor-pointer shadow-lg hover:shadow-2xl transition-shadow relative group`}
                 aria-label={`${color.name} - ${color.meaning}`}
               >
-                <span className="absolute inset-0 flex items-center justify-center text-white font-bold opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-xs sm:text-sm md:text-base drop-shadow-md">
+                <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl sm:text-2xl drop-shadow-md select-none pointer-events-none">
+                  {color.name.charAt(0)}
+                </span>
+                <span className="absolute inset-0 flex items-center justify-center text-white font-bold opacity-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-xs sm:text-sm md:text-base drop-shadow-md">
                   {color.meaning}
                 </span>
               </motion.button>

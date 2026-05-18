@@ -1,6 +1,6 @@
 import { getPayloadClient } from "@/lib/payload";
 
-const baseUrl = "https://www.beydigitalmedia.com";
+const baseUrl = "https://beydigitalmedia.com";
 
 function escapeXml(unsafe: string): string {
   return unsafe
@@ -46,7 +46,7 @@ export async function GET() {
   entries += buildUrlEntry(`${baseUrl}/iletisim`, new Date(), "monthly", 0.6);
 
   try {
-    // Pages koleksiyonundan dinamik sayfalar (home hariç)
+    // Pages koleksiyonundan dinamik sayfalar (home haric)
     const pagesResult = await payload.find({
       collection: "pages",
       limit: 1000,
@@ -70,7 +70,26 @@ export async function GET() {
       }
     }
 
-    // Blog yazıları
+    // Services koleksiyonu
+    const servicesResult = await payload.find({
+      collection: "services",
+      limit: 1000,
+    });
+
+    for (const service of servicesResult.docs) {
+      const slug = (service as any).slug;
+      const updatedAt = (service as any).updatedAt;
+      if (slug) {
+        entries += buildUrlEntry(
+          `${baseUrl}/${slug}`,
+          updatedAt ? new Date(updatedAt) : new Date(),
+          "weekly",
+          0.8
+        );
+      }
+    }
+
+    // Blog yazilari
     const blogResult = await payload.find({
       collection: "blogPosts",
       limit: 1000,
@@ -108,7 +127,7 @@ export async function GET() {
       }
     }
   } catch {
-    // CMS'e erişilemezse sadece statik sayfaları döndür
+    // CMS'e erisilemezse sadece statik sayfalari dondur
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}</urlset>`;

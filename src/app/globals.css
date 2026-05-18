@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
-/* Tailwind v4: src/lib dizinindeki dinamik class'ları tespit et */
+/* Tailwind v4: src/lib dizinindeki dinamik class'lari tespit et */
 @source "../lib";
 
 @theme {
   /* ============================================
-     DARK READER RENK ŞEMASI
+     DARK READER RENK SEMASI
      ============================================ */
-  
-  /* Primary - Ana Marka Rengi (Koyu Mavi/Lacivert tonları) */
+
+  /* Primary - Ana Marka Rengi (Koyu Mavi/Lacivert tonlari) */
   --color-primary: #0040ff;
   --color-primary-50: #f0f4ff;
   --color-primary-100: #d6e0ff;
@@ -21,7 +21,7 @@
   --color-primary-800: #002699;
   --color-primary-900: #001a66;
 
-  /* Accent - Vurgu Rengi (Altın/Sarı tonları) */
+  /* Accent - Vurgu Rengi (Altin/Sari tonlari) */
   --color-accent: #ffd76e;
   --color-accent-50: #fff8e1;
   --color-accent-100: #ffecb3;
@@ -34,12 +34,12 @@
   --color-accent-800: #f57f17;
   --color-accent-900: #ff6f00;
 
-  /* Surface - Yüzey Renkleri (Koyu tema için) */
+  /* Surface - Yuzey Renkleri (Koyu tema icin) */
   --color-surface: #1e1e2e;
   --color-surface-dark: #181825;
   --color-surface-light: #252538;
   --color-surface-hover: #2a2a3e;
-  
+
   /* Text - Metin Renkleri */
   --color-text-primary: #cdd6f4;
   --color-text-secondary: #bac2de;
@@ -64,9 +64,9 @@
   --color-black: #cdd6f4;
 
   /* ============================================
-     RENK PALETİ - DARK READER
+     RENK PALETI - DARK READER
      ============================================ */
-  
+
   /* Rose */
   --color-rose-50: #4c1c24;
   --color-rose-100: #661c2c;
@@ -215,7 +215,7 @@
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
-  /* Tipografi Ölçekleri */
+  /* Tipografi Olcekleri */
   --font-size-display: clamp(3rem, 8vw, 6rem);
   --font-size-h1: clamp(2rem, 5vw, 3.5rem);
   --font-size-h2: clamp(1.5rem, 3vw, 2.5rem);
@@ -254,7 +254,7 @@
 }
 
 /* ============================================
-   ANİMASYON KEYFRAMES
+   ANIMASYON KEYFRAMES
    ============================================ */
 
 @keyframes marquee {
@@ -270,7 +270,7 @@
   animation: marquee 30s linear infinite;
 }
 
-/* Mobilde marquee'yi yavaşlat veya durdur */
+/* Mobilde marquee'yi yavaslat veya durdur */
 @media (max-width: 768px) {
   .animate-marquee {
     animation-duration: 60s;
@@ -336,7 +336,7 @@
 }
 
 /* ============================================
-   PHOTON NOISE - Gradient banding önleyici
+   PHOTON NOISE - Gradient banding onleyici
    ============================================ */
 
 .noise::after {
@@ -366,6 +366,20 @@ body {
 ::selection {
   background-color: #005ccc !important;
   color: #cdd6f4 !important;
+}
+
+/* ============================================
+   ACCESSIBILITY & ANCHOR LINK OFFSET
+   ============================================ */
+
+section[id],
+[id] {
+  scroll-margin-top: 80px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
 }
 
 /* ============================================
@@ -508,7 +522,7 @@ body {
   background-color: #ffd76e;
 }
 
-/* Yüzey renkleri */
+/* Yuzey renkleri */
 .darkreader-surface {
   background-color: #181825;
 }

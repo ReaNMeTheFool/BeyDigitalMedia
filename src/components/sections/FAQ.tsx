@@ -3,43 +3,44 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { FAQPageJsonLd } from "@/components/SEO/JsonLd";
 
 const faqs = [
   {
-    question: "Sosyal medya yönetimi ve AI otomasyonu markama nasıl entegre ediliyor?",
+    question: "Sosyal medyayi ve AI otomasyonu benim icin nasil yonetiyorsunuz?",
     answer:
-      "Geleneksel içerik üretiminin ötesine geçiyoruz. Markanızın dijital varlığını inşa ederken, hedef kitlenizle güçlü ve organik bir bağ kuracak stratejiler geliştiriyoruz. Aynı zamanda operasyonlarınızı yormayacak zeki chatbotlar ve otomasyon algoritmalarıyla etkileşimi 7/24 sürdürülebilir bir noktaya taşıyoruz.",
+      "Instagram, Facebook ve LinkedIn hesaplarinizi sizin adiniza yonetiyoruz. Haftalik 3-5 ozgun icerik uretiyor, yorum ve mesajlara ortalama 2 saat icinde donus yapiyoruz. AI chatbot'umuz web sitenize entegre oluyor; gelen sorulari anlayip otomatik yanitliyor, gerekirse size WhatsApp'tan bildiriyor. Kurulum 3 is gunu suruyor, egitimle birlikte teslim ediyoruz.",
   },
   {
-    question: "Meta Ads ve Google Ads yönetiminde nasıl bir strateji izliyorsunuz?",
+    question: "Reklam butcemi gercekten verimli kullaniyor musunuz?",
     answer:
-      "Bütçenizi rastgele yakmıyoruz. Veri bilimi ve ileri düzey hedefleme yöntemlerini kullanarak doğrudan satın alma eğilimi yüksek kitleleri tespit ediyoruz. Amacımız sadece görünürlük değil, markanızı sektör lideri konumuna taşıyacak ve maksimum ROAS'ı (Reklam Getirisi) elde etmenizi sağlayacak kurgular oluşturmaktır.",
+      "Once isletmenizi ve hedef kitlenizi analiz ediyoruz. Meta tarafinda Advantage+ Shopping ve Lookalike kitlelerle, Google tarafinda Search ve Performance Max kampanyalariyla ilerliyoruz. Hedef ROAS'imiz 3-5x araliginda. Haftalik raporla hangi reklamin ne kazandirdigini net olarak gosteriyoruz. Minimum reklam butcesi 5.000 TL, altindaki butcelerde verim dusuyor.",
   },
   {
-    question: "Web tasarım süreçlerinizde nelere dikkat ediyorsunuz?",
+    question: "Web sitem kaca mal olur? Ne kadar surer?",
     answer:
-      "Kullanıcıyı yoran, hantal şablonlar yerine; modern, pürüzsüz animasyonlara sahip ve kullanıcı dostu tasarımlar geliştiriyoruz. Her bir pikseli kurumsal kimliğinize uygun işliyor, ziyaretçinin sitenize girdiği an premium bir deneyim yaşamasını hedefliyoruz. Arayüzlerimiz, tamamen sizin dijital merkeziniz olarak kurgulanır.",
+      "Next.js ve Tailwind CSS ile sifirdan kodluyoruz, hazir tema kullanmiyoruz. Mobil uyumlu, 90+ Google PageSpeed hedefiyle calisiyoruz. Tasarimi once Figma'da onayiniza sunuyor, revizyonlarla birlikte 2-4 haftada canliya aliyoruz. SEO altyapisi, gorsel optimizasyonu ve SSL sertifikasi pakete dahil. Sonrasinda 1 ay ucretsiz teknik destek veriyoruz.",
   },
   {
-    question: "SEO (Arama Motoru Optimizasyonu) çalışmalarınız ne zaman etki eder?",
+    question: "SEO calismalari ne zaman sonuc vermeye baslar?",
     answer:
-      "Algoritmaları manipüle eden geçici taktiklerle değil, uzun vadeli ve sağlam bir otorite inşası ile ilerliyoruz. Arama sorgularında otoritenizi sabitlemek, sektörün rekabetine göre ortalama 1-6 ay sürer. Doğru stratejiler kurgulandığında, arama sonuçlarında sarsılmaz bir konuma ulaşırsınız.",
+      "Ilk 1 ayda teknik SEO hatalarini temizliyoruz (sayfa hizi, meta etiketler, yapisal veriler). 2-3. ayda icerik optimizasyonu ve kaliteli backlinklerle yukselis basliyor. Rekabetci kelimelerde ilk sayfaya cikmak sektore gore 3-6 ay suruyor. Ornegin bir hali yikama firmasi 'hali yikama' aramasinda 4. ayda 2. siraya yukseldi.",
   },
   {
-    question: "Raporlama süreci ve şeffaflık vizyonunuz nedir?",
+    question: "Calismalarinizin raporunu nasil gorecegim?",
     answer:
-      "Sadece kalıplaşmış vaatler değil, salt veri sunuyoruz. Erişim, ROAS, dönüşüm oranları ve büyüme trendlerini size net ve şeffaf grafiklerle raporluyoruz. Neyin iyi dönüştüğünü, hangi hamlenin optimize edilmesi gerektiğini gizlilik perdesi olmadan göreceksiniz. Çünkü markanızın gelişimi, başarımızın yegane kanıtıdır.",
+      "Her ayin 5'inde Google Looker Studio uzerinden detayli PDF rapor gonderiyoruz. Raporda: erisim, tiklama, donusum, ROAS, takipci artisi ve en iyi performans veren icerikler yer aliyor. Ayrica WhatsApp grubumuzdan haftalik ozet ve anlik guncelleme aliyorsunuz. Tum metrikler acik, gizli veri yok.",
   },
   {
-    question: "Tüm ihtiyacımı tek bir yer (Bey Digital Media) ile çözebilir miyim?",
+    question: "Her seyi tek bir firmadan cozmek mumkun mu?",
     answer:
-      "Kesinlikle. Logo tasarımından yapay zeka yapılarına, performans pazarlamasından kompleks web yazılımlarına kadar dijital varlığınız için gereken her şeyi tek bir yapı içinde sunuyoruz. Dağınık sistemler yerine, tüm platformların birbiriyle konuştuğu kusursuz bir ekosistem inşa ediyoruz.",
+      "Evet. Logo tasarimindan web sitesine, Google reklamlarindan sosyal medya yonetimine kadar her seyi tek ekipten aliyorsunuz. Farkli ajanslar arasinda koordinasyon kaybi yasamazsiniz. Aylik paket fiyatlarimiz hizmet kapsamina gore 5.000 TL'den basliyor, ihtiyaciniza gore ozellestiriyoruz.",
   },
 ];
 
 export default function FAQ({
   title = 'Merak <span class="text-[#0040ff]">Ettikleriniz</span>',
-  subtitle = 'Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.',
+  subtitle = 'Dijital pazarlama ve hizmetlerimiz hakkinda en cok sorulan sorularin cevaplari.',
   showAll = true,
   faqs: propFaqs,
 }: {
@@ -59,6 +60,8 @@ export default function FAQ({
 
   return (
     <section id="faq" className="relative py-24 bg-[#11111b] overflow-hidden">
+      <FAQPageJsonLd questions={displayedFaqs} />
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -96,6 +99,7 @@ export default function FAQ({
             >
               <button
                 onClick={() => toggleFAQ(index)}
+                aria-expanded={openIndex === index}
                 className="w-full flex items-center justify-between p-4 sm:p-6 text-left transition-colors hover:bg-white/5"
               >
                 <span className="font-semibold text-[#cdd6f4] pr-4">
@@ -118,6 +122,8 @@ export default function FAQ({
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <div
+                      id={`faq-panel-${index}`}
+                      role="region"
                       className="px-4 sm:px-6 pb-4 sm:pb-6 text-[#cdd6f4]/90 leading-relaxed prose prose-invert max-w-none"
                       dangerouslySetInnerHTML={{ __html: faq.answer }}
                     />
@@ -136,12 +142,12 @@ export default function FAQ({
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-center mt-12"
         >
-          <p className="text-[#cdd6f4]/90 mb-4">Başka sorularınız mı var?</p>
+          <p className="text-[#cdd6f4]/90 mb-4">Baska sorulariniz mi var?</p>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 bg-[#0040ff] text-white px-6 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-lg transition-all"
           >
-            Bize Ulaşın
+            Bize Ulasin
           </a>
         </motion.div>
       </div>

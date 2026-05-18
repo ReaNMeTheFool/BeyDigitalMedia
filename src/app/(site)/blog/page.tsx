@@ -1,14 +1,33 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import { getPayloadClient } from "@/lib/payload";
+import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Blog | Bey Digital Media",
-  description:
-    "Dijital pazarlama, sosyal medya, SEO ve web tasarım hakkında uzman içerikler.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return mergeMetadata(defaultSeoFields, {
+    title: "Blog | Bey Digital Media",
+    description:
+      "Dijital pazarlama, sosyal medya, SEO ve web tasarim hakkinda uzman icerikler.",
+    alternates: {
+      canonical: "/blog",
+    },
+    openGraph: {
+      title: "Blog | Bey Digital Media",
+      description:
+        "Dijital pazarlama, sosyal medya, SEO ve web tasarim hakkinda uzman icerikler.",
+      url: "https://beydigitalmedia.com/blog",
+      type: "website",
+    },
+    twitter: {
+      title: "Blog | Bey Digital Media",
+      description:
+        "Dijital pazarlama, sosyal medya, SEO ve web tasarim hakkinda uzman icerikler.",
+    },
+  });
+}
 
 export default async function BlogPage() {
   let posts: Record<string, unknown>[] = [];
@@ -33,7 +52,7 @@ export default async function BlogPage() {
             Blog
           </h1>
           <p className="text-[#cdd6f4]/70 text-lg mb-12">
-            Dijital pazarlama dünyasından uzman içerikler.
+            Dijital pazarlama dunyasindan uzman icerikler.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -62,7 +81,6 @@ export default async function BlogPage() {
                           alt={title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          unoptimized
                         />
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-[#0040ff]/20 to-[#ffd76e]/20" />

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import Image from "next/image";
 
 const testimonials = [
   {
@@ -48,7 +49,7 @@ const testimonials = [
     role: "",
     image: "/isbir_yatak.webp",
     rating: 5,
-    text: "Logo ve kurumsal kimlik çalışmamız tam istediğimiz gibi oldu. Yiğit Bey'in renk psikolojisine hakimiyeti projemizi bir üst seviyeye taşıdı.",
+    text: "Logo ve kurumsal kimlik calismamiz tam istedigimiz gibi oldu. Yigit Bey renkleri inanilmaz iyi kullandi, sonuc bizi cok mutlu etti.",
   },
 ];
 
@@ -70,7 +71,7 @@ export default function Testimonials({
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [activeTestimonials.length]);
 
   const goToSlide = (index: number) => {
     setDirection(index > currentIndex ? 1 : -1);
@@ -173,10 +174,7 @@ export default function Testimonials({
                 <div className="flex items-center gap-4">
                   <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden shrink-0 ${!activeTestimonials[currentIndex].image ? 'bg-gradient-to-br from-[#0040ff] to-[#ffd76e]' : 'bg-[#1e1e2e]'}`}>
                     {activeTestimonials[currentIndex].image ? (
-                      <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={activeTestimonials[currentIndex].image} alt={activeTestimonials[currentIndex].name} className="w-full h-full object-cover" />
-                      </>
+                      <Image src={activeTestimonials[currentIndex].image} alt={activeTestimonials[currentIndex].name} width={64} height={64} className="w-full h-full object-cover" />
                     ) : (
                       activeTestimonials[currentIndex].name.charAt(0)
                     )}

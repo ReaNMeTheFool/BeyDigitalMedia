@@ -21,7 +21,7 @@ export const SiteSettings: GlobalConfig = {
       name: "tagline",
       type: "text",
       label: "Slogan",
-      defaultValue: "Bursa Dijital Pazarlama Ajansı",
+      defaultValue: "Dijital Pazarlama Ajansi",
       admin: {
         description: "Site alt başlığı veya slogan. SEO açıklamalarında ve bazı bileşenlerde kullanılır.",
       },
