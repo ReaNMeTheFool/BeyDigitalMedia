@@ -8,6 +8,7 @@ export const MarqueeBlock: Block = {
       name: "items",
       type: "array",
       label: "Marquee Öğeleri",
+      admin: { description: "Kayan şeritteki logolar" },
       required: true,
       fields: [
         {

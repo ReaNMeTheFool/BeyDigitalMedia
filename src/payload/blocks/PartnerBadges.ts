@@ -8,15 +8,14 @@ export const PartnerBadgesBlock: Block = {
       name: "title",
       type: "text",
       label: "Başlık",
+      admin: { description: "Bölüm başlığı" },
       defaultValue: "Birlikte Çalıştığımız Platformlar",
     },
     {
       name: "badges",
       type: "array",
       label: "Partner Rozetleri",
-      admin: {
-        description: "Partner platform rozetlerini buradan düzenleyin.",
-      },
+      admin: { description: "Platform rozetleri" },
       fields: [
         {
           name: "name",

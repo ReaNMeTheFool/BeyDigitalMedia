@@ -37,7 +37,7 @@ set +a
 
 # Seed
 echo "🌱 Seed script çalıştırılıyor (idempotent)..."
-npx tsx src/payload/seed.ts
+npx tsx src/payload/seed/index.ts
 
 # Dev sunucusu başlat
 echo ""

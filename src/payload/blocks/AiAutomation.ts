@@ -5,77 +5,70 @@ export const AiAutomationBlock: Block = {
   interfaceName: "AiAutomationBlock",
   fields: [
     {
-      type: "tabs",
-      tabs: [
+      name: "title",
+      type: "text",
+      label: "Başlık",
+      defaultValue:
+        'Zamanınızı Geri Kazanın, <span class="text-[#8b5cf6]">İşinizi Otomatikleştirin</span>',
+      admin: {
+        description: "Ana başlık",
+      },
+    },
+    {
+      name: "subtitle",
+      type: "textarea",
+      label: "Alt Başlık",
+      defaultValue: "Tekrarlayan işlere değil, büyümeye odaklanın.",
+      admin: {
+        description: "Kısa açıklama",
+      },
+    },
+    {
+      name: "description",
+      type: "richText",
+      label: "Açıklama",
+      admin: {
+        description: "Detaylı içerik",
+      },
+    },
+    {
+      name: "badge",
+      type: "text",
+      label: "Badge",
+      defaultValue: "AI × OTOMASYON",
+      admin: {
+        position: "sidebar",
+        description: "Köşe etiketi",
+      },
+    },
+    {
+      name: "features",
+      type: "array",
+      label: "Özellikler",
+      admin: {
+        description: "Öne çıkan özellikler",
+      },
+      fields: [
         {
-          name: "icerik",
-          label: "İçerik",
-          fields: [
-            {
-              name: "title",
-              type: "text",
-              label: "Başlık",
-              defaultValue: 'Zamanınızı Geri Kazanın, <span class="text-[#8b5cf6]">İşinizi Otomatikleştirin</span>',
-            },
-            {
-              name: "subtitle",
-              type: "textarea",
-              label: "Alt Başlık",
-              defaultValue: "Tekrarlayan işlere değil, büyümeye odaklanın.",
-            },
-            {
-              name: "description",
-              type: "array",
-              label: "Açıklama Paragrafları",
-              fields: [
-                {
-                  name: "paragraph",
-                  type: "textarea",
-                  label: "Paragraf",
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: "badge",
-              type: "text",
-              label: "Badge Metni",
-              defaultValue: "AI × OTOMASYON",
-            },
-          ],
+          name: "icon",
+          type: "text",
+          label: "İkon",
+          admin: {
+            description:
+              "Lucide ikon adı. Örn: Workflow, Bot, BarChart3, MessageSquare, Zap, BrainCircuit",
+          },
         },
         {
-          name: "ozellikler",
-          label: "Özellikler",
-          fields: [
-            {
-              name: "features",
-              type: "array",
-              label: "Özellikler",
-              fields: [
-                {
-                  name: "icon",
-                  type: "text",
-                  label: "İkon Adı",
-                  admin: {
-                    description: "Lucide ikon adı. Örn: Workflow, Bot, BarChart3, MessageSquare, Zap, BrainCircuit",
-                  },
-                },
-                {
-                  name: "label",
-                  type: "text",
-                  label: "Başlık",
-                  required: true,
-                },
-                {
-                  name: "desc",
-                  type: "textarea",
-                  label: "Açıklama",
-                  required: true,
-                },
-              ],
-            },
-          ],
+          name: "label",
+          type: "text",
+          label: "Başlık",
+          required: true,
+        },
+        {
+          name: "desc",
+          type: "textarea",
+          label: "Açıklama",
+          required: true,
         },
       ],
     },

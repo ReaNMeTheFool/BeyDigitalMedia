@@ -69,12 +69,12 @@ body {
    ============================================ */
 .nav {
   background: var(--theme-elevation-100) !important;
-  border-right: 1px solid var(--theme-border-color) !important;
+  border-right: none !important;
 }
 
 .nav__brand {
   padding: 20px 16px !important;
-  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-bottom: none !important;
 }
 
 .nav__wrap {
@@ -106,7 +106,7 @@ body {
 .table {
   border-radius: var(--radius-lg) !important;
   overflow: hidden !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
 }
 
 .table thead th {
@@ -117,11 +117,12 @@ body {
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
   padding: 14px 16px !important;
-  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-bottom: none !important;
 }
 
 .table tbody tr {
   transition: background var(--transition-fast) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
 }
 
 .table tbody tr:hover {
@@ -130,7 +131,7 @@ body {
 
 .table tbody td {
   padding: 14px 16px !important;
-  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-bottom: none !important;
   color: var(--theme-text) !important;
 }
 
@@ -165,13 +166,13 @@ body {
 
 .btn--style-secondary {
   background: var(--theme-elevation-200) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   color: var(--theme-text) !important;
 }
 
 .btn--style-secondary:hover {
   background: var(--theme-elevation-300) !important;
-  border-color: var(--theme-primary-200) !important;
+  border-color: transparent !important;
 }
 
 .btn--style-transparent {
@@ -195,7 +196,7 @@ body {
 .select__control,
 .react-select__control {
   background: var(--theme-input-bg) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
   border-radius: var(--radius-md) !important;
   padding: 10px 14px !important;
   font-size: 14px !important;
@@ -216,7 +217,6 @@ input[type="password"] {
 .field-type.email input:focus,
 .select__control--is-focused,
 .react-select__control--is-focused {
-  border-color: var(--theme-primary-500) !important;
   box-shadow: 0 0 0 3px var(--theme-primary-100) !important;
   outline: none !important;
 }
@@ -238,7 +238,7 @@ input[type="password"] {
   padding: 8px 12px !important;
   background: var(--theme-elevation-200) !important;
   border-radius: var(--radius-sm) !important;
-  border-left: 3px solid var(--theme-primary-500) !important;
+  border-left: none !important;
   line-height: 1.5 !important;
 }
 
@@ -277,7 +277,7 @@ input[type="password"] {
 .collection-edit__header .collection-description,
 .collection-list__header .collection-description {
   background: var(--theme-primary-50) !important;
-  border: 1px solid var(--theme-primary-200) !important;
+  border: none !important;
   border-radius: var(--radius-md) !important;
   padding: 12px 16px !important;
   margin-bottom: 20px !important;
@@ -291,7 +291,7 @@ input[type="password"] {
    ============================================ */
 .login__form {
   background: var(--theme-elevation-100) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   border-radius: var(--radius-xl) !important;
   padding: 40px !important;
   box-shadow: var(--shadow-lg) !important;
@@ -318,7 +318,7 @@ input[type="password"] {
    ============================================ */
 .doc-header {
   background: var(--theme-elevation-100) !important;
-  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-bottom: none !important;
   padding: 20px 24px !important;
 }
 
@@ -352,7 +352,7 @@ input[type="password"] {
   padding: 14px 18px !important;
   font-weight: 600 !important;
   font-size: 13px !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   transition: all var(--transition-fast) !important;
 }
 
@@ -362,14 +362,11 @@ input[type="password"] {
 
 .collapsible--opened .collapsible__toggle {
   border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
-  border-bottom-color: transparent !important;
 }
 
 .collapsible__content {
   background: var(--theme-elevation-100) !important;
-  border: 1px solid var(--theme-border-color) !important;
-  border-top: none !important;
-  border-radius: 0 0 var(--radius-md) var(--radius-md) !important;
+  border: none !important;
   padding: 20px !important;
 }
 
@@ -399,7 +396,7 @@ input[type="password"] {
 
 .search-filter__input {
   background: var(--theme-input-bg) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   border-radius: var(--radius-md) !important;
   padding: 10px 14px !important;
   color: var(--theme-text) !important;
@@ -410,13 +407,13 @@ input[type="password"] {
    ============================================ */
 .lexical-editor {
   border-radius: var(--radius-md) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   overflow: hidden !important;
 }
 
 .lexical-editor__toolbar {
   background: var(--theme-elevation-200) !important;
-  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-bottom: none !important;
   padding: 8px !important;
 }
 
@@ -435,7 +432,7 @@ input[type="password"] {
 .modal {
   border-radius: var(--radius-xl) !important;
   background: var(--theme-elevation-100) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   box-shadow: var(--shadow-lg) !important;
 }
 
@@ -445,11 +442,11 @@ input[type="password"] {
 
 .drawer {
   background: var(--theme-elevation-100) !important;
-  border-left: 1px solid var(--theme-border-color) !important;
+  border-left: none !important;
 }
 
 .drawer__header {
-  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-bottom: none !important;
   padding: 20px 24px !important;
 }
 
@@ -537,14 +534,14 @@ input[type="password"] {
 
 .dashboard__card {
   background: var(--theme-elevation-100) !important;
-  border: 1px solid var(--theme-border-color) !important;
+  border: none !important;
   border-radius: var(--radius-lg) !important;
   padding: 24px !important;
   transition: all var(--transition-base) !important;
 }
 
 .dashboard__card:hover {
-  border-color: var(--theme-primary-200) !important;
+  border-color: transparent !important;
   box-shadow: var(--shadow-md) !important;
   transform: translateY(-2px) !important;
 }

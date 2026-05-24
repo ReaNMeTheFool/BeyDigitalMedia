@@ -34,24 +34,6 @@ export const BlogPosts: CollectionConfig = {
       },
     },
     {
-      name: "metaTitle",
-      type: "text",
-      label: "SEO Başlığı",
-      admin: {
-        position: "sidebar",
-        description: "SEO başlığı.",
-      },
-    },
-    {
-      name: "metaDescription",
-      type: "textarea",
-      label: "SEO Açıklaması",
-      admin: {
-        position: "sidebar",
-        description: "SEO açıklaması (max 160 karakter).",
-      },
-    },
-    {
       type: "tabs",
       tabs: [
         {
@@ -116,7 +98,24 @@ export const BlogPosts: CollectionConfig = {
         },
         {
           label: "SEO",
-          fields: [],
+          fields: [
+            {
+              name: "metaTitle",
+              type: "text",
+              label: "SEO Başlığı",
+              admin: {
+                description: "SEO başlığı.",
+              },
+            },
+            {
+              name: "metaDescription",
+              type: "textarea",
+              label: "SEO Açıklaması",
+              admin: {
+                description: "SEO açıklaması (max 160 karakter).",
+              },
+            },
+          ],
         },
       ],
     },

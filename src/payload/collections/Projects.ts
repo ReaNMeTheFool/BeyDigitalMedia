@@ -14,47 +14,6 @@ export const Projects: CollectionConfig = {
   },
   fields: [
     {
-      name: "logo",
-      type: "upload",
-      relationTo: "media",
-      label: "Logo",
-      admin: {
-        position: "sidebar",
-        description: "Müşteri logosu.",
-      },
-    },
-    {
-      name: "logoScale",
-      type: "number",
-      label: "Logo Scale",
-      defaultValue: 1,
-      admin: {
-        position: "sidebar",
-        description: "Logo büyütme oranı.",
-      },
-    },
-    {
-      name: "smallTags",
-      type: "checkbox",
-      label: "Küçük Etiketler",
-      defaultValue: false,
-      admin: {
-        position: "sidebar",
-        description: "Etiketleri küçük boyutta göster.",
-      },
-    },
-    {
-      name: "color",
-      type: "text",
-      label: "Gradient Renk",
-      required: true,
-      defaultValue: "from-blue-500 to-cyan-500",
-      admin: {
-        position: "sidebar",
-        description: "Arka plan gradient. Örn: from-emerald-500 to-teal-600",
-      },
-    },
-    {
       name: "order",
       type: "number",
       label: "Sıralama",
@@ -68,7 +27,7 @@ export const Projects: CollectionConfig = {
       type: "tabs",
       tabs: [
         {
-          label: "Genel",
+          label: "Proje",
           fields: [
             {
               name: "slug",
@@ -148,7 +107,45 @@ export const Projects: CollectionConfig = {
         },
         {
           label: "Görsel",
-          fields: [],
+          fields: [
+            {
+              name: "logo",
+              type: "upload",
+              relationTo: "media",
+              label: "Logo",
+              admin: {
+                description: "Müşteri logosu.",
+              },
+            },
+            {
+              name: "logoScale",
+              type: "number",
+              label: "Logo Scale",
+              defaultValue: 1,
+              admin: {
+                description: "Logo büyütme oranı.",
+              },
+            },
+            {
+              name: "smallTags",
+              type: "checkbox",
+              label: "Küçük Etiketler",
+              defaultValue: false,
+              admin: {
+                description: "Etiketleri küçük boyutta göster.",
+              },
+            },
+            {
+              name: "color",
+              type: "text",
+              label: "Gradient Renk",
+              required: true,
+              defaultValue: "from-blue-500 to-cyan-500",
+              admin: {
+                description: "Arka plan gradient. Örn: from-emerald-500 to-teal-600",
+              },
+            },
+          ],
         },
       ],
     },

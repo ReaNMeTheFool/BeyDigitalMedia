@@ -14,16 +14,15 @@ export const HeroBlock: Block = {
             {
               name: "titlePrefix",
               type: "text",
-              label: "Başlık Ön Ek",
+              label: "Başlık Önü",
+              admin: { description: "Sabit başlangıç metni" },
               defaultValue: "Dijital",
             },
             {
               name: "animatedWords",
               type: "array",
-              label: "Animasyonlu Kelimeler",
-              admin: {
-                description: "Dönüşümlü gösterilecek kelimeler.",
-              },
+              label: "Dönen Kelimeler",
+              admin: { description: "Sırayla değişen kelimeler" },
               fields: [
                 {
                   name: "word",
@@ -36,20 +35,16 @@ export const HeroBlock: Block = {
             {
               name: "titleSuffix",
               type: "text",
-              label: "Başlık Son Ek",
+              label: "Başlık Sonu",
+              admin: { description: "Sabit bitiş metni" },
               defaultValue: "Çözümleri",
             },
             {
               name: "subtitle",
-              type: "text",
-              label: "Alt Başlık",
-              defaultValue: "Türkiye'nin önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
-            },
-            {
-              name: "description",
               type: "textarea",
-              label: "Açıklama",
-              defaultValue: "Markanızı dijital dünyada büyütmek için ihtiyacınız olan tüm hizmetler tek çatı altında.",
+              label: "Alt Başlık",
+              admin: { description: "Başlık altı açıklama" },
+              defaultValue: "Türkiye'nin önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
             },
           ],
         },
@@ -60,12 +55,13 @@ export const HeroBlock: Block = {
             {
               name: "primaryCta",
               type: "group",
-              label: "Birincil CTA",
+              label: "Ana Buton",
+              admin: { description: "Öne çıkan buton" },
               fields: [
                 {
                   name: "text",
                   type: "text",
-                  label: "Buton Metni",
+                  label: "Metin",
                   defaultValue: "Ücretsiz Teklif Al",
                 },
                 {
@@ -79,12 +75,13 @@ export const HeroBlock: Block = {
             {
               name: "secondaryCta",
               type: "group",
-              label: "İkincil CTA",
+              label: "İkinci Buton",
+              admin: { description: "İkinci buton" },
               fields: [
                 {
                   name: "text",
                   type: "text",
-                  label: "Buton Metni",
+                  label: "Metin",
                   defaultValue: "Hizmetlerimizi Keşfet",
                 },
                 {

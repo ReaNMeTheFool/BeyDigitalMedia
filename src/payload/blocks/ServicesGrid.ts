@@ -8,12 +8,14 @@ export const ServicesGridBlock: Block = {
       name: "sectionTitle",
       type: "text",
       label: "Bölüm Başlığı",
+      admin: { description: "Bölüm başlığı" },
       defaultValue: "Hizmetlerimiz",
     },
     {
       name: "showAllServices",
       type: "checkbox",
       label: "Tüm Servisleri Göster",
+      admin: { description: "Tümünü otomatik getir" },
       defaultValue: true,
     },
     {
@@ -24,6 +26,7 @@ export const ServicesGridBlock: Block = {
       label: "Seçili Servisler",
       admin: {
         condition: (data, siblingData) => !siblingData.showAllServices,
+        description: "Manuel servis seçimi",
       },
     },
   ],

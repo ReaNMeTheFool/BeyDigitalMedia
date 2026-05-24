@@ -5,44 +5,42 @@ export const AboutBlock: Block = {
   interfaceName: "AboutBlock",
   fields: [
     {
-      type: "tabs",
-      tabs: [
+      name: "title",
+      type: "text",
+      label: "Başlık",
+      required: true,
+      admin: {
+        description: "Bölüm başlığı",
+      },
+    },
+    {
+      name: "content",
+      type: "richText",
+      label: "İçerik",
+      required: true,
+      admin: {
+        description: "Şirket açıklaması",
+      },
+    },
+    {
+      name: "stats",
+      type: "array",
+      label: "İstatistikler",
+      admin: {
+        description: "Sayısal istatistikler",
+      },
+      fields: [
         {
-          name: "icerik",
-          label: "İçerik",
-          fields: [
-            {
-              name: "title",
-              type: "text",
-              label: "Başlık",
-              required: true,
-            },
-            {
-              name: "content",
-              type: "richText",
-              label: "İçerik",
-              required: true,
-            },
-            {
-              name: "stats",
-              type: "array",
-              label: "İstatistikler",
-              fields: [
-                {
-                  name: "value",
-                  type: "text",
-                  label: "Değer",
-                  required: true,
-                },
-                {
-                  name: "label",
-                  type: "text",
-                  label: "Etiket",
-                  required: true,
-                },
-              ],
-            },
-          ],
+          name: "value",
+          type: "text",
+          label: "Değer",
+          required: true,
+        },
+        {
+          name: "label",
+          type: "text",
+          label: "Etiket",
+          required: true,
         },
       ],
     },

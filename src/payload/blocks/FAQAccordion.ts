@@ -10,6 +10,9 @@ export const FAQAccordionBlock: Block = {
       label: "Başlık",
       required: true,
       defaultValue: "Merak Ettikleriniz",
+      admin: {
+        description: "Bölüm başlığı",
+      },
     },
     {
       name: "subtitle",
@@ -17,12 +20,18 @@ export const FAQAccordionBlock: Block = {
       label: "Alt Başlık",
       defaultValue:
         "Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.",
+      admin: {
+        description: "Kısa açıklama",
+      },
     },
     {
       name: "showAllFaqs",
       type: "checkbox",
       label: "Tüm FAQ'ları Göster",
       defaultValue: true,
+      admin: {
+        description: "Tümünü otomatik getir",
+      },
     },
     {
       name: "selectedFaqs",
@@ -32,6 +41,7 @@ export const FAQAccordionBlock: Block = {
       label: "Seçili FAQ'lar",
       admin: {
         condition: (data, siblingData) => !siblingData.showAllFaqs,
+        description: "Manuel FAQ seçimi",
       },
     },
   ],
