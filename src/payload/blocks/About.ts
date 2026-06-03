@@ -31,16 +31,25 @@ export const AboutBlock: Block = {
       },
       fields: [
         {
-          name: "value",
-          type: "text",
-          label: "Değer",
-          required: true,
-        },
-        {
-          name: "label",
-          type: "text",
-          label: "Etiket",
-          required: true,
+          type: "row",
+          fields: [
+            {
+              name: "value",
+              type: "text",
+              label: "Değer",
+              required: true,
+              defaultValue: "150+",
+              admin: { width: "35%" },
+            },
+            {
+              name: "label",
+              type: "text",
+              label: "Etiket",
+              required: true,
+              defaultValue: "Mutlu Müşteri",
+              admin: { width: "65%" },
+            },
+          ],
         },
       ],
     },

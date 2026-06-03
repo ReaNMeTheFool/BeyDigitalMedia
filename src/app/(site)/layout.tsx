@@ -35,8 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
     (siteSettings.defaultMetaDescription as string) ||
     "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.";
   const title =
-    (siteSettings.defaultMetaTitle as string) ||
-    `${siteName} | ${tagline}`;
+    (siteSettings.defaultMetaTitle as string) || `${siteName} | ${tagline}`;
 
   const verification: Record<string, string> = {};
   const googleCode = siteSettings.googleVerification as string | undefined;
@@ -60,9 +59,9 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: siteName,
     publisher: siteName,
     icons: {
-      icon: "/beydigital_logo.webp",
-      shortcut: "/beydigital_logo.webp",
-      apple: "/beydigital_logo.webp",
+      icon: "/favicon.png",
+      shortcut: "/favicon.png",
+      apple: "/favicon.png",
     },
     formatDetection: {
       email: false,

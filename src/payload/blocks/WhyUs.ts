@@ -34,6 +34,7 @@ export const WhyUsBlock: Block = {
           name: "icon",
           type: "text",
           label: "İkon Adı",
+          defaultValue: "TrendingUp",
           admin: {
             description: "Lucide ikon adı. Örn: TrendingUp, Clock, Users, Award, Zap, CheckCircle2",
           },
@@ -43,12 +44,14 @@ export const WhyUsBlock: Block = {
           type: "text",
           label: "Başlık",
           required: true,
+          defaultValue: "Neden Başlığı",
         },
         {
           name: "description",
           type: "textarea",
           label: "Açıklama",
           required: true,
+          defaultValue: "Bu maddenin kısa açıklaması.",
         },
       ],
     },

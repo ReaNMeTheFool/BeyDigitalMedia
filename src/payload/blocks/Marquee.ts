@@ -16,6 +16,7 @@ export const MarqueeBlock: Block = {
           type: "text",
           label: "Metin",
           required: true,
+          defaultValue: "Marka Adı",
         },
       ],
     },

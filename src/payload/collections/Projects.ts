@@ -70,12 +70,14 @@ export const Projects: CollectionConfig = {
                   type: "text",
                   label: "Etiket",
                   required: true,
+                  defaultValue: "Hizmet Adı",
                 },
                 {
                   name: "slug",
                   type: "text",
                   label: "Slug",
                   required: true,
+                  defaultValue: "hizmet-slug",
                 },
                 {
                   name: "breakBefore",
@@ -90,6 +92,7 @@ export const Projects: CollectionConfig = {
               type: "text",
               label: "Sonuç Metni",
               required: true,
+              defaultValue: "Etkileşim +%2000",
               admin: {
                 description: "Proje sonucu. Örn: Etkileşim +%2000",
               },

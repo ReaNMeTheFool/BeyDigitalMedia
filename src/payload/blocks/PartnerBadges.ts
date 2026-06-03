@@ -22,6 +22,7 @@ export const PartnerBadgesBlock: Block = {
           type: "text",
           label: "Platform Adı",
           required: true,
+          defaultValue: "Platform Adı",
         },
         {
           name: "icon",

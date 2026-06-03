@@ -81,6 +81,14 @@ export const SiteSettings: GlobalConfig = {
                 description: "Sayfa açıklaması yoksa kullanılır.",
               },
             },
+            {
+              name: "googleVerification",
+              type: "text",
+              label: "Google Site Doğrulama",
+              admin: {
+                description: "Google Search Console doğrulama kodu.",
+              },
+            },
           ],
         },
         {

@@ -29,6 +29,7 @@ export const HeroBlock: Block = {
                   type: "text",
                   label: "Kelime",
                   required: true,
+                  defaultValue: "Dönüşüm",
                 },
               ],
             },
@@ -59,16 +60,23 @@ export const HeroBlock: Block = {
               admin: { description: "Öne çıkan buton" },
               fields: [
                 {
-                  name: "text",
-                  type: "text",
-                  label: "Metin",
-                  defaultValue: "Ücretsiz Teklif Al",
-                },
-                {
-                  name: "link",
-                  type: "text",
-                  label: "Link",
-                  defaultValue: "#contact",
+                  type: "row",
+                  fields: [
+                    {
+                      name: "text",
+                      type: "text",
+                      label: "Metin",
+                      defaultValue: "Ücretsiz Teklif Al",
+                      admin: { width: "60%" },
+                    },
+                    {
+                      name: "link",
+                      type: "text",
+                      label: "Link",
+                      defaultValue: "#contact",
+                      admin: { width: "40%" },
+                    },
+                  ],
                 },
               ],
             },
@@ -79,16 +87,23 @@ export const HeroBlock: Block = {
               admin: { description: "İkinci buton" },
               fields: [
                 {
-                  name: "text",
-                  type: "text",
-                  label: "Metin",
-                  defaultValue: "Hizmetlerimizi Keşfet",
-                },
-                {
-                  name: "link",
-                  type: "text",
-                  label: "Link",
-                  defaultValue: "#services",
+                  type: "row",
+                  fields: [
+                    {
+                      name: "text",
+                      type: "text",
+                      label: "Metin",
+                      defaultValue: "Hizmetlerimizi Keşfet",
+                      admin: { width: "60%" },
+                    },
+                    {
+                      name: "link",
+                      type: "text",
+                      label: "Link",
+                      defaultValue: "#services",
+                      admin: { width: "40%" },
+                    },
+                  ],
                 },
               ],
             },

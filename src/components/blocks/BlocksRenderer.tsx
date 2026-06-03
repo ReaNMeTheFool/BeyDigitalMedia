@@ -27,6 +27,7 @@ const blockOrder = [
   "partnerBadges",
   "testimonialsCarousel",
   "faqAccordion",
+  "cta",
 ];
 
 export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
@@ -61,7 +62,14 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
             return (
               <HeroServer
                 key={index}
-                description={(block.description as string) || undefined}
+                titlePrefix={(block.titlePrefix as string) || undefined}
+                animatedWords={
+                  ((block.animatedWords as { word: string }[]) || []).map(
+                    (w) => w.word
+                  )
+                }
+                titleSuffix={(block.titleSuffix as string) || undefined}
+                subtitle={(block.subtitle as string) || undefined}
                 primaryCta={
                   (block.primaryCta as {
                     text: string;
@@ -128,7 +136,9 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
             return (
               <AboutServer
                 key={index}
-                image={(block.image as string) || undefined}
+                image={
+                  (block.image as { url?: string })?.url || undefined
+                }
               />
             );
           case "aiAutomation":

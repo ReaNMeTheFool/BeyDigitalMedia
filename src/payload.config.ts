@@ -7,7 +7,18 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
 
-import { Users, Media, Categories, Services, BlogPosts, Projects, Testimonials, FAQs, ContactSubmissions, Pages } from "./payload/collections";
+import {
+  Users,
+  Media,
+  Categories,
+  Services,
+  BlogPosts,
+  Projects,
+  Testimonials,
+  FAQs,
+  ContactSubmissions,
+  Pages,
+} from "./payload/collections";
 
 import { SiteSettings, Navigation, Footer } from "./payload/globals";
 
@@ -27,7 +38,7 @@ export default buildConfig({
         {
           rel: "icon",
           type: "image/png",
-          url: "/beydigital_logo.webp",
+          url: "/favicon.png",
         },
       ],
     },
@@ -57,12 +68,20 @@ export default buildConfig({
     Pages,
   ],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret:
+    process.env.PAYLOAD_SECRET ||
+    (() => {
+      throw new Error("PAYLOAD_SECRET environment variable is required");
+    })(),
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || "",
+    url:
+      process.env.DATABASE_URI ||
+      (() => {
+        throw new Error("DATABASE_URI environment variable is required");
+      })(),
   }),
   globals: [SiteSettings, Navigation, Footer],
   sharp,

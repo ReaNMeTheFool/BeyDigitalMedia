@@ -5,6 +5,7 @@ import { Mail, Phone, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import ContactForm from "../ui/ContactForm";
 import { iconMap } from "@/lib/icon-map";
+import { sanitizeHtml } from "@/lib/sanitize-html";
 
 const defaultFooterLinks = {
   services: [
@@ -70,7 +71,7 @@ export default function Footer({
             <div>
               <h2
                 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6"
-                dangerouslySetInnerHTML={{ __html: ctaTitle }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(ctaTitle) }}
               />
               <p className="text-[#cdd6f4]/90 text-lg mb-8">
                 {ctaSubtitle}
@@ -114,7 +115,7 @@ export default function Footer({
           <div className="lg:col-span-1">
             <div
               className="text-2xl font-bold mb-4"
-              dangerouslySetInnerHTML={{ __html: brandName }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(brandName) }}
             />
             <p className="text-[#cdd6f4]/80 mb-6">
               {brandTagline}

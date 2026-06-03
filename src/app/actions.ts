@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
@@ -67,7 +68,7 @@ export async function submitContactForm(
 ) {
   try {
     // Rate limiting check
-    const clientId = "anonymous";
+    const clientId = headers().get("x-forwarded-for") || headers().get("x-real-ip") || "anonymous";
     if (!checkRateLimit(clientId)) {
       return {
         success: false,
@@ -158,7 +159,7 @@ export async function submitContactForm(
     const resend = new Resend(resendApiKey);
     
     const { data, error } = await resend.emails.send({
-      from: "Bey Digital Media <onboarding@resend.dev>",
+      from: process.env.RESEND_FROM_EMAIL || "Bey Digital Media <onboarding@resend.dev>",
       to: [recipientEmail],
       subject: `Yeni İletişim Formu: ${name}`,
       html: `

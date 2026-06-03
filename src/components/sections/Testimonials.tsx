@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import Image from "next/image";
+import { sanitizeHtml } from "@/lib/sanitize-html";
 
 const testimonials = [
   {
@@ -81,13 +82,13 @@ export default function Testimonials({
   const goToPrev = () => {
     setDirection(-1);
     setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+      (prev) => (prev - 1 + activeTestimonials.length) % activeTestimonials.length
     );
   };
 
   const goToNext = () => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % activeTestimonials.length);
   };
 
   const variants = {
@@ -116,7 +117,7 @@ export default function Testimonials({
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
         </motion.div>
 
         {/* Carousel */}

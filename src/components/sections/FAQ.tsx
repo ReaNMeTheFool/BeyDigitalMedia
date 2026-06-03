@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FAQPageJsonLd } from "@/components/SEO/JsonLd";
+import { sanitizeHtml } from "@/lib/sanitize-html";
 
 const faqs = [
   {
@@ -71,7 +72,7 @@ export default function FAQ({
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
           <p className="text-[#cdd6f4]/90 text-lg max-w-2xl mx-auto">
             {subtitle}
           </p>

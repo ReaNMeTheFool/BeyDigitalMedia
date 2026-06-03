@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle, AlertCircle, ChevronDown, Check } from "lucide-react";
-import emailjs from "@emailjs/browser";
+import { submitContactForm } from "@/app/actions";
 
 const services = [
   { id: "social-media", label: "Sosyal Medya Yönetimi" },
@@ -190,12 +190,17 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     if (!formRef.current) return;
 
     const formData = new FormData(formRef.current);
-    const errors = validateForm(formData);
 
+    // Add selected services to formData
+    if (selectedServices.length > 0) {
+      formData.set("service", selectedServices.join(","));
+    }
+
+    // Client-side quick validation
+    const errors = validateForm(formData);
     if (Object.keys(errors).length > 0) {
       setStatus({
         success: false,
@@ -208,44 +213,24 @@ export default function ContactForm() {
     setIsSubmitting(true);
     setStatus(null);
 
-    // EmailJS environment variables
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setStatus({
-        success: false,
-        message: "Email servisi yapılandırılmamış. Lütfen daha sonra tekrar deneyin.",
-        errors: {},
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
-      const templateParams = {
-        from_name: formData.get("name"),
-        from_email: formData.get("email"),
-        phone: formData.get("phone") || "Belirtilmemiş",
-        services: getServiceNames(),
-        message: formData.get("message"),
-        to_email: "Beydigitalmedia@gmail.com",
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      const result = await submitContactForm(
+        { success: false, message: "", errors: {} },
+        formData
+      );
 
       setStatus({
-        success: true,
-        message: "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
-        errors: {},
+        success: result.success,
+        message: result.message,
+        errors: result.errors || {},
       });
-      
-      // Formu temizle
-      formRef.current.reset();
-      setSelectedServices([]);
+
+      if (result.success) {
+        formRef.current.reset();
+        setSelectedServices([]);
+      }
     } catch (error) {
-      console.error("Email gönderim hatası:", error);
+      console.error("Form gönderim hatası:", error);
       setStatus({
         success: false,
         message: "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",

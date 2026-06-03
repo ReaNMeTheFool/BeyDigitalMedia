@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { HeroBlock, MarqueeBlock, ServicesGridBlock, PortfolioSliderBlock, TestimonialsCarouselBlock, FAQAccordionBlock, AboutBlock, AiAutomationBlock, WhyUsBlock, PricingBlock, PartnerBadgesBlock } from "../blocks";
+import { HeroBlock, MarqueeBlock, ServicesGridBlock, PortfolioSliderBlock, TestimonialsCarouselBlock, FAQAccordionBlock, AboutBlock, AiAutomationBlock, WhyUsBlock, PricingBlock, PartnerBadgesBlock, CTABlock } from "../blocks";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -63,6 +63,7 @@ export const Pages: CollectionConfig = {
                 WhyUsBlock,
                 PricingBlock,
                 PartnerBadgesBlock,
+                CTABlock,
               ],
             },
           ],

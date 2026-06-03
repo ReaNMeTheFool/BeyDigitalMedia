@@ -228,18 +228,46 @@ input[type="password"] {
   margin-bottom: 6px !important;
 }
 
+/* Field spacing — her alan arası net boşluk */
+.field-type {
+  margin-bottom: 20px !important;
+}
+
+/* Array item cards — net ayrım */
+.array-field__item {
+  margin-bottom: 10px !important;
+}
+
+/* Sidebar fields — ana içerikten ayrışsın */
+.sidebar-fields {
+  padding-top: 8px !important;
+}
+
+/* Block seçim kartları */
+.block-select__blocks .block-select__block {
+  border-radius: var(--radius-md) !important;
+  padding: 12px 16px !important;
+  margin-bottom: 4px !important;
+  transition: all var(--transition-fast) !important;
+}
+
+.block-select__blocks .block-select__block:hover {
+  background: var(--theme-elevation-200) !important;
+}
+
 /* ============================================
    TOOLTIPS
    ============================================ */
 .field-description {
-  font-size: 12px !important;
+  font-size: 11px !important;
   color: var(--theme-text-secondary) !important;
-  margin-top: 6px !important;
-  padding: 8px 12px !important;
-  background: var(--theme-elevation-200) !important;
-  border-radius: var(--radius-sm) !important;
+  margin-top: 4px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
   border-left: none !important;
-  line-height: 1.5 !important;
+  line-height: 1.4 !important;
+  opacity: 0.7 !important;
 }
 
 /* Custom tooltip on hover for icons / buttons */
@@ -329,6 +357,166 @@ input[type="password"] {
 }
 
 /* ============================================
+   DOCUMENT EDIT LAYOUT — PANEL SIZING
+   ============================================ */
+
+/* Core layout variables — narrower sidebar, wider main */
+.document-fields {
+  --doc-sidebar-width: 250px !important;
+  gap: 0 !important;
+}
+
+/* Sidebar panel: ~25% width instead of 33.33% */
+.document-fields__sidebar-wrap {
+  width: 25% !important;
+  min-width: 240px !important;
+}
+
+/* Sidebar fields — consistent spacing */
+.document-fields__sidebar-fields {
+  gap: 12px !important;
+}
+
+/* Main edit area — generous padding */
+.document-fields__edit {
+  padding-top: 28px !important;
+  padding-bottom: 80px !important;
+}
+
+/* ============================================
+   GROUP FIELDS — CARD PANEL REDESIGN
+   ============================================ */
+
+/* Base group: card appearance, no negative margins */
+.group-field {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  background: var(--theme-elevation-50) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 18px 22px !important;
+  margin-bottom: 14px !important;
+}
+
+/* Adjacent groups — consistent gap */
+.group-field + .group-field {
+  margin-top: 0 !important;
+  padding-top: 18px !important;
+}
+
+/* Header — title with subtle bottom separator */
+.group-field__header {
+  margin-bottom: 14px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.group-field__title {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--theme-text) !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Top-level groups — more prominent */
+.group-field--top-level {
+  padding: 28px 32px !important;
+  background: var(--theme-elevation-100) !important;
+  border-radius: var(--radius-lg) !important;
+  margin-bottom: 20px !important;
+}
+
+.group-field--top-level:first-child {
+  padding-top: 28px !important;
+  margin-top: 0 !important;
+}
+
+.group-field--top-level .group-field__header {
+  margin-bottom: 18px !important;
+  padding-bottom: 12px !important;
+}
+
+.group-field--top-level .group-field__title {
+  font-size: 15px !important;
+}
+
+/* Within tabs — no card bg, keep it clean but remove negative margins */
+.group-field--within-tab {
+  background: transparent !important;
+  padding: 16px 0 !important;
+  border-radius: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+.group-field--within-tab:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.group-field--within-tab:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Within collapsible — lighter, internal padding only */
+.group-field--within-collapsible {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background: transparent !important;
+  padding: 14px 0 !important;
+}
+
+.group-field--within-collapsible:first-child {
+  padding-top: 0 !important;
+}
+
+.group-field--within-collapsible:last-child {
+  padding-bottom: 0 !important;
+}
+
+/* Nested groups — transparent, no extra chrome */
+.group-field--within-group {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Within row — minimal */
+.group-field--within-row {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Gutter variant — subtle left accent line */
+.group-field--gutter {
+  border-left: 2px solid var(--theme-elevation-300) !important;
+  padding-left: 18px !important;
+  border-radius: 0 !important;
+}
+
+/* Error state */
+.group-field--has-error {
+  box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.3) !important;
+}
+
+.group-field--has-error .group-field__header {
+  color: var(--theme-error-400) !important;
+}
+
+/* Tab content breathing room */
+.tab-container__content {
+  padding-top: 24px !important;
+}
+
+/* Array / block field spacing */
+.array-field__add {
+  margin-top: 12px !important;
+}
+
+/* ============================================
    TABS & COLLAPSIBLES
    ============================================ */
 .tab-container__tab {
@@ -354,6 +542,7 @@ input[type="password"] {
   font-size: 13px !important;
   border: none !important;
   transition: all var(--transition-fast) !important;
+  margin-top: 4px !important;
 }
 
 .collapsible__toggle:hover {
@@ -365,9 +554,11 @@ input[type="password"] {
 }
 
 .collapsible__content {
-  background: var(--theme-elevation-100) !important;
+  background: var(--theme-elevation-50) !important;
   border: none !important;
+  border-left: 2px solid var(--theme-elevation-400) !important;
   padding: 20px !important;
+  margin-bottom: 8px !important;
 }
 
 /* ============================================

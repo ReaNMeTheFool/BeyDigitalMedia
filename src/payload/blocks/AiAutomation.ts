@@ -50,25 +50,35 @@ export const AiAutomationBlock: Block = {
       },
       fields: [
         {
-          name: "icon",
-          type: "text",
-          label: "İkon",
-          admin: {
-            description:
-              "Lucide ikon adı. Örn: Workflow, Bot, BarChart3, MessageSquare, Zap, BrainCircuit",
-          },
-        },
-        {
-          name: "label",
-          type: "text",
-          label: "Başlık",
-          required: true,
+          type: "row",
+          fields: [
+            {
+              name: "icon",
+              type: "text",
+              label: "İkon",
+              defaultValue: "Zap",
+              admin: {
+                width: "25%",
+                description:
+                  "Lucide ikon adı. Örn: Workflow, Bot, BarChart3, MessageSquare, Zap, BrainCircuit",
+              },
+            },
+            {
+              name: "label",
+              type: "text",
+              label: "Başlık",
+              required: true,
+              defaultValue: "Özellik Başlığı",
+              admin: { width: "75%" },
+            },
+          ],
         },
         {
           name: "desc",
           type: "textarea",
           label: "Açıklama",
           required: true,
+          defaultValue: "Bu özelliğin kısa açıklaması.",
         },
       ],
     },
