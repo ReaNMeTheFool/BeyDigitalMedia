@@ -1,4 +1,15 @@
-import type { CollectionConfig } from "payload";
+import type { AccessArgs, CollectionConfig } from "payload";
+import type { User } from "@/payload-types";
+
+const isAdmin = ({ req: { user } }: { req: { user?: User | null } }) =>
+  user?.role === "admin";
+
+// Boş veritabanında ilk adminin oluşturulabilmesi için.
+const canCreateUser = async ({ req }: AccessArgs<User>) => {
+  if (req.user?.role === "admin") return true;
+  const { totalDocs } = await req.payload.count({ collection: "users" });
+  return totalDocs === 0;
+};
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -17,6 +28,13 @@ export const Users: CollectionConfig = {
       requireEmail: false,
       requireUsername: true,
     },
+  },
+  access: {
+    create: canCreateUser,
+    read: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
+    unlock: isAdmin,
   },
   fields: [
     {
@@ -39,6 +57,9 @@ export const Users: CollectionConfig = {
         { label: "Admin", value: "admin" },
         { label: "Editor", value: "editor" },
       ],
+      access: {
+        update: isAdmin,
+      },
     },
   ],
 };

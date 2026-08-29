@@ -2,16 +2,24 @@
 
 import { headers } from "next/headers";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
+import { getPayloadClient } from "@/lib/payload";
 
-// Rate limiting için basit bir Map (production'da Redis kullanılmalı)
+// Basit in-memory rate limit (tek container kurulumu için yeterli)
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 const RATE_LIMIT = 5; // 5 dakikada max 5 istek
 const RATE_LIMIT_WINDOW = 5 * 60 * 1000; // 5 dakika
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
+
+  // Süresi geçen kayıtları temizle (Map sınırsız büyümesin)
+  for (const [key, record] of rateLimitMap) {
+    if (now - record.timestamp > RATE_LIMIT_WINDOW) {
+      rateLimitMap.delete(key);
+    }
+  }
+
   const record = rateLimitMap.get(ip);
 
   if (!record) {
@@ -30,6 +38,15 @@ function checkRateLimit(ip: string): boolean {
 
   record.count++;
   return true;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 const contactFormSchema = z.object({
@@ -133,80 +150,80 @@ export async function submitContactForm(
         ? selectedServices.map((s) => serviceNames[s] || s).join(", ")
         : "Belirtilmemiş";
 
-    // Resend ile email gönder
+    // Talebi önce veritabanına kaydet
+    try {
+      const payload = await getPayloadClient();
+      await payload.create({
+        collection: "contactSubmissions",
+        data: {
+          name,
+          email,
+          phone: phone || undefined,
+          service,
+          message,
+        },
+      });
+    } catch (dbError) {
+      console.error("Form talebi veritabanına kaydedilemedi:", dbError);
+      return {
+        success: false,
+        message: "Bir hata oluştu. Lütfen tekrar deneyin.",
+        errors: {},
+      };
+    }
+
+    // Email bildirimi (başarısız olsa da talep veritabanında kayıtlı)
     const recipientEmail = process.env.RECIPIENT_EMAIL;
     const resendApiKey = process.env.RESEND_API_KEY;
 
-    // Environment variable kontrolü
-    if (!resendApiKey) {
-      console.error("RESEND_API_KEY tanımlı değil");
-      return {
-        success: false,
-        message:
-          "Sunucu yapılandırma hatası: Email servisi ayarlanmamış. Lütfen daha sonra tekrar deneyin.",
-        errors: {},
-      };
-    }
+    let emailSent = false;
 
-    if (!recipientEmail) {
-      console.error("RECIPIENT_EMAIL tanımlı değil");
-      return {
-        success: false,
-        message: "Sunucu yapılandırma hatası: Alıcı email adresi ayarlanmamış.",
-        errors: {},
-      };
-    }
+    if (resendApiKey && recipientEmail) {
+      try {
+        const safeName = escapeHtml(name);
+        const safeEmail = escapeHtml(email);
+        const safePhone = escapeHtml(phone || "Belirtilmemiş");
+        const safeServices = escapeHtml(serviceNamesList);
+        const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
 
-    // Resend client'ı lazy initialization ile oluştur
-    const resend = new Resend(resendApiKey);
+        const resend = new Resend(resendApiKey);
+        const { error } = await resend.emails.send({
+          from:
+            process.env.RESEND_FROM_EMAIL ||
+            "Bey Digital Media <onboarding@resend.dev>",
+          to: [recipientEmail],
+          subject: `Yeni İletişim Formu: ${name}`,
+          html: `
+            <h2>Yeni İletişim Formu Gönderimi</h2>
+            <p><strong>Ad Soyad:</strong> ${safeName}</p>
+            <p><strong>E-posta:</strong> ${safeEmail}</p>
+            <p><strong>Telefon:</strong> ${safePhone}</p>
+            <p><strong>İlgilenen Hizmetler:</strong> ${safeServices}</p>
+            <p><strong>Mesaj:</strong></p>
+            <p>${safeMessage}</p>
+            <hr>
+            <p><small>Bey Digital Media - İletişim Formu</small></p>
+          `,
+          replyTo: email,
+        });
 
-    const { data, error } = await resend.emails.send({
-      from:
-        process.env.RESEND_FROM_EMAIL ||
-        "Bey Digital Media <onboarding@resend.dev>",
-      to: [recipientEmail],
-      subject: `Yeni İletişim Formu: ${name}`,
-      html: `
-        <h2>Yeni İletişim Formu Gönderimi</h2>
-        <p><strong>Ad Soyad:</strong> ${name}</p>
-        <p><strong>E-posta:</strong> ${email}</p>
-        <p><strong>Telefon:</strong> ${phone || "Belirtilmemiş"}</p>
-        <p><strong>İlgilenen Hizmetler:</strong> ${serviceNamesList}</p>
-        <p><strong>Mesaj:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-        <hr>
-        <p><small>Bey Digital Media - İletişim Formu</small></p>
-      `,
-      replyTo: email,
-    });
-
-    if (error) {
-      console.error("Email gönderim hatası:", error);
-      // Resend domain doğrulama hatası kontrolü
-      if (error.message && error.message.includes("domain")) {
-        return {
-          success: false,
-          message:
-            "Email gönderimi için domain doğrulaması gerekiyor. Lütfen bizimle telefon ile iletişime geçin.",
-          errors: {},
-        };
+        if (error) {
+          console.error("Email gönderim hatası:", error);
+        } else {
+          emailSent = true;
+        }
+      } catch (emailError) {
+        console.error("Email gönderim hatası:", emailError);
       }
-      return {
-        success: false,
-        message:
-          "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
-        errors: {},
-      };
+    } else {
+      console.error("RESEND_API_KEY veya RECIPIENT_EMAIL tanımlı değil");
     }
-
-    console.log("Email başarıyla gönderildi:", data);
-
-    revalidatePath("/");
 
     return {
       success: true,
-      message:
-        "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
+      message: emailSent
+        ? "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız."
+        : "Talebiniz alındı ve kaydedildi. En kısa sürede size dönüş yapacağız.",
       errors: {},
     };
   } catch (error) {
