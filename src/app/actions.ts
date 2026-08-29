@@ -64,15 +64,18 @@ export async function submitContactForm(
     message: string;
     errors: Record<string, string[]>;
   },
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     // Rate limiting check
-    const clientId = headers().get("x-forwarded-for") || headers().get("x-real-ip") || "anonymous";
+    const hdrs = await headers();
+    const clientId =
+      hdrs.get("x-forwarded-for") || hdrs.get("x-real-ip") || "anonymous";
     if (!checkRateLimit(clientId)) {
       return {
         success: false,
-        message: "Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.",
+        message:
+          "Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.",
         errors: {},
       };
     }
@@ -114,10 +117,10 @@ export async function submitContactForm(
       "meta-ads": "Meta Ads",
       "google-ads": "Google Ads",
       "web-design": "Web Tasarım",
-      "seo": "SEO",
-      "branding": "Logo ve Kurumsal Kimlik",
-      "content": "İçerik Üretimi",
-      "consulting": "Dijital Danışmanlık",
+      seo: "SEO",
+      branding: "Logo ve Kurumsal Kimlik",
+      content: "İçerik Üretimi",
+      consulting: "Dijital Danışmanlık",
     };
 
     // Seçilen hizmetleri parse et (virgülle ayrılmış)
@@ -127,25 +130,24 @@ export async function submitContactForm(
 
     const serviceNamesList =
       selectedServices.length > 0
-        ? selectedServices
-            .map((s) => serviceNames[s] || s)
-            .join(", ")
+        ? selectedServices.map((s) => serviceNames[s] || s).join(", ")
         : "Belirtilmemiş";
 
     // Resend ile email gönder
     const recipientEmail = process.env.RECIPIENT_EMAIL;
     const resendApiKey = process.env.RESEND_API_KEY;
-    
+
     // Environment variable kontrolü
     if (!resendApiKey) {
       console.error("RESEND_API_KEY tanımlı değil");
       return {
         success: false,
-        message: "Sunucu yapılandırma hatası: Email servisi ayarlanmamış. Lütfen daha sonra tekrar deneyin.",
+        message:
+          "Sunucu yapılandırma hatası: Email servisi ayarlanmamış. Lütfen daha sonra tekrar deneyin.",
         errors: {},
       };
     }
-    
+
     if (!recipientEmail) {
       console.error("RECIPIENT_EMAIL tanımlı değil");
       return {
@@ -154,12 +156,14 @@ export async function submitContactForm(
         errors: {},
       };
     }
-    
+
     // Resend client'ı lazy initialization ile oluştur
     const resend = new Resend(resendApiKey);
-    
+
     const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Bey Digital Media <onboarding@resend.dev>",
+      from:
+        process.env.RESEND_FROM_EMAIL ||
+        "Bey Digital Media <onboarding@resend.dev>",
       to: [recipientEmail],
       subject: `Yeni İletişim Formu: ${name}`,
       html: `
@@ -182,13 +186,15 @@ export async function submitContactForm(
       if (error.message && error.message.includes("domain")) {
         return {
           success: false,
-          message: "Email gönderimi için domain doğrulaması gerekiyor. Lütfen bizimle telefon ile iletişime geçin.",
+          message:
+            "Email gönderimi için domain doğrulaması gerekiyor. Lütfen bizimle telefon ile iletişime geçin.",
           errors: {},
         };
       }
       return {
         success: false,
-        message: "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        message:
+          "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
         errors: {},
       };
     }
@@ -199,7 +205,8 @@ export async function submitContactForm(
 
     return {
       success: true,
-      message: "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
+      message:
+        "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
       errors: {},
     };
   } catch (error) {
