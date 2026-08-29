@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 
-SERVER="root@212.68.34.84"
-SERVER_PASS="Ahmetonur1"
+SERVER_HOST="${SERVER_HOST:?SERVER_HOST environment variable is required}"
+SERVER_USER="${SERVER_USER:?SERVER_USER environment variable is required}"
+SERVER_PASS="${SERVER_SSH_PASSWORD:?SERVER_SSH_PASSWORD environment variable is required}"
+SERVER="${SERVER_USER}@${SERVER_HOST}"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

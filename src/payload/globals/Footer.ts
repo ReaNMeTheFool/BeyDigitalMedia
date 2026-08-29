@@ -18,7 +18,7 @@ export const Footer: GlobalConfig = {
               name: "ctaTitle",
               type: "text",
               label: "CTA Başlık",
-              defaultValue: 'Dijital <span class="text-[#ffd76e]">Dönüşüm</span> İçin <br /><span style="color: #04a5e5">Hazır mısınız?</span>',
+              defaultValue: 'Dijital <span class="text-[#ffd76e]">Dönüşüm</span> İçin <br /><span class="text-[#4c7fff]">Hazır mısınız?</span>',
               admin: {
                 description: "HTML etiketleri kullanabilirsiniz.",
               },
@@ -34,12 +34,6 @@ export const Footer: GlobalConfig = {
               type: "text",
               label: "CTA Buton Metni",
               defaultValue: "Ücretsiz Teklif Alın",
-            },
-            {
-              name: "ctaButtonHref",
-              type: "text",
-              label: "CTA Buton Linki",
-              defaultValue: "#contact",
             },
             {
               name: "columns",
@@ -63,9 +57,9 @@ export const Footer: GlobalConfig = {
                 {
                   title: "Şirket",
                   links: [
-                    { label: "Hakkımızda", href: "#about" },
-                    { label: "Portfolyo", href: "/portfolyo" },
-                    { label: "SSS", href: "#faq" },
+                    { label: "Hakkımızda", href: "/hakkimizda" },
+                    { label: "Portfolyo", href: "/#portfolio" },
+                    { label: "SSS", href: "/#faq" },
                     { label: "İletişim", href: "/iletisim" },
                   ],
                 },
@@ -105,13 +99,13 @@ export const Footer: GlobalConfig = {
               name: "bottomText",
               type: "text",
               label: "Alt Metin",
-              defaultValue: "© 2024 Bey Digital Media. Tüm hakları saklıdır.",
+              defaultValue: "© Bey Digital Media. Tüm hakları saklıdır.",
             },
             {
               name: "brandTagline",
               type: "text",
               label: "Marka Sloganı",
-              defaultValue: "Built for Digital Growth.",
+              defaultValue: "Dijitalde Büyüyoruz.",
               admin: {
                 position: "sidebar",
               },

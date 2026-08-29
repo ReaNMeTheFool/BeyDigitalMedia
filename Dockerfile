@@ -3,6 +3,11 @@ WORKDIR /app
 ENV NODE_OPTIONS="--max-old-space-size=1536"
 COPY package*.json ./
 RUN npm ci
+# Build asamasinda DB yok; placeholder degerler yeterli. Gercek degerler runtime'da docker-compose env'den gelir.
+ARG DATABASE_URI=mongodb://localhost:27017/build
+ARG PAYLOAD_SECRET=build-only-placeholder
+ENV DATABASE_URI=${DATABASE_URI} \
+    PAYLOAD_SECRET=${PAYLOAD_SECRET}
 COPY . .
 RUN NODE_OPTIONS="--max-old-space-size=1536" NEXT_BUILD_WORKERS=2 npm run build
 

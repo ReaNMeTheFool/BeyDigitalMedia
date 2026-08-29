@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { HeroBlock, MarqueeBlock, ServicesGridBlock, PortfolioSliderBlock, TestimonialsCarouselBlock, FAQAccordionBlock, AboutBlock, AiAutomationBlock, WhyUsBlock, PricingBlock, PartnerBadgesBlock, CTABlock } from "../blocks";
+import { HeroBlock, MarqueeBlock, ServicesGridBlock, PortfolioSliderBlock, TestimonialsCarouselBlock, FAQAccordionBlock, AboutBlock, AiAutomationBlock, WhyUsBlock, PricingBlock, PartnerBadgesBlock, CTABlock } from "../blocks/index.ts";
 
 export const Pages: CollectionConfig = {
   slug: "pages",

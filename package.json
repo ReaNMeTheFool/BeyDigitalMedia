@@ -2,19 +2,19 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "payload:seed": "tsx src/payload/seed.ts",
+    "payload:seed": "tsx src/payload/seed/index.ts",
     "start:all": "bash scripts/start-dev.sh",
     "deploy": "bash scripts/deploy.sh",
     "sync": "bash scripts/sync-from-server.sh",
     "seed": "bash scripts/seed.sh"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@payloadcms/db-mongodb": "^3.84.1",
     "@payloadcms/graphql": "^3.84.1",
     "@payloadcms/next": "^3.84.1",

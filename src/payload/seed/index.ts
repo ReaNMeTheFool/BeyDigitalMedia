@@ -2,7 +2,6 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { seedUsers } from "./users";
 import { seedServices } from "./services";
-import { seedBlogPosts } from "./blogPosts";
 import { seedProjects } from "./projects";
 import { seedTestimonials } from "./testimonials";
 import { seedFAQs } from "./faqs";
@@ -16,7 +15,6 @@ async function seed() {
 
   await seedUsers(payload);
   await seedServices(payload);
-  await seedBlogPosts(payload);
   await seedProjects(payload);
   await seedTestimonials(payload);
   await seedFAQs(payload);

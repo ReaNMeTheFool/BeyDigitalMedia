@@ -24,7 +24,7 @@ export const SiteSettings: GlobalConfig = {
               name: "tagline",
               type: "text",
               label: "Slogan",
-              defaultValue: "Dijital Pazarlama Ajansi",
+              defaultValue: "Dijital Pazarlama Ajansı",
             },
             {
               name: "logo",

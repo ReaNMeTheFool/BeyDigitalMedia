@@ -8,7 +8,7 @@
 - **OS:** AlmaLinux 9 (64 Bit)
 - **IP Address:** `212.68.34.84`
 - **SSH Username:** `root`
-- **SSH Password:** `Ahmetonur1`
+- **SSH Password:** `(gizli — rotation sonrası doldurun)`
 - **Hardware Profile:** 4GB RAM + 8GB NVME Swap Space (Total 12GB effective memory for container workloads), 40GB NVME Disk, E5-2699v4 CPU.
 
 ## 2. INFRASTRUCTURE & ARCHITECTURE
@@ -36,7 +36,7 @@ The host is secured using `firewalld`. Only the following ports are permitted:
 ## 4. DEPLOYMENT WORKFLOW (HOW TO HOST A NEW SITE)
 
 When the USER requests a new Next.js website deployment:
-1. Connect to the host via SSH (`Ahmetonur1` password through Paramiko or similar).
+1. Connect to the host via SSH (password: `(gizli — rotation sonrası doldurun)`, through Paramiko or similar).
 2. Create an isolated project directory: `mkdir -p /opt/sayfalar/<project_name>`
 3. Place a lightweight `docker-compose.yml` into that directory. The image should either be pre-built, or use a Dockerfile in the same folder.
 4. Ensure the container's network can be reached. Expose a local port mapping (e.g., `127.0.0.1:3000:3000`) but *do not open it in firewalld*.
@@ -44,7 +44,7 @@ When the USER requests a new Next.js website deployment:
 6. Use Nginx Proxy Manager (either via port 81 API or asking the user to do it in the GUI) to map `www.domain.com` to `127.0.0.1:3000` (or Docker bridge IP) and issue the SSL.
 
 ## 5. DEFAULT CREDENTIALS
-- **NPM Initial Login:** `admin@example.com` / `changeme` (The USER is instructed to change this).
+- **NPM Initial Login:** `(gizli — rotation sonrası doldurun)`.
 - **Portainer Initial Setup:** The USER must visit `https://212.68.34.84:9443` to set up the initial admin password.
 
 ## 6. EMERGENCY / TROUBLESHOOTING

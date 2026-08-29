@@ -1,0 +1,10 @@
+.env
+.env.*
+.git
+node_modules
+.next
+progress/
+*.md
+sunucu*.md
+site-loaded.png
+check_tr.mjs

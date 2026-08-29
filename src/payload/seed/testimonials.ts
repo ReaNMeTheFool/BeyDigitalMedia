@@ -12,7 +12,7 @@ export async function seedTestimonials(payload: Payload) {
       name: "Erenalp Guzgun",
       company: "Guzgun Tekstil",
       rating: 5,
-      text: "Uzun zamandır sosyal medyada böyle düzenli ve yaratıcı içerikler görmemiştik. Bey Digital Media sayesinde sayfamız adeta kendini buldu diyebiliriz 😊 Her detayı özenle takip etmeleri ve bizi biz gibi yansıtmaları işin en güzel yanı. Emeğinize sağlık!",
+      text: "Uzun zamandır sosyal medyada böyle düzenli ve yaratıcı içerikler görmemiştik. Bey Digital Media sayesinde sayfamız adeta kendini buldu diyebiliriz. Her detayı özenle takip etmeleri ve bizi biz gibi yansıtmaları işin en güzel yanı. Emeğinize sağlık!",
     },
     {
       name: "Erkutay Torun",

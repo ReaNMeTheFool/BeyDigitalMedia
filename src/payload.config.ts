@@ -18,9 +18,9 @@ import {
   FAQs,
   ContactSubmissions,
   Pages,
-} from "./payload/collections";
+} from "./payload/collections/index.ts";
 
-import { SiteSettings, Navigation, Footer } from "./payload/globals";
+import { SiteSettings, Navigation, Footer } from "./payload/globals/index.ts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

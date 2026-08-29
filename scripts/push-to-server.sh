@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 
-SERVER="root@212.68.34.84"
-SERVER_PASS="Ahmetonur1"
+SERVER_HOST="${SERVER_HOST:?SERVER_HOST environment variable is required}"
+SERVER_USER="${SERVER_USER:?SERVER_USER environment variable is required}"
+SERVER_PASS="${SERVER_SSH_PASSWORD:?SERVER_SSH_PASSWORD environment variable is required}"
+SERVER="${SERVER_USER}@${SERVER_HOST}"
 PROJECT_DIR="/opt/sayfalar/beydigital"
 IMAGE_NAME="beydigital-app"
 
@@ -28,7 +30,7 @@ AVAILABLE_MEM_GB=$(awk "BEGIN {printf \"%.1f\", $AVAILABLE_MEM_MB/1024}")
 log "Server available RAM: ${AVAILABLE_MEM_MB}MB (${AVAILABLE_MEM_GB}GB)"
 
 # Reserve 1GB for OS + running containers, use rest for build
-RESERVE_MB=1024
+RESERVE_MB=512
 BUILD_MEM_MB=$((AVAILABLE_MEM_MB - RESERVE_MB))
 
 if [ "$BUILD_MEM_MB" -lt 1024 ]; then
@@ -85,4 +87,4 @@ echo "   Site:    https://beydigitalmedia.com"
 echo "   Admin:   https://beydigitalmedia.com/admin"
 echo ""
 echo "   Check logs:"
-echo "   ssh root@212.68.34.84 'docker logs beydigital-app-1 -f'"
+echo "   ssh ${SERVER} 'docker logs beydigital-app-1 -f'"

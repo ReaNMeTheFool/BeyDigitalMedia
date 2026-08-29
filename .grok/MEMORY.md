@@ -18,3 +18,8 @@ Rejected: empty-by-default CMS-managed stats.
 Why: user chose it. Keep blogPosts collection, /blog routes and nav link; remove 3 stub seed posts (end in "...") from seed and DB. No invented articles.
 
 ## Dead ends
+
+### 2026-08-29 — code-reviewer subagent type
+Failed: dispatching the `code-reviewer` agent type twice returned harness error "captcha verify failed" (no work performed).
+Don't retry unless: the harness error disappears. Use `Explore` (read-only, has Bash for git diff) for diff reviews instead.
+

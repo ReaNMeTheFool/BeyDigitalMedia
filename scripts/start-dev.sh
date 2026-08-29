@@ -44,7 +44,5 @@ echo ""
 echo "🖥️ Next.js dev sunucusu başlatılıyor..."
 echo "   🌐 Site:     http://localhost:3000"
 echo "   🔐 Admin:    http://localhost:3000/admin"
-echo "   📧 Email:    admin@beydigitalmedia.com"
-echo "   🔑 Password: admin123"
 echo ""
 npm run dev

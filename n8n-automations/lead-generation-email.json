@@ -243,14 +243,14 @@
     },
     {
       "parameters": {
-        "fromEmail": "info@beydigital.com.tr",
+        "fromEmail": "info@beydigitalmedia.com",
         "fromName": "Bey Digital Media",
         "toEmail": "={{ $json.contact_email }}",
         "subject": "={{ $json.email_subject }}",
         "emailType": "text",
-        "message": "={{ $json.email_body }}\n\n---\nBey Digital Media\n📍 Bursa, Türkiye\n🌐 www.beydigital.com.tr\n📧 info@beydigital.com.tr\n\nBu e-postayı almak istemiyorsanız lütfen bildiriniz.",
+        "message": "={{ $json.email_body }}\n\n---\nBey Digital Media\nBursa, Türkiye\nwww.beydigitalmedia.com\ninfo@beydigitalmedia.com\n\nBu e-postayı almak istemiyorsanız lütfen bildiriniz.",
         "options": {
-          "replyTo": "info@beydigital.com.tr"
+          "replyTo": "info@beydigitalmedia.com"
         }
       },
       "id": "send-email",

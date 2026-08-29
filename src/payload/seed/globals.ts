@@ -11,7 +11,7 @@ export async function seedGlobals(payload: Payload) {
         slug: "siteSettings",
         data: {
           siteName: "Bey Digital Media",
-          tagline: "Dijital Pazarlama Ajansi",
+          tagline: "Dijital Pazarlama Ajansı",
           contactEmail: "info@beydigitalmedia.com",
         },
       });
@@ -78,7 +78,7 @@ export async function seedGlobals(payload: Payload) {
               url: "https://www.tiktok.com/@beydigitalmedia",
             },
           ],
-          bottomText: "© 2024 Bey Digital Media. Tüm hakları saklıdır.",
+          bottomText: "© Bey Digital Media. Tüm hakları saklıdır.",
           showNewsletter: false,
           columns: [
             {
@@ -95,9 +95,9 @@ export async function seedGlobals(payload: Payload) {
             {
               title: "Şirket",
               links: [
-                { label: "Hakkımızda", href: "#about" },
-                { label: "Portfolyo", href: "/portfolyo" },
-                { label: "SSS", href: "#faq" },
+                { label: "Hakkımızda", href: "/hakkimizda" },
+                { label: "Portfolyo", href: "/#portfolio" },
+                { label: "SSS", href: "/#faq" },
                 { label: "İletişim", href: "/iletisim" },
               ],
             },

@@ -90,7 +90,6 @@ DATABASE_URI=mongodb://localhost:27017/beydigital
 PAYLOAD_SECRET=your-random-secret-key-min-32-chars
 
 # App
-NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
 # Email
 RESEND_API_KEY=re_xxxxxxxx
@@ -117,19 +116,20 @@ MongoDB çalışıyor olmalı:
 # Docker ile MongoDB başlat
 docker run -d -p 27017:27017 --name mongo mongo:8
 
-# Seed script çalıştır
+# Seed script çalıştır (ADMIN_USERNAME ve ADMIN_PASSWORD .env'de zorunlu)
 npm run payload:seed
 ```
 
 Seed script şunları oluşturur:
-- Admin kullanıcısı (`admin@beydigitalmedia.com` / `admin123`)
+- Admin kullanıcısı (kullanıcı adı/şifre `.env` içindeki `ADMIN_USERNAME` / `ADMIN_PASSWORD` değerlerinden alınır)
 - 9 hizmet (services-data.ts'den)
-- 3 blog yazısı
 - 5 portfolyo projesi
 - 5 müşteri referansı
 - 6 FAQ
 - Home page (blocks ile)
 - SiteSettings, Navigation, Footer globals
+
+Blog yazıları seed edilmez; içerik admin panelinden eklenir.
 
 ## 🐳 Docker Deploy (Production)
 
@@ -148,10 +148,7 @@ Container'lar:
 
 ## 🔐 Admin Paneli
 
-İlk kurulumda `/admin` adresine gidip create-first-user ekranından admin kullanıcısı oluşturun. Seed kullanıldıysa:
-
-- **Email:** `admin@beydigitalmedia.com`
-- **Password:** `admin123`
+İlk kurulumda `/admin` adresine gidip create-first-user ekranından admin kullanıcısı oluşturun. Seed kullanıldıysa giriş bilgileri `.env` dosyasındaki `ADMIN_USERNAME` / `ADMIN_PASSWORD` değerleridir.
 
 ## 🌐 Nginx Proxy Manager Ayarları
 

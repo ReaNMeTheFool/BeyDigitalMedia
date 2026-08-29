@@ -5,11 +5,12 @@ export function richText(text: string) {
       children: [
         {
           type: "paragraph",
-          children: [{ type: "text", text }],
+          version: 1,
+          children: [{ type: "text", text, version: 1 }],
         },
       ],
       direction: null,
-      format: "",
+      format: "" as const,
       indent: 0,
       version: 1,
     },

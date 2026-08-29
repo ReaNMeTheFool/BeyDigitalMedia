@@ -14,26 +14,52 @@ export async function seedHomePage(payload: Payload) {
         data: {
           slug: "home",
           title: "Ana Sayfa",
-          metaTitle: "Bey Digital Media | Dijital Pazarlama Ajansi",
+          metaTitle: "Bey Digital Media | Dijital Pazarlama Ajansı",
           metaDescription:
             "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.",
           content: [
             {
               blockType: "hero",
-              title: "Dijitalde Büyüyün",
-              subtitle: "Markanızı dijital dünyada büyütün",
-              description:
-                "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
-              primaryCta: { text: "Ücretsiz Teklif Al", link: "#contact" },
-              secondaryCta: { text: "Hizmetlerimiz", link: "#services" },
+              icerik: {
+                titlePrefix: "Dijital",
+                titleSuffix: "Çözümleri",
+                subtitle:
+                  "Türkiye'nin önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
+              },
+              cta: {
+                primaryCta: { text: "Ücretsiz Teklif Al", link: "#contact" },
+                secondaryCta: { text: "Hizmetlerimizi Keşfet", link: "#services" },
+              },
             },
             { blockType: "marquee", items: [{ text: "Sosyal Medya" }, { text: "Meta Ads" }, { text: "Google Ads" }, { text: "Web Tasarım" }, { text: "SEO" }, { text: "Logo Tasarımı" }, { text: "Kurumsal Kimlik" }, { text: "Dijital Büyüme" }] },
-            { blockType: "servicesGrid", showAllServices: true },
-            { blockType: "portfolioSlider" },
-            { blockType: "testimonialsCarousel" },
-            { blockType: "faqAccordion", showAllFaqs: true },
-            { blockType: "cta", title: "Dijital Büyüme", ctaText: "Ücretsiz Teklif Al", ctaLink: "#contact" },
-            { blockType: "about", title: "Hakkımızda", content: richText("Bey Digital Media olarak 8 yılı aşkın süredir markaların dijital dünyada büyümesine yardımcı oluyoruz.") },
+            { blockType: "servicesGrid", sectionTitle: "Hizmetlerimiz", showAllServices: true },
+            {
+              blockType: "portfolioSlider",
+              title: "Gerçek Başarı Hikayeleri",
+              subtitle:
+                "Türkiye'nin önde gelen markalarıyla çalışarak dijital dünyada ölçülebilir sonuçlar elde ediyoruz.",
+              showAllPortfolios: true,
+            },
+            { blockType: "testimonialsCarousel", title: "Bizim Hakkımızda Ne Dediler?", showAllTestimonials: true },
+            {
+              blockType: "faqAccordion",
+              title: "Merak Ettikleriniz",
+              subtitle:
+                "Dijital pazarlama ve hizmetlerimiz hakkında en çok sorulan soruların cevapları.",
+              showAllFaqs: true,
+            },
+            {
+              blockType: "cta",
+              title: "Dijital Büyüme",
+              subtitle: "Markanız için ilk adımı atın.",
+              ctaText: "Ücretsiz Teklif Al",
+              ctaLink: "#contact",
+            },
+            {
+              blockType: "about",
+              title: "Hakkımızda",
+              content: richText("Bey Digital Media olarak 8 yılı aşkın süredir markaların dijital dünyada büyümesine yardımcı oluyoruz."),
+            },
           ],
         },
       });
