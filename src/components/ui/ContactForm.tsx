@@ -146,25 +146,6 @@ export default function ContactForm() {
     );
   };
 
-  // Hizmet adlarını Türkçe'ye çevir
-  const getServiceNames = () => {
-    const serviceNames: Record<string, string> = {
-      "social-media": "Sosyal Medya Yönetimi",
-      "meta-ads": "Meta Ads",
-      "google-ads": "Google Ads",
-      "web-design": "Web Tasarım",
-      "seo": "SEO",
-      "branding": "Logo ve Kurumsal Kimlik",
-      "content": "İçerik Üretimi",
-      "consulting": "Dijital Danışmanlık",
-    };
-
-    if (selectedServices.length === 0) return "Belirtilmemiş";
-    return selectedServices
-      .map((s) => serviceNames[s] || s)
-      .join(", ");
-  };
-
   const validateForm = (formData: FormData): Record<string, string[]> => {
     const errors: Record<string, string[]> = {};
     

@@ -33,7 +33,7 @@ export default async function AboutServer({
         where: { slug: { equals: "about" } },
         limit: 1,
       });
-      const aboutPage = result.docs[0] as any;
+      const aboutPage = result.docs[0];
       if (aboutPage?.content) {
         aboutParagraphs = [lexicalToHtml(aboutPage.content)];
       }

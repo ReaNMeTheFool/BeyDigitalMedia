@@ -6,7 +6,7 @@ interface FAQServerProps {
   title?: string;
   subtitle?: string;
   showAll?: boolean;
-  selectedFaqs?: any[];
+  selectedFaqs?: { question: string; answer: unknown }[];
 }
 
 export default async function FAQServer({
@@ -24,7 +24,7 @@ export default async function FAQServer({
         collection: "faqs",
         sort: "order",
       });
-      faqs = result.docs.map((doc: any) => ({
+      faqs = result.docs.map((doc) => ({
         question: doc.question,
         answer: lexicalToHtml(doc.answer),
       }));
@@ -32,9 +32,12 @@ export default async function FAQServer({
       faqs = [];
     }
   } else if (selectedFaqs && selectedFaqs.length > 0) {
-    faqs = selectedFaqs.map((doc: any) => ({
+    faqs = selectedFaqs.map((doc) => ({
       question: doc.question,
-      answer: lexicalToHtml(doc.answer),
+      answer:
+        doc.answer && typeof doc.answer === "object"
+          ? lexicalToHtml(doc.answer)
+          : "",
     }));
   }
 

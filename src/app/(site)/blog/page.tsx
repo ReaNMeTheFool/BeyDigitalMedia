@@ -5,32 +5,33 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import { getPayloadClient } from "@/lib/payload";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
+import type { BlogPost } from "@/payload-types";
 
 export async function generateMetadata(): Promise<Metadata> {
   return mergeMetadata(defaultSeoFields, {
     title: "Blog | Bey Digital Media",
     description:
-      "Dijital pazarlama, sosyal medya, SEO ve web tasarim hakkinda uzman icerikler.",
+      "Dijital pazarlama, sosyal medya, SEO ve web tasarım hakkında uzman içerikler.",
     alternates: {
       canonical: "/blog",
     },
     openGraph: {
       title: "Blog | Bey Digital Media",
       description:
-        "Dijital pazarlama, sosyal medya, SEO ve web tasarim hakkinda uzman icerikler.",
+        "Dijital pazarlama, sosyal medya, SEO ve web tasarım hakkında uzman içerikler.",
       url: "https://beydigitalmedia.com/blog",
       type: "website",
     },
     twitter: {
       title: "Blog | Bey Digital Media",
       description:
-        "Dijital pazarlama, sosyal medya, SEO ve web tasarim hakkinda uzman icerikler.",
+        "Dijital pazarlama, sosyal medya, SEO ve web tasarım hakkında uzman içerikler.",
     },
   });
 }
 
 export default async function BlogPage() {
-  let posts: Record<string, unknown>[] = [];
+  let posts: BlogPost[] = [];
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
@@ -52,21 +53,31 @@ export default async function BlogPage() {
             Blog
           </h1>
           <p className="text-[#cdd6f4]/70 text-lg mb-12">
-            Dijital pazarlama dunyasindan uzman icerikler.
+            Dijital pazarlama dünyasından uzman içerikler.
           </p>
+
+          {posts.length === 0 && (
+            <p className="text-[#cdd6f4]/60 text-lg">
+              Henüz yayınlanmış bir yazı bulunmuyor.
+            </p>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post) => {
-              const slug = post.slug as string;
-              const title = post.title as string;
-              const excerpt = post.excerpt as string;
-              const category = (post.category as { name?: string })?.name || "";
+              const slug = post.slug;
+              const title = post.title;
+              const excerpt = post.excerpt;
+              const category =
+                post.category && typeof post.category === "object"
+                  ? post.category.name
+                  : "";
               const date = post.publishedDate
-                ? new Date(post.publishedDate as string).toLocaleDateString(
-                    "tr-TR"
-                  )
+                ? new Date(post.publishedDate).toLocaleDateString("tr-TR")
                 : "";
-              const image = (post.featuredImage as { url?: string })?.url || "";
+              const image =
+                post.featuredImage && typeof post.featuredImage === "object"
+                  ? post.featuredImage.url || ""
+                  : "";
 
               return (
                 <article

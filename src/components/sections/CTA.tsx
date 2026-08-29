@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { sanitizeHtml } from "@/lib/sanitize-html";
 
 export default function CTA({
   title = 'Dijital <span class="text-[#ffd76e]">Büyüme</span> Yolculuğuna Bugün Başlayın',
@@ -46,7 +47,7 @@ export default function CTA({
             </span>
           </motion.div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
           <p className="text-[#cdd6f4]/90 text-lg md:text-xl max-w-3xl mx-auto mb-10">
             {subtitle}
           </p>
@@ -88,19 +89,19 @@ export default function CTA({
           >
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">150+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Proje</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Tamamlanan Proje</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">4.8/5</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Müşteri Puanı</div>
+              <div className="text-2xl font-bold text-[#cdd6f4]">100+</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Memnun Müşteri</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-[#cdd6f4]">8+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Yıl Deneyim</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Yıllık Deneyim</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">500+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Kampanya</div>
+              <div className="text-2xl font-bold text-[#cdd6f4]">%100</div>
+              <div className="text-[#cdd6f4]/70 text-sm">Müşteri Memnuniyeti</div>
             </div>
           </motion.div>
         </motion.div>

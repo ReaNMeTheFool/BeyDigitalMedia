@@ -1,9 +1,34 @@
 import { getPayloadClient } from "@/lib/payload";
 import Footer from "./Footer";
+import type { Footer as FooterGlobal, SiteSetting } from "@/payload-types";
+
+// Footer.tsx'teki defaultFooterLinks ile aynı içerik.
+const defaultFooterLinks = {
+  services: [
+    { label: "Sosyal Medya Yönetimi", href: "/sosyal-medya-yonetimi" },
+    { label: "Meta Ads", href: "/meta-ads" },
+    { label: "Google Ads", href: "/google-ads" },
+    { label: "Web Tasarım", href: "/web-tasarim" },
+    { label: "SEO", href: "/seo" },
+    { label: "Logo & Kurumsal Kimlik", href: "/logo-tasarimi" },
+  ],
+  company: [
+    { label: "Hakkımızda", href: "/hakkimizda" },
+    { label: "Portfolyo", href: "/#portfolio" },
+    { label: "SSS", href: "/#faq" },
+    { label: "İletişim", href: "/iletisim" },
+  ],
+  social: [
+    { label: "Instagram", href: "https://instagram.com/beydigitalmedia", platform: "instagram" },
+    { label: "YouTube", href: "https://www.youtube.com/@beydigitalmedia", platform: "youtube" },
+    { label: "Facebook", href: "https://www.facebook.com/beydigitalmedia", platform: "facebook" },
+    { label: "TikTok", href: "https://www.tiktok.com/@beydigitalmedia", platform: "tiktok" },
+  ],
+};
 
 export default async function FooterServer() {
-  let footerData: any = {};
-  let siteSettings: any = {};
+  let footerData: Partial<FooterGlobal> = {};
+  let siteSettings: Partial<SiteSetting> = {};
 
   try {
     const payload = await getPayloadClient();
@@ -19,31 +44,31 @@ export default async function FooterServer() {
 
   const footerLinks = {
     services:
-      columns.find((c: any) =>
+      columns.find((c) =>
         ["Hizmetler", "Services", "hizmetler", "services"].includes(c.title)
-      )?.links?.map((l: any) => ({ label: l.label, href: l.href })) ||
-      undefined,
+      )?.links?.map((l) => ({ label: l.label, href: l.href })) ||
+      defaultFooterLinks.services,
     company:
-      columns.find((c: any) =>
+      columns.find((c) =>
         ["Şirket", "Company", "şirket", "company", "Hakkımızda", "About"].includes(c.title)
-      )?.links?.map((l: any) => ({ label: l.label, href: l.href })) ||
-      undefined,
+      )?.links?.map((l) => ({ label: l.label, href: l.href })) ||
+      defaultFooterLinks.company,
     social: (() => {
       const raw = footerData?.socialLinks || siteSettings?.socialLinks;
-      if (!raw) return undefined;
+      if (!raw) return defaultFooterLinks.social;
       const order: Record<string, number> = {
         instagram: 0,
         youtube: 1,
         facebook: 2,
         tiktok: 3,
       };
-      const mapped = raw.map((s: any) => ({
+      const mapped = raw.map((s) => ({
         label: s.platform,
         href: s.url,
-        platform: s.platform?.toLowerCase() || "",
+        platform: s.platform.toLowerCase(),
       }));
       mapped.sort(
-        (a: any, b: any) =>
+        (a, b) =>
           (order[a.platform] ?? 999) - (order[b.platform] ?? 999)
       );
       return mapped;
@@ -55,14 +80,9 @@ export default async function FooterServer() {
       ctaTitle={footerData?.ctaTitle || undefined}
       ctaSubtitle={footerData?.ctaSubtitle || undefined}
       ctaButtonText={footerData?.ctaButtonText || undefined}
-      ctaButtonHref={footerData?.ctaButtonHref || undefined}
       brandName={siteSettings?.siteName || undefined}
       brandTagline={footerData?.brandTagline || undefined}
-      footerLinks={
-        footerLinks.services || footerLinks.company || footerLinks.social
-          ? footerLinks
-          : undefined
-      }
+      footerLinks={footerLinks}
       contactEmail={siteSettings?.contactEmail || undefined}
       contactPhone={siteSettings?.contactPhone || undefined}
       bottomText={footerData?.bottomText || undefined}

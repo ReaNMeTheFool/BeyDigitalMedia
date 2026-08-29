@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   return mergeMetadata(defaultSeoFields, {
-    title: "Hakkimizda | Bey Digital Media",
+    title: "Hakkımızda | Bey Digital Media",
     description:
-      "Bey Digital Media, 8 yili askin deneyimiyle markalarin dijital dunyada buyumesine yardimci oluyor. Ekibimizi, misyonumuzu ve vizyonumuzu kesfedin.",
+      "Bey Digital Media, 8 yılı aşkın deneyimiyle markaların dijital dünyada büyümesine yardımcı oluyor. Ekibimizi, misyonumuzu ve vizyonumuzu keşfedin.",
     alternates: {
       canonical: "/hakkimizda",
     },
     openGraph: {
-      title: "Hakkimizda | Bey Digital Media",
+      title: "Hakkımızda | Bey Digital Media",
       description:
-        "Bey Digital Media, 8 yili askin deneyimiyle markalarin dijital dunyada buyumesine yardimci oluyor.",
+        "Bey Digital Media, 8 yılı aşkın deneyimiyle markaların dijital dünyada büyümesine yardımcı oluyor.",
       url: "https://beydigitalmedia.com/hakkimizda",
     },
   });
@@ -23,38 +24,38 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function HakkimizdaPage() {
   const stats = [
     { value: "150+", label: "Tamamlanan Proje" },
-    { value: "100+", label: "Memnun Musteri" },
-    { value: "8+", label: "Yillik Deneyim" },
-    { value: "%100", label: "Musteri Memnuniyeti" },
+    { value: "100+", label: "Memnun Müşteri" },
+    { value: "8+", label: "Yıllık Deneyim" },
+    { value: "%100", label: "Müşteri Memnuniyeti" },
   ];
 
   const values = [
     {
       title: "Misyonumuz",
       description:
-        "Markalarin dijital dunyada guclu bir kimlik kazanmasini saglamak, renklerin psikolojik etkisini kullanarak akilda kalici ve etkili markalar yaratmak.",
+        "Markaların dijital dünyada güçlü bir kimlik kazanmasını sağlamak, renklerin psikolojik etkisini kullanarak akılda kalıcı ve etkili markalar yaratmak.",
       color: "from-[#0040ff] to-[#0033cc]",
     },
     {
       title: "Vizyonumuz",
       description:
-        "Turkiye'nin onde gelen dijital pazarlama ajanslarindan biri olmak, global standartlarda hizmet vererek markalari uluslararasi arenaya tasimak.",
+        "Türkiye'nin önde gelen dijital pazarlama ajanslarından biri olmak, global standartlarda hizmet vererek markaları uluslararası arenaya taşımak.",
       color: "from-[#ffd76e] to-[#f9a825]",
     },
   ];
 
   const team = [
     {
-      name: "Yigit Emre Balaban",
-      role: "Kurucu & Dijital Strateji Direktoru",
+      name: "Yiğit Emre Balaban",
+      role: "Kurucu & Dijital Strateji Direktörü",
       description:
-        "8 yili askin dijital pazarlama deneyimiyle markalarin buyume stratejilerini yonlendiriyor.",
+        "8 yılı aşkın dijital pazarlama deneyimiyle markaların büyüme stratejilerini yönlendiriyor.",
     },
     {
-      name: "Ekip Arkadaslarimiz",
-      role: "Tasarim, Icerik ve Reklam Uzmanlari",
+      name: "Ekip Arkadaşlarımız",
+      role: "Tasarım, İçerik ve Reklam Uzmanları",
       description:
-        "Sosyal medya yonetimi, grafik tasarim, icerik uretimi, Meta & Google reklamciligi ve web gelistirme alanlarinda uzman kadromuz.",
+        "Sosyal medya yönetimi, grafik tasarım, içerik üretimi, Meta & Google reklamcılığı ve web geliştirme alanlarında uzman kadromuz.",
     },
   ];
 
@@ -70,14 +71,14 @@ export default function HakkimizdaPage() {
           </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#cdd6f4] mb-6">
-              Dijitalde Buyumenin{" "}
-              <span className="text-[#0040ff]">Guvenilir Ortagi</span>
+              Dijitalde Büyümenin{" "}
+              <span className="text-[#0040ff]">Güvenilir Ortağı</span>
             </h1>
             <p className="text-[#cdd6f4]/80 text-lg md:text-xl max-w-3xl mx-auto">
-              Bey Digital Media olarak 8 yili askin suredir markalarin dijital
-              dunyada buyumesine yardimci oluyoruz. Renklerin psikolojisinden
-              ilham alarak, markalarin kimligini en iyi sekilde yansitan
-              stratejiler gelistiriyoruz.
+              Bey Digital Media olarak 8 yılı aşkın süredir markaların dijital
+              dünyada büyümesine yardımcı oluyoruz. Renklerin psikolojisinden
+              ilham alarak, markaların kimliğini en iyi şekilde yansıtan
+              stratejiler geliştiriyoruz.
             </p>
           </div>
         </section>
@@ -132,8 +133,8 @@ export default function HakkimizdaPage() {
               Ekibimiz
             </h2>
             <p className="text-[#cdd6f4]/60 text-center mb-12 max-w-xl mx-auto">
-              Markanizi bir sonraki seviyeye tasimak icin tutkulu ve deneyimli
-              bir ekiple calisiyoruz.
+              Markanızı bir sonraki seviyeye taşımak için tutkulu ve deneyimli
+              bir ekiple çalışıyoruz.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {team.map((member) => (
@@ -165,17 +166,17 @@ export default function HakkimizdaPage() {
         <section className="py-16 bg-[#0040ff]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#cdd6f4] mb-4">
-              Siz de Buyume Yolculuguna Katilin
+              Siz de Büyüme Yolculuğuna Katılın
             </h2>
             <p className="text-[#cdd6f4]/80 text-lg mb-8 max-w-2xl mx-auto">
-              Markanizi bir ust seviyeye tasimak icin bugun bizimle iletisime gecin.
+              Markanızı bir üst seviyeye taşımak için bugün bizimle iletişime geçin.
             </p>
-            <a
+            <Link
               href="/iletisim"
               className="inline-flex items-center gap-2 bg-[#ffd76e] text-[#181825] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 hover:shadow-lg hover:shadow-[#ffd76e]/25 transition-all duration-300"
             >
-              Iletisime Gec
-            </a>
+              İletişime Geç
+            </Link>
           </div>
         </section>
       </main>

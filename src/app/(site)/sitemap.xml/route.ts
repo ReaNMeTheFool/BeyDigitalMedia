@@ -40,8 +40,6 @@ export async function GET() {
   // Statik sayfalar
   entries += buildUrlEntry(baseUrl, new Date(), "daily", 1.0);
   entries += buildUrlEntry(`${baseUrl}/hakkimizda`, new Date(), "weekly", 0.8);
-  entries += buildUrlEntry(`${baseUrl}/hizmetler`, new Date(), "weekly", 0.8);
-  entries += buildUrlEntry(`${baseUrl}/portfolyo`, new Date(), "weekly", 0.8);
   entries += buildUrlEntry(`${baseUrl}/blog`, new Date(), "daily", 0.9);
   entries += buildUrlEntry(`${baseUrl}/iletisim`, new Date(), "monthly", 0.6);
 
@@ -57,13 +55,11 @@ export async function GET() {
       },
     });
 
-    for (const page of pagesResult.docs) {
-      const slug = (page as any).slug;
-      const updatedAt = (page as any).updatedAt;
-      if (slug) {
+    for (const page of pagesResult.docs as { slug?: string; updatedAt?: string }[]) {
+      if (page.slug) {
         entries += buildUrlEntry(
-          `${baseUrl}/${slug}`,
-          updatedAt ? new Date(updatedAt) : new Date(),
+          `${baseUrl}/${page.slug}`,
+          page.updatedAt ? new Date(page.updatedAt) : new Date(),
           "weekly",
           0.7
         );
@@ -76,13 +72,11 @@ export async function GET() {
       limit: 1000,
     });
 
-    for (const service of servicesResult.docs) {
-      const slug = (service as any).slug;
-      const updatedAt = (service as any).updatedAt;
-      if (slug) {
+    for (const service of servicesResult.docs as { slug?: string; updatedAt?: string }[]) {
+      if (service.slug) {
         entries += buildUrlEntry(
-          `${baseUrl}/${slug}`,
-          updatedAt ? new Date(updatedAt) : new Date(),
+          `${baseUrl}/${service.slug}`,
+          service.updatedAt ? new Date(service.updatedAt) : new Date(),
           "weekly",
           0.8
         );
@@ -95,13 +89,11 @@ export async function GET() {
       limit: 1000,
     });
 
-    for (const post of blogResult.docs) {
-      const slug = (post as any).slug;
-      const publishedDate = (post as any).publishedDate;
-      if (slug) {
+    for (const post of blogResult.docs as { slug?: string; publishedDate?: string }[]) {
+      if (post.slug) {
         entries += buildUrlEntry(
-          `${baseUrl}/blog/${slug}`,
-          publishedDate ? new Date(publishedDate) : new Date(),
+          `${baseUrl}/blog/${post.slug}`,
+          post.publishedDate ? new Date(post.publishedDate) : new Date(),
           "weekly",
           0.7
         );
@@ -114,13 +106,11 @@ export async function GET() {
       limit: 1000,
     });
 
-    for (const project of projectsResult.docs) {
-      const slug = (project as any).slug;
-      const updatedAt = (project as any).updatedAt;
-      if (slug) {
+    for (const project of projectsResult.docs as { slug?: string; updatedAt?: string }[]) {
+      if (project.slug) {
         entries += buildUrlEntry(
-          `${baseUrl}/portfolyo/${slug}`,
-          updatedAt ? new Date(updatedAt) : new Date(),
+          `${baseUrl}/portfolyo/${project.slug}`,
+          project.updatedAt ? new Date(project.updatedAt) : new Date(),
           "monthly",
           0.6
         );

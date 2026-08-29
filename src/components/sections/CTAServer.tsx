@@ -1,8 +1,21 @@
 import { getPayloadClient } from "@/lib/payload";
 import CTA from "./CTA";
+import type { SiteSetting } from "@/payload-types";
 
-export default async function CTAServer() {
-  let siteSettings: Record<string, unknown> = {};
+interface CTAServerProps {
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+export default async function CTAServer({
+  title,
+  subtitle,
+  ctaText,
+  ctaLink,
+}: CTAServerProps) {
+  let siteSettings: Partial<SiteSetting> = {};
 
   try {
     const payload = await getPayloadClient();
@@ -11,10 +24,14 @@ export default async function CTAServer() {
     siteSettings = {};
   }
 
-  const phone = (siteSettings.contactPhone as string) || "+905013927088";
+  const phone = siteSettings.contactPhone || "+905443760339";
 
   return (
     <CTA
+      title={title}
+      subtitle={subtitle}
+      ctaText={ctaText}
+      ctaLink={ctaLink}
       contactPhone={phone}
     />
   );

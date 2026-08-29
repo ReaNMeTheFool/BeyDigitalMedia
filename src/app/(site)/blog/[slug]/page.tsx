@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       limit: 1,
     });
     const post = result.docs[0];
-    if (!post) return { title: "Sayfa Bulunamadi | Bey Digital Media" };
+    if (!post) return { title: "Sayfa Bulunamadı | Bey Digital Media" };
 
     const title = (post.metaTitle as string) || (post.title as string);
     const description =
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     });
   } catch {
-    return { title: "Sayfa Bulunamadi | Bey Digital Media" };
+    return { title: "Sayfa Bulunamadı | Bey Digital Media" };
   }
 }
 

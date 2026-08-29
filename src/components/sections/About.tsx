@@ -5,19 +5,19 @@ import Image from "next/image";
 import { BarChart3, Award, Star, Clock } from "lucide-react";
 
 const defaultStats = [
-  { icon: BarChart3, value: "10+", label: "Sektor" },
-  { icon: Award, value: "500+", label: "Kampanya" },
-  { icon: Star, value: "4.8/5", label: "Musteri Puani" },
-  { icon: Clock, value: "8+", label: "Yil Deneyim" },
+  { icon: BarChart3, value: "150+", label: "Tamamlanan Proje" },
+  { icon: Award, value: "100+", label: "Memnun Müşteri" },
+  { icon: Clock, value: "8+", label: "Yıllık Deneyim" },
+  { icon: Star, value: "%100", label: "Müşteri Memnuniyeti" },
 ];
 
 export default function About({
   image = '/hakkimizda.webp',
-  title = 'Dijitalde Buyumenin <span class="text-[#0040ff]">Guvenilir Ortagi</span>',
+  title = 'Dijitalde Büyümenin <span class="text-[#0040ff]">Güvenilir Ortağı</span>',
   paragraphs = [
-    "Bey Digital Media olarak 8 yili askin suredir markalarin dijital dunyada buyumesine yardimci oluyoruz. Kurucumuz Yigit Emre Balaban liderliginde; sosyal medya yonetimi, Meta Ads, Google Ads, web tasarim, SEO, logo tasarimi ve kurumsal kimlik alanlarinda uzman kadromuzla hizmet veriyoruz.",
-    "Her markanin kendine ozgu bir hikayesi var, biz de bu hikayeyi en iyi sekilde anlatmaya odaklaniyoruz. Renklerin psikolojisinden ilham aliyor, markanizin kimligini hem gorsel hem duygusal olarak guclendirecek stratejiler gelistiriyoruz. Amacimiz sadece guzel gorunmek degil, akilda kalmak.",
-    "10'dan fazla sektorde, 500'un uzerinde kampanya yonettik. Turkiye'nin dort bir yanindan markalarla calistik, hepsinden bir sey ogrendik. Siz de dijitalde buyumek istiyorsaniz dogru yerdesiniz.",
+    "Bey Digital Media olarak 8 yılı aşkın süredir markaların dijital dünyada büyümesine yardımcı oluyoruz. Kurucumuz Yiğit Emre Balaban liderliğinde; sosyal medya yönetimi, Meta Ads, Google Ads, web tasarım, SEO, logo tasarımı ve kurumsal kimlik alanlarında uzman kadromuzla hizmet veriyoruz.",
+    "Her markanın kendine özgü bir hikayesi var, biz de bu hikayeyi en iyi şekilde anlatmaya odaklanıyoruz. Renklerin psikolojisinden ilham alıyor, markanızın kimliğini hem görsel hem duygusal olarak güçlendirecek stratejiler geliştiriyoruz. Amacımız sadece güzel görünmek değil, akılda kalmak.",
+    "10'dan fazla sektörde, 500'ün üzerinde kampanya yönettik. Türkiye'nin dört bir yanından markalarla çalıştık, hepsinden bir şey öğrendik. Siz de dijitalde büyümek istiyorsanız doğru yerdesiniz.",
   ],
   stats: propStats,
 }: {
@@ -55,7 +55,7 @@ export default function About({
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,64,255,0.5)]">
                 <Image
                   src={image}
-                  alt="Hakkimizda"
+                  alt="Hakkımızda"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
@@ -72,7 +72,7 @@ export default function About({
               className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-[#0040ff] text-[#cdd6f4] rounded-2xl p-4 sm:p-6 shadow-xl"
             >
               <div className="text-4xl font-bold">8+</div>
-              <div className="text-sm opacity-90">Yillik Deneyim</div>
+              <div className="text-sm opacity-90">Yıllık Deneyim</div>
             </motion.div>
           </motion.div>
 

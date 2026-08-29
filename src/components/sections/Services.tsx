@@ -10,10 +10,12 @@ import { iconMap } from "@/lib/icon-map";
 import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function Services({
+  sectionTitle,
   showAll = true,
   selectedSlugs,
   services: propServices,
 }: {
+  sectionTitle?: string;
   showAll?: boolean;
   selectedSlugs?: string[];
   services?: Service[];
@@ -34,7 +36,11 @@ export default function Services({
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
-            Dijital <span className="text-[#0040ff]">Büyüme</span> Çözümleri
+            {sectionTitle || (
+              <>
+                Dijital <span className="text-[#0040ff]">Büyüme</span> Çözümleri
+              </>
+            )}
           </h2>
           <p className="text-[#cdd6f4]/90 text-lg max-w-3xl mx-auto">
             Markanızı dijital dünyada büyütmek için ihtiyacınız olan tüm hizmetler tek çatı altında.

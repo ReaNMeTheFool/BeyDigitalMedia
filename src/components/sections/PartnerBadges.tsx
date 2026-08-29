@@ -1,26 +1,31 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Linkedin } from "lucide-react";
+import Image from "next/image";
 
 interface Badge {
   name: string;
-  icon: string;
+  icon?: string;
 }
 
-const defaultBadges: Badge[] = [
+const LinkedinIcon = ({ className }: { className?: string }) => (
+  <Linkedin className={className} size={40} strokeWidth={1.5} />
+);
+
+const defaultBadges: (Badge | { name: string; iconComponent: typeof LinkedinIcon })[] = [
   { name: "Meta", icon: "/media/meta_logo_icon_214665.png" },
   { name: "Google Ads", icon: "/media/google-ads-transparent.png" },
-  { name: "TikTok", icon: "" },
-  { name: "LinkedIn", icon: "" },
+  { name: "LinkedIn", iconComponent: LinkedinIcon },
   { name: "Instagram & Facebook", icon: "/media/instaxfacebook.png" },
 ];
 
 export default function PartnerBadges({
-  title = "Birlikte Calistigimiz Platformlar",
+  title = "Birlikte Çalıştığımız Platformlar",
   badges = defaultBadges,
 }: {
   title?: string;
-  badges?: Badge[];
+  badges?: (Badge | { name: string; iconComponent: typeof LinkedinIcon })[];
 }) {
   return (
     <section className="relative py-20 bg-[#1e1e2e] overflow-hidden">
@@ -42,12 +47,12 @@ export default function PartnerBadges({
             {title}
           </h2>
           <p className="text-[#cdd6f4]/60 text-lg max-w-xl mx-auto">
-            Markanizin dijital buyumesi icin en guclu platformlarla calisiyoruz.
+            Markanızın dijital büyümesi için en güçlü platformlarla çalışıyoruz.
           </p>
         </motion.div>
 
         {/* Badges Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto">
           {badges.map((badge, index) => (
             <motion.div
               key={badge.name}
@@ -57,19 +62,19 @@ export default function PartnerBadges({
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-[#181825] border border-[#2d2d44] hover:border-[#0040ff]/30 hover:shadow-[0_0_30px_rgba(0,64,255,0.1)] transition-all duration-300"
             >
-              {badge.icon ? (
-                <img
-                  src={badge.icon}
-                  alt={badge.name}
-                  className="h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
-                />
-              ) : (
-                <div className="h-10 w-20 rounded-lg bg-[#2d2d44]/50 flex items-center justify-center">
-                  <span className="text-[#cdd6f4]/40 text-xs font-medium">
-                    {badge.name}
-                  </span>
-                </div>
-              )}
+              <div className="h-10 flex items-center justify-center">
+                {"iconComponent" in badge ? (
+                  <badge.iconComponent className="text-[#cdd6f4]/80" />
+                ) : badge.icon ? (
+                  <Image
+                    src={badge.icon}
+                    alt={badge.name}
+                    width={40}
+                    height={40}
+                    className="h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  />
+                ) : null}
+              </div>
               <span className="text-[#cdd6f4]/50 text-xs font-medium text-center">
                 {badge.name}
               </span>

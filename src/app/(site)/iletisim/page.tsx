@@ -6,27 +6,32 @@ import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   return mergeMetadata(defaultSeoFields, {
-    title: "Iletisim | Bey Digital Media",
+    title: "İletişim | Bey Digital Media",
     description:
-      "Bey Digital Media ile iletisime gecin. Ucretsiz analiz ve teklif icin hemen bize ulasin. Telefon, e-posta ve adres bilgilerimiz bu sayfada.",
+      "Bey Digital Media ile iletişime geçin. Ücretsiz analiz ve teklif için hemen bize ulaşın. Telefon, e-posta ve adres bilgilerimiz bu sayfada.",
     alternates: {
       canonical: "/iletisim",
     },
     openGraph: {
-      title: "Iletisim | Bey Digital Media",
+      title: "İletişim | Bey Digital Media",
       description:
-        "Bey Digital Media ile iletisime gecin. Ucretsiz analiz ve teklif icin hemen bize ulasin.",
+        "Bey Digital Media ile iletişime geçin. Ücretsiz analiz ve teklif için hemen bize ulaşın.",
       url: "https://beydigitalmedia.com/iletisim",
     },
   });
 }
 
 export default function IletisimPage() {
-  const contactInfo = [
+  const contactInfo: {
+    label: string;
+    value: string;
+    href?: string;
+    icon: React.ReactNode;
+  }[] = [
     {
       label: "Telefon",
-      value: "+90 501 392 70 88",
-      href: "tel:+905013927088",
+      value: "+90 544 376 03 39",
+      href: "tel:+905443760339",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +50,8 @@ export default function IletisimPage() {
     },
     {
       label: "E-posta",
-      value: "Beydigitalmedia@gmail.com",
-      href: "mailto:Beydigitalmedia@gmail.com",
+      value: "info@beydigitalmedia.com",
+      href: "mailto:info@beydigitalmedia.com",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -66,8 +71,7 @@ export default function IletisimPage() {
     },
     {
       label: "Adres",
-      value: "Turkiye",
-      href: "#",
+      value: "Türkiye",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -99,11 +103,11 @@ export default function IletisimPage() {
           </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#cdd6f4] mb-6">
-              Bizimle <span className="text-[#0040ff]">Iletisime</span> Gecin
+              Bizimle <span className="text-[#0040ff]">İletişime</span> Geçin
             </h1>
             <p className="text-[#cdd6f4]/80 text-lg md:text-xl max-w-3xl mx-auto">
-              Markaniz icin ucretsiz analiz ve teklif almak, sorularinizi sormak
-              veya isbirligi detaylarini konusmak icin bize ulasin.
+              Markanız için ücretsiz analiz ve teklif almak, sorularınızı sormak
+              veya iş birliği detaylarını konuşmak için bize ulaşın.
             </p>
           </div>
         </section>
@@ -116,10 +120,10 @@ export default function IletisimPage() {
               <div className="lg:col-span-3">
                 <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] p-8">
                   <h2 className="text-2xl font-bold text-[#cdd6f4] mb-2">
-                    Mesaj Gonder
+                    Mesaj Gönder
                   </h2>
                   <p className="text-[#cdd6f4]/60 mb-8">
-                    Projeniz hakkinda bilgi verin, en kisa surede donus yapalim.
+                    Projeniz hakkında bilgi verin, en kısa sürede dönüş yapalım.
                   </p>
                   <ContactForm />
                 </div>
@@ -129,71 +133,56 @@ export default function IletisimPage() {
               <div className="lg:col-span-2 space-y-6">
                 <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] p-8">
                   <h3 className="text-xl font-bold text-[#cdd6f4] mb-6">
-                    Iletisim Bilgileri
+                    İletişim Bilgileri
                   </h3>
                   <div className="space-y-6">
-                    {contactInfo.map((info) => (
-                      <a
-                        key={info.label}
-                        href={info.href}
-                        className="flex items-start gap-4 group"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-[#0040ff]/10 flex items-center justify-center text-[#0040ff] shrink-0 group-hover:bg-[#0040ff] group-hover:text-[#cdd6f4] transition-all">
-                          {info.icon}
-                        </div>
-                        <div>
-                          <div className="text-[#cdd6f4]/50 text-xs uppercase tracking-wider mb-0.5">
-                            {info.label}
+                    {contactInfo.map((info) => {
+                      const inner = (
+                        <>
+                          <div className="w-10 h-10 rounded-xl bg-[#0040ff]/10 flex items-center justify-center text-[#0040ff] shrink-0 group-hover:bg-[#0040ff] group-hover:text-[#cdd6f4] transition-all">
+                            {info.icon}
                           </div>
-                          <div className="text-[#cdd6f4] font-medium group-hover:text-[#0040ff] transition-colors">
-                            {info.value}
+                          <div>
+                            <div className="text-[#cdd6f4]/50 text-xs uppercase tracking-wider mb-0.5">
+                              {info.label}
+                            </div>
+                            <div className="text-[#cdd6f4] font-medium group-hover:text-[#0040ff] transition-colors">
+                              {info.value}
+                            </div>
                           </div>
+                        </>
+                      );
+                      return info.href ? (
+                        <a
+                          key={info.label}
+                          href={info.href}
+                          className="flex items-start gap-4 group"
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <div
+                          key={info.label}
+                          className="flex items-start gap-4 group"
+                        >
+                          {inner}
                         </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Google Maps Placeholder */}
-                <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] overflow-hidden">
-                  <div className="aspect-video bg-[#2d2d44]/30 flex items-center justify-center">
-                    <div className="text-center p-6">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="40"
-                        height="40"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="text-[#cdd6f4]/30 mx-auto mb-3"
-                      >
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                        <circle cx="12" cy="10" r="3" />
-                      </svg>
-                      <p className="text-[#cdd6f4]/40 text-sm">
-                        Google Maps konum bilgisi
-                      </p>
-                      <p className="text-[#cdd6f4]/20 text-xs mt-1">
-                        Turkiye
-                      </p>
-                    </div>
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* Social Proof Card */}
                 <div className="bg-gradient-to-br from-[#0040ff]/10 to-[#ffd76e]/5 rounded-2xl border border-[#2d2d44] p-8">
                   <h3 className="text-lg font-bold text-[#cdd6f4] mb-4">
-                    Neden Bizi Secmelisiniz?
+                    Neden Bizi Seçmelisiniz?
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      "Ucretsiz ilk analiz ve danismanlik",
-                      "Size ozel strateji ve fiyatlandirma",
-                      "150+ basarili proje deneyimi",
-                      "7/24 iletisim ve destek",
+                      "Ücretsiz ilk analiz ve danışmanlık",
+                      "Size özel strateji ve fiyatlandırma",
+                      "150+ başarılı proje deneyimi",
+                      "7/24 iletişim ve destek",
                     ].map((item, i) => (
                       <li
                         key={i}

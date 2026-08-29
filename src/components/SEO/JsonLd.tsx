@@ -3,6 +3,7 @@ export interface OrganizationJsonLdProps {
   url: string;
   logo?: string;
   telephone?: string;
+  email?: string;
   sameAs?: string[];
   description?: string;
 }
@@ -12,6 +13,7 @@ export function OrganizationJsonLd({
   url,
   logo,
   telephone,
+  email,
   sameAs,
   description,
 }: OrganizationJsonLdProps) {
@@ -26,6 +28,7 @@ export function OrganizationJsonLd({
 
   if (logo) data.logo = logo;
   if (telephone) data.telephone = telephone;
+  if (email) data.email = email;
   if (sameAs && sameAs.length > 0) data.sameAs = sameAs;
   if (description) data.description = description;
 
@@ -51,14 +54,6 @@ export function WebSiteJsonLd({ url, name, description }: WebSiteJsonLdProps) {
     "@type": "WebSite",
     url,
     name,
-    potentialAction: {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        urlTemplate: `${url}/ara?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 
   if (description) data.description = description;

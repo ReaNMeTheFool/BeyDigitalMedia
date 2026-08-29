@@ -14,28 +14,28 @@ interface Package {
 
 const defaultPackages: Package[] = [
   {
-    name: "Baslangic",
+    name: "Başlangıç",
     price: "3.500₺+",
     features: [
-      "Temel sosyal medya yonetimi",
-      "Aylik 12 gonderi tasarimi",
+      "Temel sosyal medya yönetimi",
+      "Aylık 12 gönderi tasarımı",
       "Temel SEO analizi",
-      "Aylik raporlama",
-      "E-posta destegi",
+      "Aylık raporlama",
+      "E-posta desteği",
     ],
     highlighted: false,
-    ctaText: "Baslangic Paketi",
+    ctaText: "Başlangıç Paketi",
     ctaLink: "#contact",
   },
   {
     name: "Profesyonel",
     price: "7.500₺+",
     features: [
-      "Kapsamli sosyal medya yonetimi",
-      "Aylik 20 gonderi tasarimi",
-      "Meta & Google Ads yonetimi",
-      "SEO ve icerik optimizasyonu",
-      "Haftalik raporlama ve danismanlik",
+      "Kapsamlı sosyal medya yönetimi",
+      "Aylık 20 gönderi tasarımı",
+      "Meta & Google Ads yönetimi",
+      "SEO ve içerik optimizasyonu",
+      "Haftalık raporlama ve danışmanlık",
     ],
     highlighted: true,
     ctaText: "Profesyonel Paket",
@@ -45,11 +45,11 @@ const defaultPackages: Package[] = [
     name: "Kurumsal",
     price: "15.000₺+",
     features: [
-      "Tum sosyal medya platform yonetimi",
-      "Sinirsiz gonderi ve icerik uretimi",
-      "Tum reklam platformlari yonetimi",
-      "Web sitesi ve SEO yonetimi",
-      "7/24 oncelikli destek ve danismanlik",
+      "Tüm sosyal medya platform yönetimi",
+      "Sınırsız gönderi ve içerik üretimi",
+      "Tüm reklam platformları yönetimi",
+      "Web sitesi ve SEO yönetimi",
+      "7/24 öncelikli destek ve danışmanlık",
     ],
     highlighted: false,
     ctaText: "Kurumsal Paket",
@@ -58,8 +58,8 @@ const defaultPackages: Package[] = [
 ];
 
 export default function Pricing({
-  title = "Fiyatlandirma",
-  subtitle = "Markaniz icin en uygun paketi secin, dijital dunyada birlikte buyuyelim.",
+  title = "Fiyatlandırma",
+  subtitle = "Markanız için en uygun paketi seçin, dijital dünyada birlikte büyüyelim.",
   packages = defaultPackages,
 }: {
   title?: string;
@@ -109,7 +109,7 @@ export default function Pricing({
               {pkg.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#ffd76e] text-[#181825] px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5">
                   <Zap size={14} />
-                  En Populer
+                  En Popüler
                 </div>
               )}
 

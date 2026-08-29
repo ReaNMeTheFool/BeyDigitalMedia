@@ -5,31 +5,53 @@ import { defaultProjects } from "@/lib/defaultProjects";
 interface PortfolioServerProps {
   title?: string;
   subtitle?: string;
+  showAll?: boolean;
 }
 
 export default async function PortfolioServer({
   title,
   subtitle,
+  showAll = true,
 }: PortfolioServerProps) {
-  let cmsProjects: any[] = [];
+  let cmsProjects: {
+    id: number;
+    title: string;
+    category: string;
+    services: { label: string; slug: string; breakBefore?: boolean }[];
+    color: string;
+    results: string;
+    logo?: string;
+    logoScale?: number;
+    resultsColor?: string;
+    smallTags?: boolean;
+  }[] = [];
 
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: "projects",
       sort: "order",
+      ...(showAll ? {} : { limit: 6 }),
     });
-    cmsProjects = result.docs.map((doc: any) => ({
-      id: doc.id,
+    cmsProjects = result.docs.map((doc) => ({
+      // CMS belge id'leri string döner; bileşen prop tipi hardcoded veriden number bekliyor.
+      id: doc.id as unknown as number,
       title: doc.title,
       category: doc.category,
-      services: doc.services || [],
-      color: doc.color || undefined,
-      results: doc.results || undefined,
-      logo: doc.logo?.url || undefined,
-      logoScale: doc.logoScale,
-      resultsColor: doc.resultsColor,
-      smallTags: doc.smallTags,
+      services: (doc.services || []).map((tag) => ({
+        label: tag.label,
+        slug: tag.slug,
+        breakBefore: tag.breakBefore ?? undefined,
+      })),
+      color: doc.color,
+      results: doc.results,
+      logo:
+        doc.logo && typeof doc.logo === "object"
+          ? doc.logo.url || undefined
+          : undefined,
+      logoScale: doc.logoScale ?? undefined,
+      resultsColor: doc.resultsColor ?? undefined,
+      smallTags: doc.smallTags ?? undefined,
     }));
   } catch {
     cmsProjects = [];

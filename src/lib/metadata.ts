@@ -51,7 +51,7 @@ export const defaultSeoFields: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Bey Digital Media - Dijital Pazarlama Ajansi",
+        alt: "Bey Digital Media - Dijital Pazarlama Ajansı",
       },
     ],
   },

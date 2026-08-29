@@ -17,10 +17,10 @@ const defaultFooterLinks = {
     { label: "Logo & Kurumsal Kimlik", href: "/logo-tasarimi" },
   ],
   company: [
-    { label: "Hakkımızda", href: "#about" },
-    { label: "Portfolyo", href: "#portfolio" },
-    { label: "SSS", href: "#faq" },
-    { label: "İletişim", href: "#contact" },
+    { label: "Hakkımızda", href: "/hakkimizda" },
+    { label: "Portfolyo", href: "/#portfolio" },
+    { label: "SSS", href: "/#faq" },
+    { label: "İletişim", href: "/iletisim" },
   ],
   social: [
     { label: "Instagram", href: "https://instagram.com/beydigitalmedia", platform: "instagram" },
@@ -34,7 +34,6 @@ interface FooterProps {
   ctaTitle?: string;
   ctaSubtitle?: string;
   ctaButtonText?: string;
-  ctaButtonHref?: string;
   brandName?: string;
   brandTagline?: string;
   footerLinks?: typeof defaultFooterLinks;
@@ -44,14 +43,13 @@ interface FooterProps {
 }
 
 export default function Footer({
-  ctaTitle = 'Dijital <span class="text-[#ffd76e]">Dönüşüm</span> İçin <br /><span style="color: #04a5e5">Hazır mısınız?</span>',
-  ctaSubtitle = "Dijitalde buyumek icin ilk adimi atin. Uzman ekibimizle ucretsiz danismanlik icin formu doldurun.",
-  ctaButtonText = "Ucretsiz Teklif Alin",
-  ctaButtonHref = "#contact-form",
+  ctaTitle = 'Dijital <span class="text-[#ffd76e]">Dönüşüm</span> İçin <br /><span class="text-[#4c7fff]">Hazır mısınız?</span>',
+  ctaSubtitle = "Dijitalde büyümek için ilk adımı atın. Uzman ekibimizle ücretsiz danışmanlık için formu doldurun.",
+  ctaButtonText = "Ücretsiz Teklif Alın",
   brandName = 'Bey <span class="text-[#ffd76e]">Digital</span> Media',
-  brandTagline = "Dijitalde Buyuyoruz.",
+  brandTagline = "Dijitalde Büyüyoruz.",
   footerLinks = defaultFooterLinks,
-  contactEmail = "Beydigitalmedia@gmail.com",
+  contactEmail = "info@beydigitalmedia.com",
   contactPhone = "+90 544 376 03 39",
   bottomText = `© ${new Date().getFullYear()} Bey Digital Media. Tüm hakları saklıdır.`,
 }: FooterProps) {

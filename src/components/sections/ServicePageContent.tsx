@@ -38,7 +38,7 @@ const itemVariants = {
 };
 
 const contactInfo = {
-  email: "Beydigitalmedia@gmail.com",
+  email: "info@beydigitalmedia.com",
   phone: "+90 544 376 03 39",
 };
 
@@ -121,25 +121,6 @@ export default function ServicePageContent({
               {service.subtitle}
             </p>
 
-            {/* Premium badge */}
-            <motion.span
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border mb-8"
-              style={{
-                color: accent,
-                borderColor: `${accent}40`,
-                backgroundColor: `${accent}12`,
-              }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ backgroundColor: accent }}
-              />
-              Premium Dijital Hizmet
-            </motion.span>
-
             <div>
               <Link
                 href="/#contact"
@@ -203,10 +184,6 @@ export default function ServicePageContent({
               Ne{" "}
               <span style={{ color: accent }}>Sunuyoruz?</span>
             </h2>
-            <p className="text-[#cdd6f4]/60 text-[15px] sm:text-base max-w-2xl mx-auto">
-              Bu hizmet kapsamında sağladığımız tüm değer ve çözümleri keşfedin.
-              Her biri markanızın özel ihtiyaçlarına göre uyarlanır.
-            </p>
           </motion.div>
 
           <motion.div

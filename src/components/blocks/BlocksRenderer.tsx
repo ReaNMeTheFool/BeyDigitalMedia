@@ -9,8 +9,10 @@ import AiAutomationServer from "@/components/sections/AiAutomationServer";
 import WhyUsServer from "@/components/sections/WhyUsServer";
 import Pricing from "@/components/sections/Pricing";
 import PartnerBadges from "@/components/sections/PartnerBadges";
+import CTAServer from "@/components/sections/CTAServer";
+import type { HeroBlock, PartnerBadgesBlock } from "@/payload-types";
 
-interface Block {
+export interface Block {
   blockType: string;
   [key: string]: unknown;
 }
@@ -58,32 +60,38 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
     <>
       {sortedBlocks.map((block, index) => {
         switch (block.blockType) {
-          case "hero":
+          case "hero": {
+            const icerik = block.icerik as HeroBlock["icerik"] | undefined;
+            const cta = block.cta as HeroBlock["cta"] | undefined;
+            const words = icerik?.animatedWords;
             return (
               <HeroServer
                 key={index}
-                titlePrefix={(block.titlePrefix as string) || undefined}
+                titlePrefix={icerik?.titlePrefix || undefined}
                 animatedWords={
-                  ((block.animatedWords as { word: string }[]) || []).map(
-                    (w) => w.word
-                  )
+                  words?.length ? words.map((w) => w.word) : undefined
                 }
-                titleSuffix={(block.titleSuffix as string) || undefined}
-                subtitle={(block.subtitle as string) || undefined}
+                titleSuffix={icerik?.titleSuffix || undefined}
+                description={icerik?.subtitle || undefined}
                 primaryCta={
-                  (block.primaryCta as {
-                    text: string;
-                    link: string;
-                  }) || undefined
+                  cta?.primaryCta
+                    ? {
+                        text: cta.primaryCta.text || "",
+                        link: cta.primaryCta.link || "",
+                      }
+                    : undefined
                 }
                 secondaryCta={
-                  (block.secondaryCta as {
-                    text: string;
-                    link: string;
-                  }) || undefined
+                  cta?.secondaryCta
+                    ? {
+                        text: cta.secondaryCta.text || "",
+                        link: cta.secondaryCta.link || "",
+                      }
+                    : undefined
                 }
               />
             );
+          }
           case "marquee":
             return (
               <Marquee
@@ -99,6 +107,7 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
             return (
               <ServicesServer
                 key={index}
+                sectionTitle={(block.sectionTitle as string) || undefined}
                 showAll={Boolean(block.showAllServices)}
                 selectedSlugs={
                   ((block.selectedServices as { slug: string }[]) || []).map(
@@ -113,6 +122,7 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
                 key={index}
                 title={(block.title as string) || undefined}
                 subtitle={(block.subtitle as string) || undefined}
+                showAll={block.showAllPortfolios !== false}
               />
             );
           case "testimonialsCarousel":
@@ -120,6 +130,7 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
               <TestimonialsServer
                 key={index}
                 title={(block.title as string) || undefined}
+                showAll={block.showAllTestimonials !== false}
               />
             );
           case "faqAccordion":
@@ -129,7 +140,12 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
                 title={(block.title as string) || undefined}
                 subtitle={(block.subtitle as string) || undefined}
                 showAll={Boolean(block.showAllFaqs)}
-                selectedFaqs={(block.selectedFaqs as any[]) || undefined}
+                selectedFaqs={
+                  (block.selectedFaqs as {
+                    question: string;
+                    answer: unknown;
+                  }[]) || undefined
+                }
               />
             );
           case "about":
@@ -178,17 +194,35 @@ export default function BlocksRenderer({ blocks }: { blocks: Block[] }) {
                 }
               />
             );
-          case "partnerBadges":
+          case "partnerBadges": {
+            const rawBadges =
+              (block.badges as PartnerBadgesBlock["badges"]) || undefined;
+            // badges.icon CMS'te Media relation olabilir; sadece string URL'leri geç.
+            const badges = rawBadges?.map((badge) => ({
+              name: badge.name,
+              icon:
+                typeof badge.icon === "string"
+                  ? badge.icon
+                  : typeof badge.icon?.url === "string"
+                    ? badge.icon.url
+                    : undefined,
+            }));
             return (
               <PartnerBadges
                 key={index}
                 title={(block.title as string) || undefined}
-                badges={
-                  (block.badges as {
-                    name: string;
-                    icon: string;
-                  }[]) || undefined
-                }
+                badges={badges}
+              />
+            );
+          }
+          case "cta":
+            return (
+              <CTAServer
+                key={index}
+                title={(block.title as string) || undefined}
+                subtitle={(block.subtitle as string) || undefined}
+                ctaText={(block.ctaText as string) || undefined}
+                ctaLink={(block.ctaLink as string) || undefined}
               />
             );
           default:

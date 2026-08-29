@@ -6,6 +6,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import { getPayloadClient } from "@/lib/payload";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
+import type { Project } from "@/payload-types";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const project = result.docs[0];
     if (!project) {
       return mergeMetadata(defaultSeoFields, {
-        title: "Proje Bulunamadi | Bey Digital Media",
+        title: "Proje Bulunamadı | Bey Digital Media",
       });
     }
     return mergeMetadata(defaultSeoFields, {
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
   } catch {
     return mergeMetadata(defaultSeoFields, {
-      title: "Proje Detayi | Bey Digital Media",
+      title: "Proje Detayı | Bey Digital Media",
     });
   }
 }
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PortfolioDetailPage({ params }: Props) {
   const { slug } = await params;
 
-  let project: Record<string, unknown> | null = null;
+  let project: Project | null = null;
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
@@ -76,13 +77,16 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   if (!project) notFound();
 
-  const title = (project.title as string) || "";
-  const category = (project.category as string) || "";
-  const services = (project.services as { label: string; slug: string }[]) || [];
-  const color = (project.color as string) || "from-blue-500 to-cyan-500";
-  const results = (project.results as string) || "";
-  const resultsColor = (project.resultsColor as string) || "#fefefe";
-  const logo = (project.logo as { url?: string })?.url || "";
+  const title = project.title;
+  const category = project.category;
+  const services = project.services || [];
+  const color = project.color || "from-blue-500 to-cyan-500";
+  const results = project.results;
+  const resultsColor = project.resultsColor || "#fefefe";
+  const logo =
+    project.logo && typeof project.logo === "object"
+      ? project.logo.url || ""
+      : "";
 
   const displayServices = services.map((s) => s.label);
 
@@ -96,7 +100,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             href="/#portfolio"
             className="text-[#0040ff] text-sm font-medium mb-8 inline-block hover:underline"
           >
-            ← Tum Projeler
+            ← Tüm Projeler
           </Link>
 
           {/* Project Header */}
@@ -147,7 +151,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
           {results && (
             <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] p-8 mb-12">
               <h2 className="text-xl font-bold text-[#cdd6f4] mb-4">
-                Proje Sonuclari
+                Proje Sonuçları
               </h2>
               <div className="flex items-center gap-4">
                 <div
@@ -160,35 +164,21 @@ export default async function PortfolioDetailPage({ params }: Props) {
             </div>
           )}
 
-          {/* Project Description */}
-          <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] p-8 mb-12">
-            <h2 className="text-xl font-bold text-[#cdd6f4] mb-4">
-              Proje Detaylari
-            </h2>
-            <p className="text-[#cdd6f4]/70 leading-relaxed">
-              {title} markasina sundugumuz {category.toLowerCase()} hizmeti
-              kapsaminda, markanin dijital varligini guclendirmek ve hedef
-              kitlesiyle daha etkili bir iletisim kurmasini saglamak icin
-              kapsamli bir strateji uyguladik. Proje surecinde{" "}
-              {displayServices.slice(0, 3).join(", ")} alanlarinda calistik.
-            </p>
-          </div>
-
           {/* CTA */}
           <div className="text-center bg-[#0040ff] rounded-2xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-[#cdd6f4] mb-4">
-              Sizin Icin de Basarili Bir Proje Gelistirelim
+              Sizin İçin de Başarılı Bir Proje Geliştirelim
             </h2>
             <p className="text-[#cdd6f4]/80 mb-8 max-w-xl mx-auto">
-              Markanizin dijital potansiyelini kesfetmek icin bugun bizimle
-              iletisime gecin.
+              Markanızın dijital potansiyelini keşfetmek için bugün bizimle
+              iletişime geçin.
             </p>
-            <a
+            <Link
               href="/iletisim"
               className="inline-flex items-center gap-2 bg-[#ffd76e] text-[#181825] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 hover:shadow-lg hover:shadow-[#ffd76e]/25 transition-all duration-300"
             >
-              Ucretsiz Teklif Al
-            </a>
+              Ücretsiz Teklif Al
+            </Link>
           </div>
         </div>
       </main>

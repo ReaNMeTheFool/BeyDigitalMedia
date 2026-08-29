@@ -69,7 +69,7 @@ export default function Portfolio({
       changed = true;
     }
     if (changed) applyTransform();
-  }, [applyTransform]);
+  }, [applyTransform, activeProjects.length]);
 
   const normalizeDuringDrag = useCallback(() => {
     const len = activeProjects.length;
@@ -91,7 +91,7 @@ export default function Portfolio({
       changed = true;
     }
     if (changed) applyTransform();
-  }, [applyTransform]);
+  }, [applyTransform, activeProjects.length]);
 
   const tickRef = useRef<() => void>(() => {});
 
@@ -138,7 +138,7 @@ export default function Portfolio({
       currentXRef.current -= len * cw;
     }
     applyTransform();
-  }, [applyTransform]);
+  }, [applyTransform, activeProjects.length]);
 
   const navigate = useCallback(
     (direction: 1 | -1) => {
@@ -248,7 +248,7 @@ export default function Portfolio({
     }
   }, []);
 
-  const getGerçekColor = () => {
+  const getResultColor = () => {
     switch (activeHover) {
       case "Guzgun Tekstil": return "#0040ff";
       case "İşbir Yatak": return "#dc2626";
@@ -270,7 +270,7 @@ export default function Portfolio({
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
-            <span style={{ color: getGerçekColor(), transition: "color 300ms ease-in-out" }}>
+            <span style={{ color: getResultColor(), transition: "color 300ms ease-in-out" }}>
               {title.split(' ')[0]}
             </span>{" "}
             {title.split(' ').slice(1).join(' ')}

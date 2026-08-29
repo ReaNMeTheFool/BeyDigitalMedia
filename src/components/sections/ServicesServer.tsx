@@ -17,15 +17,24 @@ function hexToRgba(hex: string, alpha: number): string {
 }
 
 interface ServicesServerProps {
+  sectionTitle?: string;
   showAll?: boolean;
   selectedSlugs?: string[];
 }
 
 export default async function ServicesServer({
+  sectionTitle,
   showAll = true,
   selectedSlugs,
 }: ServicesServerProps) {
-  let cmsServices: any[] = [];
+  let cmsServices: {
+    imageSrc?: string;
+    title: string;
+    description: string;
+    link: string;
+    color?: string;
+    bgColor?: string;
+  }[] = [];
 
   try {
     const payload = await getPayloadClient();
@@ -33,8 +42,11 @@ export default async function ServicesServer({
       collection: "services",
       sort: "order",
     });
-    cmsServices = result.docs.map((doc: any) => ({
-      imageSrc: doc.icon?.url || undefined,
+    cmsServices = result.docs.map((doc) => ({
+      imageSrc:
+        doc.icon && typeof doc.icon === "object"
+          ? doc.icon.url || undefined
+          : undefined,
       title: doc.title,
       description: doc.description,
       link: `/${doc.slug}`,
@@ -63,6 +75,7 @@ export default async function ServicesServer({
 
   return (
     <Services
+      sectionTitle={sectionTitle}
       showAll={showAll}
       selectedSlugs={selectedSlugs}
       services={mergedServices}

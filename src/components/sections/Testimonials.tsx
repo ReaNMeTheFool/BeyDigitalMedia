@@ -23,7 +23,7 @@ const testimonials = [
     role: "",
     image: "/guzgunlar_logo.webp",
     rating: 5,
-    text: "Uzun zamandır sosyal medyada böyle düzenli ve yaratıcı içerikler görmemiştik. Bey Digital Media sayesinde sayfamız adeta kendini buldu diyebiliriz 😊 Her detayı özenle takip etmeleri ve bizi biz gibi yansıtmaları işin en güzel yanı. Emeğinize sağlık!",
+    text: "Uzun zamandır sosyal medyada böyle düzenli ve yaratıcı içerikler görmemiştik. Bey Digital Media sayesinde sayfamız adeta kendini buldu diyebiliriz. Her detayı özenle takip etmeleri ve bizi biz gibi yansıtmaları işin en güzel yanı. Emeğinize sağlık!",
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const testimonials = [
     role: "",
     image: "/isbir_yatak.webp",
     rating: 5,
-    text: "Logo ve kurumsal kimlik calismamiz tam istedigimiz gibi oldu. Yigit Bey renkleri inanilmaz iyi kullandi, sonuc bizi cok mutlu etti.",
+    text: "Logo ve kurumsal kimlik çalışmamız tam istediğimiz gibi oldu. Yiğit Bey renkleri inanılmaz iyi kullandı, sonuç bizi çok mutlu etti.",
   },
 ];
 

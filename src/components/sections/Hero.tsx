@@ -47,10 +47,10 @@ function AnimatedHeadline({
   suffix?: string;
 }) {
   const safeWords = words.length > 0 ? words : [
-    "Satislarinizi",
-    "Kazancinizi",
-    "Verimliliginizi",
-    "Geleceginizi"
+    "Satışlarınızı",
+    "Kazancınızı",
+    "Verimliliğinizi",
+    "Geleceğinizi"
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -214,23 +214,21 @@ function ParticleCanvas() {
 
 export default function Hero({
   titlePrefix = "Dijital",
-  titleSuffix = "Cozumleri",
-  animatedWords = ["Satislarinizi", "Kazancinizi", "Verimliliginizi", "Geleceginizi"],
-  subtitle = "Turkiye'nin onde gelen dijital pazarlama ajansi olarak markanizi buyutmek icin buradayiz.",
-  description = "Bey Digital Media olarak markanizi dijital dunyada buyutmek icin Meta Ads, Google Ads, Sosyal Medya Yonetimi ve daha fazlasini sunuyoruz.",
+  titleSuffix = "Çözümleri",
+  animatedWords = ["Satışlarınızı", "Kazancınızı", "Verimliliğinizi", "Geleceğinizi"],
+  description = "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
   primaryCta,
   secondaryCta,
   stats = [
     { number: "150+", label: "Tamamlanan Proje" },
-    { number: "100+", label: "Memnun Musteri" },
-    { number: "4.8/5", label: "Musteri Puani" },
-    { number: "8+", label: "Yillik Deneyim" },
+    { number: "100+", label: "Memnun Müşteri" },
+    { number: "8+", label: "Yıllık Deneyim" },
+    { number: "%100", label: "Müşteri Memnuniyeti" },
   ],
 }: {
   titlePrefix?: string;
   titleSuffix?: string;
   animatedWords?: string[];
-  subtitle?: string;
   description?: string;
   primaryCta?: { text: string; link: string };
   secondaryCta?: { text: string; link: string };
@@ -241,7 +239,7 @@ export default function Hero({
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden w-full"
     >
-      <h1 className="sr-only">Bey Digital Media - Dijital Pazarlama Ajansi</h1>
+      <h1 className="sr-only">Bey Digital Media - Dijital Pazarlama Ajansı</h1>
 
       {/* Background Gradient + Noise */}
       <div className="absolute inset-0 z-0 noise">
@@ -289,7 +287,7 @@ export default function Hero({
               }}
               className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#ffd76e] text-[#181825] font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,215,110,0.4)]"
             >
-              <span className="relative z-10">{primaryCta?.text || 'Ucretsiz Analiz Al'}</span>
+              <span className="relative z-10">{primaryCta?.text || 'Ücretsiz Analiz Al'}</span>
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 transition-transform group-hover:translate-x-1" />
             </button>
             <button
@@ -332,7 +330,7 @@ export default function Hero({
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#cdd6f4]/60 hover:text-[#cdd6f4] transition-colors cursor-pointer animate-bounce-slow"
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-sm tracking-wider">Bizi daha fazla kesfet</span>
+          <span className="text-sm tracking-wider">Daha fazla keşfet</span>
           <ChevronDown className="w-6 h-6" />
         </div>
       </button>

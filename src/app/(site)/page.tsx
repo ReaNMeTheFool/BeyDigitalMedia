@@ -1,9 +1,11 @@
 export const dynamic = "force-dynamic";
 
 import type { Metadata } from "next";
+import Link from "next/link";
 import NavbarServer from "@/components/ui/NavbarServer";
 import FooterServer from "@/components/sections/FooterServer";
 import BlocksRenderer from "@/components/blocks/BlocksRenderer";
+import type { Block } from "@/components/blocks/BlocksRenderer";
 import { getPayloadClient } from "@/lib/payload";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 
@@ -18,10 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
     const page = result.docs[0];
     if (page) {
       const title =
-        (page.metaTitle as string) || "Bey Digital Media | Dijital Pazarlama Ajansi";
+        (page.metaTitle as string) || "Bey Digital Media | Dijital Pazarlama Ajansı";
       const description =
         (page.metaDescription as string) ||
-        "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.";
+        "Dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.";
       return mergeMetadata(defaultSeoFields, {
         title,
         description,
@@ -35,20 +37,20 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return mergeMetadata(defaultSeoFields, {
-    title: "Bey Digital Media | Dijital Pazarlama Ajansi",
+    title: "Bey Digital Media | Dijital Pazarlama Ajansı",
     description:
-      "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.",
+      "Dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.",
     alternates: { canonical: "/" },
     openGraph: {
-      title: "Bey Digital Media | Dijital Pazarlama Ajansi",
+      title: "Bey Digital Media | Dijital Pazarlama Ajansı",
       description:
-        "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.",
+        "Dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.",
       url: "https://beydigitalmedia.com",
     },
     twitter: {
-      title: "Bey Digital Media | Dijital Pazarlama Ajansi",
+      title: "Bey Digital Media | Dijital Pazarlama Ajansı",
       description:
-        "Dijital pazarlama ajansi. Sosyal medya yonetimi, web tasarim, SEO ve kurumsal kimlik calismalari ile markanizi buyutuyoruz.",
+        "Dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.",
     },
   });
 }
@@ -67,7 +69,7 @@ export default async function Home() {
     page = null;
   }
 
-  const blocks = page?.content || [];
+  const blocks = (page?.content || []) as unknown as Block[];
   const hasBlocks = Array.isArray(blocks) && blocks.length > 0;
 
   return (
@@ -80,17 +82,18 @@ export default async function Home() {
           <div className="min-h-screen flex items-center justify-center bg-[#181825] text-[#cdd6f4]">
             <div className="text-center px-4">
               <h1 className="text-3xl sm:text-4xl font-bold mb-4">
-                Ana Sayfa Henuz Olusturulmadi
+                Bu sayfa henüz hazırlanmadı
               </h1>
               <p className="text-lg text-[#cdd6f4]/80 mb-8 max-w-lg mx-auto">
-                Payload Admin paneline gidip &quot;home&quot; slug&apos;lu bir sayfa olusturun. Tum section&apos;lari CMS&apos;den yonetebilirsiniz.
+                Yönetim panelinden &quot;home&quot; sayfasını oluşturarak tüm
+                bölümleri yönetebilirsiniz.
               </p>
-              <a
+              <Link
                 href="/admin"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#0040ff] text-white rounded-xl font-semibold hover:bg-[#0033cc] transition-colors shadow-lg shadow-[#0040ff]/25"
               >
-                Admin Panele Git
-              </a>
+                Yönetim Paneline Git
+              </Link>
             </div>
           </div>
         )}

@@ -33,6 +33,7 @@ const defaultNavLinks: NavLink[] = [
   { name: "Neden Biz?", href: "#why-us" },
   { name: "Portfolyo", href: "#portfolio" },
   { name: "Hakkımızda", href: "#about" },
+  { name: "Blog", href: "/blog" },
   { name: "SSS", href: "#faq" },
   { name: "İletişim", href: "#contact" },
 ];
@@ -83,7 +84,7 @@ export default function Navbar({
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
+  }, [isHomePage, navLinks]);
 
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false);

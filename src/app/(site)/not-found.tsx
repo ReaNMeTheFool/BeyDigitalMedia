@@ -78,7 +78,7 @@ export default function NotFound() {
               { name: "Hizmetler", href: "/#services" },
               { name: "Portfolyo", href: "/#portfolio" },
               { name: "Hakkımızda", href: "/#about" },
-              { name: "Blog", href: "/#blog" },
+              { name: "Blog", href: "/blog" },
               { name: "İletişim", href: "/#contact" },
             ].map((link) => (
               <a
