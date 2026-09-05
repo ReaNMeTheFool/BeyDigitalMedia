@@ -17,6 +17,10 @@ Rejected: empty-by-default CMS-managed stats.
 ### 2026-08-29 — Blog stays, empty until real content
 Why: user chose it. Keep blogPosts collection, /blog routes and nav link; remove 3 stub seed posts (end in "...") from seed and DB. No invented articles.
 
+### 2026-09-05 — Product record locked in PRODUCT.md
+Why: user interview for impeccable init. Primary customer = Turkish SMBs nationwide (not Bursa-local). Positioning = measured results + full-service partner + direct founder access. No legal entity displayed. Full record in PRODUCT.md; keep it in sync, don't re-interview.
+Rejected: Bursa/local-first focus, AI-first as lead positioning (AI services stay a service, not the differentiator), displaying legal registration.
+
 ## Dead ends
 
 ### 2026-08-29 — code-reviewer subagent type
