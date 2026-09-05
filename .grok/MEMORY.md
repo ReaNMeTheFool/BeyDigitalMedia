@@ -21,6 +21,10 @@ Why: user chose it. Keep blogPosts collection, /blog routes and nav link; remove
 Why: user interview for impeccable init. Primary customer = Turkish SMBs nationwide (not Bursa-local). Positioning = measured results + full-service partner + direct founder access. No legal entity displayed. Full record in PRODUCT.md; keep it in sync, don't re-interview.
 Rejected: Bursa/local-first focus, AI-first as lead positioning (AI services stay a service, not the differentiator), displaying legal registration.
 
+### 2026-09-05 — Visual direction locked: Fatura & Kaşe
+Why: impeccable direction round (seed 16ad156d, roll assigned candidate 5, user confirmed via decision flow). Redesign presents every result as a certified Turkish fiscal document: serials, dotted ledger rules, line-item results, kaşe stamps, founder signature; one red action stamp = quote CTA. Raises absorbed: one-gesture ink commitment per viewport (from Ebru), exposed-mechanism interactions (from automata). Code-led build (no image generation on this machine). Logo stays as-is; "Bursa" banned from site copy; build scope = full site.
+Rejected: Hesap Defteri (model pick, stayed alternate), Enstrüman Panosu VU-meter (competitive), Ebru + Kâğıt Otomata (declined), kategori standardı (canon).
+
 ## Dead ends
 
 ### 2026-08-29 — code-reviewer subagent type

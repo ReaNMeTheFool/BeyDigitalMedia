@@ -1,0 +1,99 @@
+{
+  "title": "Choose the visual world",
+  "question": "The roll assigned Fatura & Kaşe. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Fatura & Kaşe",
+      "kicker": "THE ROLL",
+      "lineage": "Turkish official paperwork — fatura, seri no, irsaliye, kaşe",
+      "thesis": "Every result shipped as a certified document the owner already trusts: serial, line item, stamp, founder's signature.",
+      "palette": ["#f6f4ec", "#14162b", "#4340b0", "#c8341f"],
+      "materials": ["banko form print", "kaşe stamp ink", "dotted ledger rules"],
+      "viewport": "The first viewport is the agency's result certificate: serial header, headline as document title, real case numbers as ruled line items, founder signature line, and TEKLİF AL as the one red action stamp.",
+      "risk": "Forms turn dry and bureaucratic the moment the grid loses nerve; the stamps must feel pressed, not pasted.",
+      "raised": [
+        {
+          "from": "Ebru",
+          "raise": "Tek dokunuş — each viewport commits one full-scale ink gesture, a single decisive stamp impression placed without hedging."
+        },
+        {
+          "from": "Kâğıt Otomata",
+          "raise": "Açık mekanizma — every interaction exposes its working: stamps press under real pressure, perforations tear, pull-tabs slide."
+        }
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Hesap Defteri",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "the esnaf's ruled account book — kasa defteri",
+      "thesis": "The agency keeps your marketing like an honest shopkeeper keeps his book: every lira and every result entered in the grid.",
+      "palette": ["#f1e9d6", "#1f1d1a", "#b3442e", "#6f6a60"],
+      "materials": ["ledger ruling", "grid paper", "pen-ruled entries"],
+      "viewport": "An open defter spread: this month's real results ruled into columns, the founder's entry line at the bottom, the quote action as the next blank row.",
+      "risk": "Warm paper is the fastest way to look trustworthy without proving anything — only structurally real numbers save it; it is also the coziest direction on this table."
+    },
+    {
+      "id": "challenger-vu",
+      "label": "Enstrüman Panosu",
+      "verdict": "competitive",
+      "lineage": "analog recording-desk VU bridges",
+      "thesis": "The agency as a calibrated instrument: real campaign numbers drive needle ballistics; the only red is past zero.",
+      "palette": ["#f2ecd9", "#0e0e0e", "#5b3a22", "#d23820"],
+      "materials": ["glass meter faces", "needle ballistics", "brushed steel and walnut"],
+      "viewport": "A shoulder-to-shoulder row of meter faces wired to real stats (150+ proje, +%150 satış), needles settling with true ballistics on load; the quote action rides the red arc.",
+      "case": "Carries 'measured results' literally and beautifully; loses narrowly on identification — a studio instrument is not the owner's daily paper.",
+      "risk": "Reads as audio-culture cosplay unless every needle is genuinely driven by real numbers.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-vu-meter-bridge-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-vu-meter-bridge.webp"
+    },
+    {
+      "id": "challenger-ebru",
+      "label": "Ebru",
+      "verdict": "declined",
+      "lineage": "Turkish marbling on sized water",
+      "thesis": "Each campaign a one-contact lift: pigment displaced by gesture, an impression no one can reprint.",
+      "palette": ["#16324f", "#b3272d", "#e8dcc0", "#d4a017"],
+      "materials": ["floated pigment", "sized paper", "comb-traced rings"],
+      "viewport": "A full-bath marbled field; the headline is the single lifted print.",
+      "case": "Fuses poorly: 'an impression that can never be repeated' argues against the product's reportable, repeatable process.",
+      "kept": "Tek dokunuş cesareti — one decisive ink gesture per viewport; rings remember everything.",
+      "risk": "Beauty without a number: trust asserted, never shown.",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-ebru-floated-pigment-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/medium-native-ebru-floated-pigment.webp"
+    },
+    {
+      "id": "challenger-automata",
+      "label": "Kâğıt Otomata",
+      "verdict": "declined",
+      "lineage": "crank-driven paper automata",
+      "thesis": "The client journey as a crank procession — each stage a paper figure that folds open as you advance.",
+      "palette": ["#d5b895", "#f2ede3", "#2a2622", "#b3272d"],
+      "materials": ["cut paper", "kraft board", "charcoal shadow"],
+      "viewport": "One paper figure mid-motion; the crank line rules the base.",
+      "case": "Fuses poorly: delight without measurement — the process reads as craft, not accountable results.",
+      "kept": "Açık mekanizma — every interaction exposes its working parts; every tab has a job.",
+      "risk": "Charm for the visitor with time; the owner in a hurry wants the number.",
+      "hero": "https://impeccable.style/worlds/cards/kinetic-sculpture-automata-crank-paper-menagerie-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/kinetic-sculpture-automata-crank-paper-menagerie.webp"
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "buildPath": {
+    "value": "code",
+    "toggle": false
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "Kategori standardı",
+    "thesis": "What every agency ships, executed impeccably.",
+    "palette": ["#ffffff", "#111827", "#2563eb"],
+    "materials": ["clean grid", "stock-grade photography"],
+    "viewport": "Hero, logo marquee, services grid, testimonial carousel — at full craft.",
+    "risk": "Indistinguishable from the competition by design."
+  },
+  "steer": true
+}
