@@ -5,9 +5,10 @@ export async function seedUsers(payload: Payload) {
   const password = process.env.ADMIN_PASSWORD;
 
   if (!username || !password) {
-    throw new Error(
-      "ADMIN_USERNAME ve ADMIN_PASSWORD environment değişkenleri tanımlı olmalıdır. Örnek: ADMIN_USERNAME=admin, ADMIN_PASSWORD=güçlü-şifre",
+    console.log(
+      "⚠️ ADMIN_USERNAME/ADMIN_PASSWORD tanımlı değil — kullanıcı oluşturma atlandı, içerik seeding devam ediyor.",
     );
+    return;
   }
 
   const existingByUsername = await payload.find({
