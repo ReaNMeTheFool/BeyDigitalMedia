@@ -14,15 +14,15 @@ const defaultItems = [
 export default function Marquee({ items }: { items?: string[] }) {
   const displayItems = items?.length ? items : defaultItems;
   return (
-    <section className="py-8 bg-[#313244] overflow-hidden">
+    <section className="py-5 bg-paper-alt border-y border-ink/20 overflow-hidden">
       <div className="relative">
         <div className="flex whitespace-nowrap animate-marquee">
           {[...displayItems, ...displayItems].map((item, index) => (
-            <div key={index} className="flex items-center shrink-0">
-              <span className="text-[#cdd6f4]/90 text-base sm:text-lg font-medium px-4 sm:px-8">
+            <div key={index} className="flex items-center shrink-0" aria-hidden={index >= displayItems.length}>
+              <span className="font-mono uppercase tracking-[0.16em] text-ink/80 text-xs sm:text-sm px-5 sm:px-8">
                 {item}
               </span>
-              <span className="text-[#ffd76e] text-2xl shrink-0">✦</span>
+              <span className="h-1 w-1 shrink-0 rounded-full bg-ink/50" aria-hidden="true" />
             </div>
           ))}
         </div>

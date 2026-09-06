@@ -200,12 +200,12 @@ export default async function DynamicPage({ params }: Props) {
           {Array.isArray(blocks) && blocks.length > 0 ? (
             <BlocksRenderer blocks={blocks} />
           ) : (
-            <div className="min-h-screen flex items-center justify-center bg-[#181825] text-[#cdd6f4]">
+            <div className="min-h-screen flex items-center justify-center bg-paper text-ink">
               <div className="text-center px-4">
                 <h1 className="text-3xl sm:text-4xl font-bold mb-4">
                   {(pageDoc.title as string) || slug}
                 </h1>
-                <p className="text-lg text-[#cdd6f4]/80">
+                <p className="text-lg text-pencil">
                   Bu sayfada henüz içerik bulunmuyor.
                 </p>
               </div>

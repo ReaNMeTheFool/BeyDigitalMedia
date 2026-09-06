@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle, AlertCircle, ChevronDown, Check } from "lucide-react";
 import { submitContactForm } from "@/app/actions";
+import ActionStamp from "@/components/document/ActionStamp";
 
 const services = [
   { id: "social-media", label: "Sosyal Medya Yönetimi" },
@@ -15,6 +16,11 @@ const services = [
   { id: "content", label: "İçerik Üretimi" },
   { id: "consulting", label: "Dijital Danışmanlık" },
 ];
+
+const fieldLabelClass =
+  "block font-mono text-[11px] uppercase tracking-[0.18em] text-pencil mb-1";
+const fieldClass =
+  "w-full rounded-none border-0 border-b border-dashed border-ink/40 bg-transparent px-0 py-2.5 text-ink placeholder:text-pencil/70 outline-none transition-colors duration-150 focus:border-solid focus:border-ink focus-visible:outline-none";
 
 interface ServiceDropdownProps {
   selectedServices: string[];
@@ -59,20 +65,22 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
         aria-label="Hizmet seçin"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        className={`w-full px-4 py-3 rounded-xl border transition-all bg-[#181825] text-[#cdd6f4] flex items-center justify-between ${
+        className={`w-full px-0 py-2.5 rounded-none border-0 border-b border-dashed bg-transparent flex items-center justify-between outline-none focus-visible:outline-none transition-colors duration-150 ${
           isOpen
-            ? "border-[#0040ff] ring-2 ring-[#0040ff]/20"
-            : "border-[#2d2d44] hover:border-[#0040ff]/50"
+            ? "border-solid border-ink"
+            : "border-ink/40 hover:border-ink"
         }`}
       >
-        <span className={selectedServices.length === 0 ? "text-[#6c7086]" : ""}>
+        <span
+          className={`text-sm ${selectedServices.length === 0 ? "text-pencil/70" : "text-ink"}`}
+        >
           {getButtonText()}
         </span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <ChevronDown size={20} className="text-[#6c7086]" />
+          <ChevronDown size={18} className="text-pencil" aria-hidden="true" />
         </motion.span>
       </button>
 
@@ -80,12 +88,12 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.95 }}
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.95 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.15 }}
             role="listbox"
-            className="absolute z-50 w-full mt-2 bg-[#181825] border border-[#2d2d44] rounded-xl shadow-xl overflow-hidden"
+            className="absolute z-50 w-full mt-2 rounded-[3px] border border-ink/40 bg-paper shadow-doc overflow-hidden"
           >
             <div className="max-h-64 overflow-y-auto py-1">
               {services.map((service) => {
@@ -95,7 +103,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                     key={service.id}
                     role="option"
                     aria-selected={isSelected}
-                    className="flex items-center gap-3 px-4 py-3 cursor-pointer transition-all hover:bg-[#0040ff]/5"
+                    className="flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors hover:bg-paper-alt"
                   >
                     <input
                       type="checkbox"
@@ -106,7 +114,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                       className="sr-only"
                     />
                     <span className={`text-sm flex-1 transition-colors ${
-                      isSelected ? "text-[#0040ff] font-medium" : "text-[#cdd6f4]"
+                      isSelected ? "text-kase font-bold" : "text-ink"
                     }`}>
                       {service.label}
                     </span>
@@ -115,7 +123,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                       animate={{ opacity: isSelected ? 1 : 0, scale: isSelected ? 1 : 0.5 }}
                       transition={{ duration: 0.2, ease: "easeOut" }}
                     >
-                      <Check size={16} className="text-[#0040ff]" />
+                      <Check size={16} className="text-kase" aria-hidden="true" />
                     </motion.div>
                   </label>
                 );
@@ -148,7 +156,7 @@ export default function ContactForm() {
 
   const validateForm = (formData: FormData): Record<string, string[]> => {
     const errors: Record<string, string[]> = {};
-    
+
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const message = formData.get("message") as string;
@@ -228,7 +236,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
+          className={fieldLabelClass}
         >
           Adınız Soyadınız *
         </label>
@@ -237,12 +245,12 @@ export default function ContactForm() {
           id="name"
           name="name"
           required
-          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
+          className={fieldClass}
           placeholder="Örn: Ahmet Yılmaz"
         />
         {status?.errors?.name && (
-          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
-            <AlertCircle size={14} />
+          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
+            <AlertCircle size={13} aria-hidden="true" />
             {status.errors.name[0]}
           </p>
         )}
@@ -252,7 +260,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
+          className={fieldLabelClass}
         >
           E-posta Adresiniz *
         </label>
@@ -261,12 +269,12 @@ export default function ContactForm() {
           id="email"
           name="email"
           required
-          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
+          className={fieldClass}
           placeholder="ornek@email.com"
         />
         {status?.errors?.email && (
-          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
-            <AlertCircle size={14} />
+          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
+            <AlertCircle size={13} aria-hidden="true" />
             {status.errors.email[0]}
           </p>
         )}
@@ -276,7 +284,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="phone"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
+          className={fieldLabelClass}
         >
           Telefon Numaranız
         </label>
@@ -284,12 +292,12 @@ export default function ContactForm() {
           type="tel"
           id="phone"
           name="phone"
-          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
+          className={fieldClass}
           placeholder="05XX XXX XX XX"
         />
         {status?.errors?.phone && (
-          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
-            <AlertCircle size={14} />
+          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
+            <AlertCircle size={13} aria-hidden="true" />
             {status.errors.phone[0]}
           </p>
         )}
@@ -297,7 +305,7 @@ export default function ContactForm() {
 
       {/* Service Field - Custom Multiple Select Dropdown */}
       <div>
-        <label className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1">
+        <label className={fieldLabelClass}>
           İlgilendiğiniz Hizmetler
         </label>
         <ServiceDropdown
@@ -310,7 +318,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="message"
-          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
+          className={fieldLabelClass}
         >
           Mesajınız *
         </label>
@@ -319,47 +327,46 @@ export default function ContactForm() {
           name="message"
           required
           rows={4}
-          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086] resize-none"
+          className={`${fieldClass} resize-none`}
           placeholder="Projeniz hakkında kısa bir bilgi verin..."
         />
         {status?.errors?.message && (
-          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
-            <AlertCircle size={14} />
+          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
+            <AlertCircle size={13} aria-hidden="true" />
             {status.errors.message[0]}
           </p>
         )}
       </div>
 
       {/* Submit Button */}
-      <motion.button
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+      <ActionStamp
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-[#0040ff] text-[#cdd6f4] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#0033cc] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        size="lg"
+        className="w-full disabled:opacity-60 disabled:pointer-events-none"
       >
         {isSubmitting ? (
           <>
-            <div className="w-5 h-5 border-2 border-[#cdd6f4]/30 border-t-[#cdd6f4] rounded-full animate-spin" />
+            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-paper/30 border-t-paper" aria-hidden="true" />
             <span>Gönderiliyor...</span>
           </>
         ) : (
           <>
-            <Send size={20} />
+            <Send size={18} aria-hidden="true" />
             <span>Mesaj Gönder</span>
           </>
         )}
-      </motion.button>
+      </ActionStamp>
 
-      {/* Success Message */}
+      {/* Success Message: damgali onay */}
       {status?.success && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-green-400 bg-green-400/10 p-4 rounded-xl"
+          className="flex items-center gap-2.5 rounded-[3px] border-[2.5px] border-kase text-kase p-4 shadow-[inset_0_0_0_2px_var(--color-paper)]"
         >
-          <CheckCircle size={20} />
-          <span>{status.message}</span>
+          <CheckCircle size={20} aria-hidden="true" />
+          <span className="font-bold text-sm">{status.message}</span>
         </motion.div>
       )}
 
@@ -368,10 +375,10 @@ export default function ContactForm() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-red-400 bg-red-400/10 p-4 rounded-xl"
+          className="flex items-center gap-2.5 rounded-[3px] border-2 border-action text-action bg-action/5 p-4"
         >
-          <AlertCircle size={20} />
-          <span>{status.message}</span>
+          <AlertCircle size={20} aria-hidden="true" />
+          <span className="font-bold text-sm">{status.message}</span>
         </motion.div>
       )}
     </form>

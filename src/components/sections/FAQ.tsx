@@ -2,9 +2,11 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { Plus } from "lucide-react";
 import { FAQPageJsonLd } from "@/components/SEO/JsonLd";
 import { sanitizeHtml } from "@/lib/sanitize-html";
+import ActionStamp from "@/components/document/ActionStamp";
+import PerforationDivider from "@/components/document/PerforationDivider";
 
 const faqs = [
   {
@@ -60,59 +62,50 @@ export default function FAQ({
   };
 
   return (
-    <section id="faq" className="relative py-24 bg-[#11111b] overflow-hidden">
+    <section id="faq" className="relative py-20 bg-paper overflow-hidden">
+      <PerforationDivider tone="paper-alt" />
       <FAQPageJsonLd questions={displayedFaqs} />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
-          <p className="text-[#cdd6f4]/90 text-lg max-w-2xl mx-auto">
-            {subtitle}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        {/* Bolum basligi */}
+        <div className="mb-12">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil mb-4">
+            Soru ve Yanıtlar
           </p>
-        </motion.div>
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink mb-5"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }}
+          />
+          <p className="text-pencil text-lg max-w-2xl">{subtitle}</p>
+        </div>
 
-        {/* FAQ Items */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="space-y-4"
-        >
+        {/* Soru cetvelleri */}
+        <div>
           {displayedFaqs.map((faq, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`rounded-2xl border overflow-hidden transition-all duration-300 ${openIndex === index
-                ? "bg-[#252538] border-[#0040ff]/40 shadow-[0_0_24px_rgba(0,64,255,0.15)]"
-                : "bg-[#1e1e2e] border-[#2d2d44] hover:border-[#0040ff]/30 hover:bg-[#252538]/60 hover:shadow-[0_0_16px_rgba(0,64,255,0.1)]"
-                }`}
+              className={`border-b border-dashed border-ink/30 transition-colors duration-150 ${
+                openIndex === index ? "bg-paper-alt" : "hover:bg-paper-alt/60"
+              }`}
             >
               <button
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={openIndex === index}
-                className="w-full flex items-center justify-between p-4 sm:p-6 text-left transition-colors hover:bg-white/5"
+                className="w-full flex items-start justify-between gap-4 p-4 sm:p-5 text-left"
               >
-                <span className="font-semibold text-[#cdd6f4] pr-4">
-                  {faq.question}
+                <span className="flex items-baseline gap-3">
+                  <span className="font-mono text-xs text-pencil shrink-0">
+                    S.{String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-bold text-ink text-sm sm:text-base">{faq.question}</span>
                 </span>
-                <motion.div
-                  animate={{ rotate: openIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="shrink-0"
+                <motion.span
+                  animate={{ rotate: openIndex === index ? 45 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="shrink-0 mt-0.5 text-ink"
                 >
-                  <ChevronDown className="w-5 h-5 text-[#0040ff]" />
-                </motion.div>
+                  <Plus className="w-5 h-5" aria-hidden="true" />
+                </motion.span>
               </button>
               <AnimatePresence initial={false}>
                 {openIndex === index && (
@@ -120,39 +113,30 @@ export default function FAQ({
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="overflow-hidden"
                   >
                     <div
                       id={`faq-panel-${index}`}
                       role="region"
-                      className="px-4 sm:px-6 pb-4 sm:pb-6 text-[#cdd6f4]/90 leading-relaxed prose prose-invert max-w-none"
+                      className="px-4 sm:px-5 pb-5 pl-[52px] sm:pl-[60px] text-pencil leading-relaxed text-sm sm:text-base"
                       dangerouslySetInnerHTML={{ __html: faq.answer }}
                     />
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-center mt-12"
-        >
-          <p className="text-[#cdd6f4]/90 mb-4">Başka sorularınız mı var?</p>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 bg-[#0040ff] text-white px-6 py-3 rounded-full font-semibold hover:scale-105 hover:shadow-lg transition-all"
-          >
+        <div className="mt-12">
+          <p className="text-pencil mb-4">Başka sorularınız mı var?</p>
+          <ActionStamp href="#contact" size="md">
             Bize Ulaşın
-          </a>
-        </motion.div>
+          </ActionStamp>
+        </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );
 }

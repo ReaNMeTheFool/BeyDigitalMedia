@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
 import { sanitizeHtml } from "@/lib/sanitize-html";
+import ActionStamp from "@/components/document/ActionStamp";
+import PerforationDivider from "@/components/document/PerforationDivider";
+import LedgerRow from "@/components/document/LedgerRow";
 
 export default function CTA({
   title = 'Dijital <span class="text-[#ffd76e]">Büyüme</span> Yolculuğuna Bugün Başlayın',
@@ -18,93 +19,47 @@ export default function CTA({
   contactPhone?: string;
 }) {
   return (
-    <section className="py-24 bg-[#0040ff] relative overflow-hidden">
-{/* Background decoration */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#ffd76e]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#cdd6f4]/5 rounded-full blur-3xl" />
-      </div>
+    <section className="bg-paper-alt relative overflow-hidden">
+      <PerforationDivider tone="paper" />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        <div className="text-center">
+          {/* Seri satiri */}
+          <div className="flex items-center justify-center gap-2 mb-8 font-mono text-[11px] uppercase tracking-[0.2em] text-pencil">
+            <span className="h-1.5 w-1.5 rounded-full bg-kase" aria-hidden="true" />
+            <span>Ücretsiz Analiz - Hemen Başlayın</span>
+          </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-[#cdd6f4]/10 backdrop-blur-sm border border-[#cdd6f4]/20 rounded-full px-4 py-2 mb-8"
-          >
-            <Sparkles className="w-4 h-4 text-[#ffd76e]" />
-            <span className="text-[#cdd6f4]/90 text-sm font-medium">
-              Ücretsiz Analiz - Hemen Başlayın
-            </span>
-          </motion.div>
-
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
-          <p className="text-[#cdd6f4]/90 text-lg md:text-xl max-w-3xl mx-auto mb-10">
+          <h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-ink mb-6"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }}
+          />
+          <p className="text-pencil text-lg md:text-xl max-w-3xl mx-auto mb-10">
             {subtitle}
           </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <a
-              href={ctaLink}
-              className="group bg-[#ffd76e] text-[#181825] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 hover:shadow-lg hover:shadow-[#ffd76e]/25 transition-all duration-300 flex items-center gap-2"
-            >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <ActionStamp href={ctaLink} size="lg">
               {ctaText}
-              <ArrowRight
-                size={20}
-                className="group-hover:translate-x-1 transition-transform"
-              />
-            </a>
+            </ActionStamp>
             {contactPhone && (
-              <a
+              <ActionStamp
+                variant="ink"
+                size="lg"
                 href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                className="border-2 border-[#cdd6f4]/50 text-[#cdd6f4] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#cdd6f4] hover:text-[#181825] hover:scale-105 transition-all duration-300"
               >
                 Hemen Ara
-              </a>
+              </ActionStamp>
             )}
-          </motion.div>
+          </div>
 
-          {/* Trust badges */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-8 sm:mt-12 pt-8 sm:pt-12 border-t border-[#cdd6f4]/10"
-          >
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">150+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Tamamlanan Proje</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">100+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Memnun Müşteri</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">8+</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Yıllık Deneyim</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#cdd6f4]">%100</div>
-              <div className="text-[#cdd6f4]/70 text-sm">Müşteri Memnuniyeti</div>
-            </div>
-          </motion.div>
-        </motion.div>
+          {/* Cetvel: guven satirlari */}
+          <div className="max-w-2xl mx-auto mt-12 border-y border-ink/40 text-left">
+            <LedgerRow label="Tamamlanan Proje" value="150+" className="py-3 px-1 border-b border-dashed border-ink/25" />
+            <LedgerRow label="Memnun Müşteri" value="100+" className="py-3 px-1 border-b border-dashed border-ink/25" />
+            <LedgerRow label="Yıllık Deneyim" value="8+" className="py-3 px-1 border-b border-dashed border-ink/25" />
+            <LedgerRow label="Müşteri Memnuniyeti" value="%100" className="py-3 px-1" />
+          </div>
+        </div>
       </div>
     </section>
   );

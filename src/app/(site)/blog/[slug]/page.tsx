@@ -8,6 +8,7 @@ import { getPayloadClient } from "@/lib/payload";
 import { lexicalToHtml } from "@/lib/lexicalToHtml";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 import { ArticleJsonLd } from "@/components/SEO/JsonLd";
+import SerialStrip from "@/components/document/SerialStrip";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -91,7 +92,7 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#181825] pt-32 pb-24">
+      <main className="min-h-screen bg-paper pt-24 pb-24">
         <ArticleJsonLd
           title={title}
           url={`https://beydigitalmedia.com/blog/${slug}`}
@@ -106,16 +107,18 @@ export default async function BlogPostPage({ params }: Props) {
           publisherName="Bey Digital Media"
         />
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SerialStrip serial={slug} label="Arşiv Kaydı" />
+
           <Link
             href="/blog"
-            className="text-[#0040ff] text-sm font-medium mb-6 inline-block hover:underline"
+            className="inline-block mt-6 mb-8 font-mono text-[11px] uppercase tracking-[0.16em] text-pencil hover:text-ink transition-colors"
           >
             Tum Yazilar
           </Link>
 
-          <div className="flex items-center gap-2 text-sm text-[#cdd6f4]/60 mb-4">
+          <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.14em] text-pencil mb-4 flex-wrap">
             {category && (
-              <span className="bg-[#0040ff]/10 text-[#0040ff] px-2 py-0.5 rounded-full text-xs font-medium">
+              <span className="text-kase font-bold">
                 {category}
               </span>
             )}
@@ -123,20 +126,21 @@ export default async function BlogPostPage({ params }: Props) {
             {author && <span>- {author}</span>}
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-bold text-[#cdd6f4] mb-6">
+          <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-ink mb-6">
             {title}
           </h1>
 
-          <p className="text-xl text-[#cdd6f4]/80 mb-10 leading-relaxed">
+          <p className="text-lg sm:text-xl text-pencil mb-10 leading-relaxed border-l-2 border-kase pl-4">
             {excerpt}
           </p>
 
           {image && (
-            <div className="relative aspect-video rounded-2xl overflow-hidden mb-12">
+            <div className="relative aspect-video rounded-[3px] border border-ink/40 bg-paper-alt overflow-hidden mb-12 shadow-doc">
               <Image
                 src={image}
                 alt={title}
                 fill
+                sizes="(max-width: 768px) 100vw, 896px"
                 className="object-cover"
                 priority
               />
@@ -144,7 +148,7 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           <div
-            className="prose prose-invert prose-lg max-w-none prose-headings:text-[#cdd6f4] prose-p:text-[#cdd6f4]/80 prose-a:text-[#0040ff]"
+            className="max-w-none [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-ink [&_h1]:mt-10 [&_h1]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-ink [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-ink [&_h3]:mt-8 [&_h3]:mb-3 [&_p]:text-pencil [&_p]:leading-relaxed [&_p]:mb-5 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-5 [&_li]:text-pencil [&_li]:mb-1.5 [&_a]:text-kase [&_a]:underline [&_a]:underline-offset-4 [&_strong]:text-ink [&_blockquote]:border-y [&_blockquote]:border-dashed [&_blockquote]:border-ink/40 [&_blockquote]:py-1 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-pencil [&_img]:rounded-[3px] [&_hr]:border-dashed [&_hr]:border-ink/40 [&_hr]:my-8"
             dangerouslySetInnerHTML={{
               __html: lexicalToHtml(post.content as object),
             }}

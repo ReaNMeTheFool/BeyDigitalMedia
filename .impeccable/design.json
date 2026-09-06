@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-06T00:00:00+03:00",
+  "title": "Design System: Bey Digital Media",
+  "extensions": {
+    "colorMeta": {
+      "form-paper": { "role": "neutral", "displayName": "Form Paper", "canonical": "#f6f4ec", "tonalRamp": ["#14162b", "#3a3c4e", "#5f6180", "#8f90a8", "#c3c2cf", "#e4e2d8", "#f6f4ec", "#fbfaf5"] },
+      "form-paper-alt": { "role": "neutral", "displayName": "Form Paper Alt", "canonical": "#eceade", "tonalRamp": ["#14162b", "#3a3c4e", "#5f6180", "#8f90a8", "#c3c2cf", "#eceade", "#f2f0e6", "#faf9f3"] },
+      "document-ink": { "role": "neutral", "displayName": "Document Ink", "canonical": "#14162b", "tonalRamp": ["#14162b", "#2a2c44", "#43456a", "#6a6c8e", "#9a9bb4", "#c6c7d8", "#e4e5ee", "#f5f5fa"] },
+      "kase-violet": { "role": "primary", "displayName": "Kaşe Violet", "canonical": "#4340b0", "tonalRamp": ["#1e1c4e", "#2c2a75", "#4340b0", "#6b68c6", "#918fce", "#b9b7e2", "#dcdbf2", "#f2f1fa"] },
+      "action-red": { "role": "secondary", "displayName": "Action Red", "canonical": "#c8341f", "tonalRamp": ["#5e150b", "#8f2011", "#c8341f", "#d95c48", "#e4836f", "#eeac9c", "#f6d0c5", "#fcebe6"] },
+      "pencil-gray": { "role": "neutral", "displayName": "Pencil Gray", "canonical": "#6f6a60", "tonalRamp": ["#2c2a25", "#4a4740", "#6f6a60", "#8f8a7f", "#ada89d", "#c9c5bb", "#e3e0d8", "#f4f2ec"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Document Title", "purpose": "Uppercase Archivo black document titles; accent words in Kaşe Violet." },
+      "body": { "displayName": "Body", "purpose": "Article and description copy; Pencil Gray inside panels, Ink on open paper." },
+      "label": { "displayName": "Typed Label", "purpose": "Courier Prime uppercase micro-labels: serials, form labels, document-type markers." }
+    },
+    "shadows": [
+      { "name": "doc", "value": "0 1px 2px rgba(20, 22, 43, 0.08), 0 14px 28px -20px rgba(20, 22, 43, 0.4)", "purpose": "The single resting shadow under lifted document sheets; never animated, never stacked." }
+    ],
+    "motion": [
+      { "name": "stamp-press", "value": "scale 1.16 → 0.985 → 1, opacity 0 → 1, 280ms ease-out, once", "purpose": "Kaşe stamps press into the paper on first view; static under prefers-reduced-motion." },
+      { "name": "press-feedback", "value": "translateY(1px) scale(0.98), 150ms", "purpose": "Active-state press on ActionStamp." },
+      { "name": "marquee", "value": "translateX 0 → -50%, 32s linear infinite", "purpose": "Service ribbon under the hero; disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Action Stamp (red)",
+      "kind": "button",
+      "refersTo": "button-action",
+      "description": "The one red per viewport: the conversion action as a double-ring red stamp.",
+      "html": "<a class=\"ds-btn-action\" href=\"#teklif\">ÜCRETSİZ TEKLİF AL</a>",
+      "css": ".ds-btn-action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--color-action, #c8341f); color: var(--color-paper, #f6f4ec); border: 2.5px solid var(--color-action, #c8341f); box-shadow: inset 0 0 0 2px var(--color-paper, #f6f4ec); padding: 12px 24px; font-family: var(--font-archivo), Archivo, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: filter 0.15s, transform 0.15s; } .ds-btn-action:hover { filter: brightness(1.1); } .ds-btn-action:active { transform: translateY(1px) scale(0.98); } .ds-btn-action:focus-visible { outline: 2px solid var(--color-ink, #14162b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Action Stamp (ink)",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Secondary ink stamp for non-conversion actions (navbar CTA, GERİ DÖN).",
+      "html": "<a class=\"ds-btn-ink\" href=\"/\">HİZMETLERİMİZİ KEŞFET</a>",
+      "css": ".ds-btn-ink { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: transparent; color: var(--color-ink, #14162b); border: 2px solid var(--color-ink, #14162b); padding: 12px 24px; font-family: var(--font-archivo), Archivo, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: background 0.15s, color 0.15s, transform 0.15s; } .ds-btn-ink:hover { background: var(--color-ink, #14162b); color: var(--color-paper, #f6f4ec); } .ds-btn-ink:active { transform: translateY(1px) scale(0.98); } .ds-btn-ink:focus-visible { outline: 2px solid var(--color-ink, #14162b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ledger Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Label → dotted leader → mono tabular value; the only way numbers appear.",
+      "html": "<div class=\"ds-ledger\"><span class=\"ds-ledger-label\">TAMAMLANAN PROJE</span><span class=\"ds-ledger-dots\"></span><span class=\"ds-ledger-value\">150+</span></div>",
+      "css": ".ds-ledger { display: flex; align-items: baseline; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(20, 22, 43, 0.2); } .ds-ledger-label { font-family: var(--font-archivo), Archivo, sans-serif; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-pencil, #6f6a60); } .ds-ledger-dots { flex: 1 1 0%; min-width: 24px; height: 3px; background-image: radial-gradient(circle, currentColor 1px, transparent 1.4px); background-size: 7px 3px; background-repeat: repeat-x; opacity: 0.45; color: var(--color-ink, #14162b); } .ds-ledger-value { font-family: var(--font-courier), 'Courier Prime', monospace; font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; color: var(--color-ink, #14162b); }"
+    },
+    {
+      "name": "Serial Strip",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Document header: serial number, dotted leader, document-type marker.",
+      "html": "<div class=\"ds-serial\"><span>SERİ NO</span><strong>BDM-2026-001</strong><span class=\"ds-serial-dots\"></span><span>SONUÇ BELGESİ</span></div>",
+      "css": ".ds-serial { display: flex; align-items: baseline; gap: 10px; font-family: var(--font-courier), 'Courier Prime', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-pencil, #6f6a60); } .ds-serial strong { color: var(--color-ink, #14162b); letter-spacing: 0.14em; } .ds-serial-dots { flex: 1 1 0%; min-width: 24px; height: 3px; background-image: radial-gradient(circle, currentColor 1px, transparent 1.4px); background-size: 7px 3px; background-repeat: repeat-x; opacity: 0.45; }"
+    },
+    {
+      "name": "Ruled Input",
+      "kind": "input",
+      "refersTo": "input-line",
+      "description": "Form field as a ruled line: dashed ink underline at rest, solid on focus.",
+      "html": "<label class=\"ds-field\"><span>ADINIZ SOYADINIZ *</span><input type=\"text\" placeholder=\"Örn: Ahmet Yılmaz\" /></label>",
+      "css": ".ds-field { display: block; } .ds-field span { display: block; font-family: var(--font-courier), 'Courier Prime', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink, #14162b); margin-bottom: 4px; } .ds-field input { width: 100%; background: transparent; border: none; border-bottom: 1px dashed var(--color-ink, #14162b); padding: 8px 0; font-family: var(--font-archivo), Archivo, sans-serif; font-size: 16px; color: var(--color-ink, #14162b); border-radius: 0; } .ds-field input::placeholder { color: var(--color-pencil, #6f6a60); } .ds-field input:focus { outline: none; border-bottom: 1px solid var(--color-ink, #14162b); } .ds-field input:focus-visible { outline: 2px solid var(--color-ink, #14162b); outline-offset: 2px; }"
+    },
+    {
+      "name": "Service Tag",
+      "kind": "chip",
+      "refersTo": "chip-tag",
+      "description": "Mono uppercase tag for categories and service labels.",
+      "html": "<span class=\"ds-chip\">META ADS</span>",
+      "css": ".ds-chip { display: inline-block; background: var(--color-paper, #f6f4ec); color: var(--color-ink, #14162b); border: 1px solid rgba(20, 22, 43, 0.4); border-radius: 3px; padding: 4px 10px; font-family: var(--font-courier), 'Courier Prime', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Kaşe Stamp",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Double-ring pressed-ink verification stamp; decorative, aria-hidden.",
+      "html": "<div class=\"ds-kase\" aria-hidden=\"true\"><svg viewBox=\"0 0 200 200\"><circle cx=\"100\" cy=\"100\" r=\"97\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\"/><circle cx=\"100\" cy=\"100\" r=\"88\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/><circle cx=\"100\" cy=\"100\" r=\"56\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/><text x=\"100\" y=\"112\" text-anchor=\"middle\" fill=\"currentColor\" font-size=\"34\" font-weight=\"700\" letter-spacing=\"3\" font-family=\"monospace\">BDM</text></svg></div>",
+      "css": ".ds-kase { width: 160px; height: 160px; transform: rotate(-8deg); color: var(--color-kase, #4340b0); mix-blend-mode: multiply; -webkit-mask-image: radial-gradient(circle, black 92%, transparent 96%); mask-image: radial-gradient(circle, black 92%, transparent 96%); } .ds-kase svg { width: 100%; height: 100%; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Fatura & Kaşe — every claim is a certified document",
+    "overview": "The site is the agency's official paperwork. Each page is one document with a type, a serial strip, ruled sections, verification stamps, and a signature. The visitor reads a result certificate, trusts numbers entered like a ledger, and signs the quote request. The dark-hero-and-gradient agency look this replaced is the standing anti-reference.",
+    "keyCharacteristics": [
+      "Serial-numbered pages with document-type labels",
+      "Ledger rows carry every number (label → dotted leader → mono tabular value)",
+      "Kaşe stamps read as pressed ink, never as badges",
+      "Exactly one red element per viewport: the action stamp",
+      "Sections tear apart along perforation dividers on alternating paper grounds"
+    ],
+    "rules": [
+      { "name": "The One Red Rule", "body": "Red is a permission, not a color: one red element per viewport, and it is always the conversion action.", "section": "colors" },
+      { "name": "The Remap Rule", "body": "Accent spans arriving from CMS content render as Kaşe Violet via globals.css; copy is never edited to match the palette.", "section": "colors" },
+      { "name": "The Turkish Caps Rule", "body": "Uppercase display text relies on lang=\"tr\" for correct i→İ; never hand-upcase Turkish strings.", "section": "typography" },
+      { "name": "The Flat Paper Rule", "body": "Surfaces are flat at rest; the single --shadow-doc appears only where a physical sheet sits on the page.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do open every new template with a SerialStrip and a document-type label.",
+      "Do set every number as a ledger row: label → dots-leader → Courier Prime tabular value.",
+      "Do keep stamps pressed: .kase-ink mask, multiply blend, double ring, slight rotation.",
+      "Do alternate section grounds paper / paper-alt and separate them with PerforationDivider.",
+      "Do keep one red per viewport and make it the conversion action."
+    ],
+    "donts": [
+      "Don't introduce gradients, glassmorphism, dark section grounds, or rounded-2xl SaaS cards.",
+      "Don't use a serif display face, terracotta accents, or any red that is not the action stamp.",
+      "Don't add entrance animations that hide content; motion is press/tear feedback only.",
+      "Don't add decorative kickers/eyebrows; mono labels must name a real thing on the document.",
+      "Don't edit CMS copy to fit the palette; extend the Remap Rule instead."
+    ]
+  }
+}

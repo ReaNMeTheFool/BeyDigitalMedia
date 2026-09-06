@@ -1,9 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, Phone, ArrowUpRight } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import ContactForm from "../ui/ContactForm";
+import SerialStrip from "@/components/document/SerialStrip";
+import PerforationDivider from "@/components/document/PerforationDivider";
+import SignatureLine from "@/components/document/SignatureLine";
 import { iconMap } from "@/lib/icon-map";
 import { sanitizeHtml } from "@/lib/sanitize-html";
 
@@ -54,162 +57,176 @@ export default function Footer({
   bottomText = `© ${new Date().getFullYear()} Bey Digital Media. Tüm hakları saklıdır.`,
 }: FooterProps) {
   return (
-    <footer id="contact" className="bg-[#181825] text-[#cdd6f4] relative">
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#11111b] to-transparent pointer-events-none z-10" />
-      {/* CTA Section */}
-      <div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center"
-          >
-            <div>
-              <h2
-                className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(ctaTitle) }}
-              />
-              <p className="text-[#cdd6f4]/90 text-lg mb-8">
-                {ctaSubtitle}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href={`mailto:${contactEmail}`}
-                  className="inline-flex items-center gap-2 text-[#cdd6f4] hover:text-[#ffd76e] transition-colors break-all"
-                >
-                  <Mail size={20} className="shrink-0" />
-                  {contactEmail}
-                </a>
-                <a
-                  href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                  onClick={(e) => {
-                    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-                    if (!isMobile) {
-                      e.preventDefault();
-                      window.open(`https://wa.me/${contactPhone.replace(/\D/g, "")}`, "_blank");
-                    }
-                  }}
-                  className="inline-flex items-center gap-2 text-[#cdd6f4] hover:text-[#ffd76e] transition-colors"
-                >
-                  <Phone size={20} />
-                  {contactPhone}
-                </a>
+    <footer id="contact" className="bg-paper text-ink relative">
+      <PerforationDivider tone="paper-alt" />
+
+      {/* CTA / form bölümü */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-16">
+        <SerialStrip serial="C-01" label="İletişim" />
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
+          <div>
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-ink"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(ctaTitle) }}
+            />
+            <p className="text-pencil text-lg mb-8 max-w-xl">{ctaSubtitle}</p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-8">
+              <a
+                href={`mailto:${contactEmail}`}
+                className="inline-flex items-center gap-2 font-mono text-sm text-ink underline decoration-ink/40 underline-offset-4 hover:decoration-ink transition-colors break-all"
+              >
+                <Mail size={18} className="shrink-0" aria-hidden="true" />
+                {contactEmail}
+              </a>
+              <a
+                href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                onClick={(e) => {
+                  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+                  if (!isMobile) {
+                    e.preventDefault();
+                    window.open(`https://wa.me/${contactPhone.replace(/\D/g, "")}`, "_blank");
+                  }
+                }}
+                className="inline-flex items-center gap-2 font-mono text-sm text-ink underline decoration-ink/40 underline-offset-4 hover:decoration-ink transition-colors"
+              >
+                <Phone size={18} className="shrink-0" aria-hidden="true" />
+                {contactPhone}
+              </a>
+            </div>
+          </div>
+
+          {/* Teklif formu belgesi */}
+          <div className="rounded-[3px] border border-ink/40 bg-paper shadow-doc p-5 sm:p-8">
+            <div className="flex items-baseline gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-pencil mb-6">
+              <span>Teklif Formu</span>
+              <span aria-hidden="true" className="dots-leader" />
+              <span>BDM-{new Date().getFullYear()}</span>
+            </div>
+            <h3 className="text-xl font-bold text-ink mb-6">{ctaButtonText}</h3>
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+
+      {/* Kolofon */}
+      <div className="border-t border-ink/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+            {/* Marka */}
+            <div className="lg:col-span-1">
+              <div className="flex items-center gap-2.5 mb-4">
+                <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-[3px] bg-ink">
+                  <Image
+                    src="/beydigital_logo.webp"
+                    alt=""
+                    width={48}
+                    height={48}
+                    className="h-7 w-7 object-contain"
+                  />
+                </span>
+                <div
+                  className="text-lg font-bold text-ink"
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(brandName) }}
+                />
+              </div>
+              <p className="text-pencil text-sm mb-6">{brandTagline}</p>
+              <div className="flex gap-3">
+                {footerLinks.social?.map((social) => {
+                  const IconComponent = iconMap[social.platform];
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-9 w-9 rounded-[3px] border border-ink/40 flex items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors"
+                      aria-label={social.label}
+                    >
+                      {IconComponent ? <IconComponent size={18} /> : null}
+                    </a>
+                  );
+                })}
               </div>
             </div>
-            <div className="bg-[#cdd6f4]/5 backdrop-blur-sm rounded-3xl p-5 sm:p-8 border border-[#cdd6f4]/10">
-              <h3 className="text-xl font-bold mb-6">{ctaButtonText}</h3>
-              <ContactForm />
-            </div>
-          </motion.div>
-        </div>
-      </div>
 
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <div
-              className="text-2xl font-bold mb-4"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(brandName) }}
-            />
-            <p className="text-[#cdd6f4]/80 mb-6">
-              {brandTagline}
-            </p>
-            <div className="flex gap-4">
-              {footerLinks.social?.map((social) => {
-                const IconComponent = iconMap[social.platform];
-                return (
+            {/* Hizmetler */}
+            <div>
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil border-b border-ink/20 pb-2 mb-4">
+                Hizmetler
+              </h4>
+              <ul className="space-y-2.5">
+                {footerLinks.services?.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-ink/85 hover:text-ink hover:underline underline-offset-4 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Şirket */}
+            <div>
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil border-b border-ink/20 pb-2 mb-4">
+                Şirket
+              </h4>
+              <ul className="space-y-2.5">
+                {footerLinks.company?.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-ink/85 hover:text-ink hover:underline underline-offset-4 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* İletişim */}
+            <div>
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil border-b border-ink/20 pb-2 mb-4">
+                İletişim
+              </h4>
+              <ul className="space-y-3">
+                <li>
                   <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 bg-[#cdd6f4]/10 rounded-full flex items-center justify-center hover:bg-[#ffd76e] hover:text-[#181825] transition-all"
-                    aria-label={social.label}
+                    href={`mailto:${contactEmail}`}
+                    className="text-sm text-ink/85 hover:text-ink hover:underline underline-offset-4 transition-colors break-all"
                   >
-                    {IconComponent ? <IconComponent size={20} /> : null}
+                    {contactEmail}
                   </a>
-                );
-              })}
+                </li>
+                <li>
+                  <a
+                    href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                    onClick={(e) => {
+                      const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+                      if (!isMobile) {
+                        e.preventDefault();
+                        window.open(`https://wa.me/${contactPhone.replace(/\D/g, "")}`, "_blank");
+                      }
+                    }}
+                    className="text-sm text-ink/85 hover:text-ink hover:underline underline-offset-4 transition-colors"
+                  >
+                    {contactPhone}
+                  </a>
+                </li>
+              </ul>
             </div>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Hizmetler</h4>
-            <ul className="space-y-3">
-              {footerLinks.services?.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-[#cdd6f4]/80 hover:text-[#ffd76e] transition-colors flex items-center gap-1 group"
-                  >
-                    {link.label}
-                    <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">Şirket</h4>
-            <ul className="space-y-3">
-              {footerLinks.company?.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-[#cdd6f4]/80 hover:text-[#ffd76e] transition-colors flex items-center gap-1 group"
-                  >
-                    {link.label}
-                    <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-semibold text-lg mb-4">İletişim</h4>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <Mail size={20} className="text-[#ffd76e] shrink-0" />
-                <a href={`mailto:${contactEmail}`} className="text-[#cdd6f4]/80 hover:text-[#ffd76e] transition-colors break-all">
-                  {contactEmail}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={20} className="text-[#ffd76e] shrink-0" />
-                <a
-                  href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                  onClick={(e) => {
-                    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-                    if (!isMobile) {
-                      e.preventDefault();
-                      window.open(`https://wa.me/${contactPhone.replace(/\D/g, "")}`, "_blank");
-                    }
-                  }}
-                  className="text-[#cdd6f4]/80 hover:text-[#ffd76e] transition-colors"
-                >
-                  {contactPhone}
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <p className="text-[#cdd6f4]/60 text-sm text-center">
-            {bottomText}
-          </p>
+      {/* Alt bar */}
+      <div className="border-t border-dashed border-ink/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <p className="font-mono text-xs text-pencil text-center sm:text-left">{bottomText}</p>
+          <SignatureLine name="Yiğit Emre Balaban" caption="İmza" className="scale-90 origin-bottom-right" />
         </div>
       </div>
     </footer>

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import ActionStamp from "@/components/document/ActionStamp";
 
 interface NavLink {
   name: string;
@@ -100,40 +101,35 @@ export default function Navbar({
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "backdrop-blur-md bg-[#181825]/80 border-b border-[#2d2d44]/50 shadow-sm"
-            : "bg-transparent"
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 bg-paper transition-shadow duration-300 ${
+          isScrolled ? "shadow-doc border-b border-ink/20" : "border-b border-ink/20"
         }`}
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-20 relative">
-            {/* Desktop: Logo solda 50px, nav tam ortada */}
+          <div className="flex items-center h-16 relative">
+            {/* Masaustu: logo solda, fihrist ortada */}
             <Link
               href="/"
-              className="hidden lg:flex absolute left-[50px] top-1/2 -translate-y-1/2 items-center gap-2"
+              className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 items-center gap-2.5"
             >
-              <Image
-                src={logoSrc}
-                alt={brandName}
-                width={48}
-                height={48}
-                className="object-contain"
-                priority
-              />
-              <span className="font-bold text-xl text-[#cdd6f4]">
-                {brandName}
+              <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-[3px] bg-ink">
+                <Image
+                  src={logoSrc}
+                  alt={brandName}
+                  width={48}
+                  height={48}
+                  className="h-7 w-7 object-contain"
+                  priority
+                />
               </span>
+              <span className="font-bold text-base text-ink">{brandName}</span>
             </Link>
 
             <div className="hidden lg:block w-full h-full">
               <div className="max-w-7xl mx-auto h-full relative">
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -ml-[34px] flex items-center gap-5 xl:gap-7">
-                  {navLinks.map((link) =>
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -ml-[80px] flex items-center gap-4 xl:gap-5">
+                  {navLinks.map((link, index) =>
                     link.children && link.children.length > 0 ? (
                       <div
                         key={link.name}
@@ -144,38 +140,37 @@ export default function Navbar({
                         <button
                           onClick={() => scrollToSection(link.href)}
                           aria-label="Hizmetler menüsü"
-                          className={`shrink-0 whitespace-nowrap text-sm font-medium transition-colors hover:text-[#7da5ff] ${
+                          className={`shrink-0 whitespace-nowrap text-[13px] transition-colors hover:text-ink ${
                             activeSection === "services"
-                              ? "text-[#7da5ff] font-semibold"
-                              : isScrolled
-                              ? "text-[#cdd6f4]"
-                              : "text-[#cdd6f4]/90"
+                              ? "font-bold text-ink underline decoration-ink underline-offset-[6px]"
+                              : "text-pencil"
                           }`}
                         >
+                          <span className="mr-1 font-mono text-[10px] text-pencil/70">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
                           {link.name}
                         </button>
 
                         <AnimatePresence>
                           {servicesOpen && (
                             <motion.div
-                              initial={{ opacity: 0, y: 8 }}
+                              initial={{ opacity: 0, y: 6 }}
                               animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 8 }}
+                              exit={{ opacity: 0, y: 6 }}
                               transition={{ duration: 0.18 }}
-                              className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 bg-[#1e1e2e] border border-[#2d2d44] rounded-xl shadow-xl overflow-hidden z-50"
+                              className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 rounded-[3px] border border-ink/30 bg-paper py-1 shadow-doc overflow-hidden z-50"
                             >
-                              <div className="py-1">
-                                {link.children.map((child) => (
-                                  <Link
-                                    key={child.href}
-                                    href={child.href}
-                                    className="block px-4 py-2.5 text-sm text-[#cdd6f4]/90 hover:text-[#7da5ff] hover:bg-[#252538] transition-colors"
-                                    onClick={() => setServicesOpen(false)}
-                                  >
-                                    {child.name}
-                                  </Link>
-                                ))}
-                              </div>
+                              {link.children.map((child) => (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className="block px-4 py-2 text-[13px] text-ink/85 hover:bg-paper-alt hover:text-ink transition-colors"
+                                  onClick={() => setServicesOpen(false)}
+                                >
+                                  {child.name}
+                                </Link>
+                              ))}
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -184,14 +179,15 @@ export default function Navbar({
                       <button
                         key={link.name}
                         onClick={() => scrollToSection(link.href)}
-                        className={`shrink-0 whitespace-nowrap text-sm font-medium transition-colors hover:text-[#7da5ff] ${
+                        className={`shrink-0 whitespace-nowrap text-[13px] transition-colors hover:text-ink ${
                           activeSection === link.href.replace("#", "")
-                            ? "text-[#7da5ff] font-semibold"
-                            : isScrolled
-                            ? "text-[#cdd6f4]"
-                            : "text-[#cdd6f4]/90"
+                            ? "font-bold text-ink underline decoration-ink underline-offset-[6px]"
+                            : "text-pencil"
                         }`}
                       >
+                        <span className="mr-1 font-mono text-[10px] text-pencil/70">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
                         {link.name}
                       </button>
                     )
@@ -199,120 +195,143 @@ export default function Navbar({
                 </div>
                 {ctaLabel && (
                   <div className="absolute right-0 top-1/2 -translate-y-1/2">
-                    <button
+                    <ActionStamp
+                      variant="ink"
+                      size="sm"
                       onClick={() => scrollToSection(ctaHref)}
-                      className="px-5 py-2.5 bg-[#0040ff] text-white rounded-xl font-semibold text-sm hover:bg-[#0033cc] transition-colors shadow-lg shadow-[#0040ff]/25"
                     >
                       {ctaLabel}
-                    </button>
+                    </ActionStamp>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Mobile: Logo sol, hamburger sağ */}
-            <Link href="/" className="lg:hidden absolute left-0 flex items-center gap-2">
-              <Image
-                src={logoSrc}
-                alt={brandName}
-                width={40}
-                height={40}
-                className="object-contain"
-                priority
-              />
-              <span className="font-bold text-lg text-[#cdd6f4]">
-                {brandName}
+            {/* Mobil: logo sol, hamburger sag */}
+            <Link href="/" className="lg:hidden absolute left-0 flex items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-[3px] bg-ink">
+                <Image
+                  src={logoSrc}
+                  alt={brandName}
+                  width={48}
+                  height={48}
+                  className="h-6 w-6 object-contain"
+                  priority
+                />
               </span>
+              <span className="font-bold text-base text-ink">{brandName}</span>
             </Link>
 
-            {/* Mobile Menu Button */}
+            {/* Mobil Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden absolute right-0 p-2 rounded-lg text-[#cdd6f4]"
+              className="lg:hidden absolute right-0 p-2 rounded-[3px] border border-ink/40 text-ink"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label="Menüyü aç"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobil Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-20 left-0 right-0 bg-[#1e1e2e] border-b border-[#2d2d44] p-4 flex flex-col gap-4 shadow-lg z-40 lg:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed top-16 left-0 right-0 overflow-hidden border-b border-ink/30 bg-paper shadow-doc z-40 lg:hidden"
           >
-            {navLinks.map((link) =>
-              link.children && link.children.length > 0 ? (
-                <div key={link.name}>
-                  <div className="flex items-center">
-                    <button
-                      onClick={() => scrollToSection(link.href)}
-                      className={`flex-1 text-left py-2 px-4 rounded-lg font-medium transition-colors ${
-                        activeSection === "services"
-                          ? "text-[#0040ff] bg-[#0040ff]/5"
-                          : "text-[#cdd6f4] hover:bg-[#252538]"
-                      }`}
-                    >
-                      {link.name}
-                    </button>
-                    <button
-                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                      className="p-2 text-[#cdd6f4] hover:text-[#7da5ff]"
-                    >
-                      <ChevronDown
-                        size={16}
-                        className={`transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                  </div>
-                  <AnimatePresence>
-                    {mobileServicesOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
+            <div className="flex flex-col p-4">
+              {navLinks.map((link, index) =>
+                link.children && link.children.length > 0 ? (
+                  <div key={link.name} className="border-b border-dashed border-ink/25 py-1">
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => scrollToSection(link.href)}
+                        className={`flex-1 text-left py-2 px-2 text-sm transition-colors ${
+                          activeSection === "services"
+                            ? "font-bold text-ink"
+                            : "text-ink/85 hover:text-ink"
+                        }`}
                       >
-                        <div className="pl-4 pb-1 flex flex-col gap-1">
-                          {link.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className="text-left py-2 px-4 rounded-lg text-sm text-[#cdd6f4]/80 hover:text-[#7da5ff] hover:bg-[#252538] transition-colors"
-                            >
-                              {child.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        <span className="mr-2 font-mono text-[10px] text-pencil">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        {link.name}
+                      </button>
+                      <button
+                        onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                        className="p-2 text-pencil hover:text-ink"
+                        aria-label="Hizmetler alt menüsü"
+                        aria-expanded={mobileServicesOpen}
+                      >
+                        <ChevronDown
+                          size={16}
+                          className={`transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                    </div>
+                    <AnimatePresence>
+                      {mobileServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="ml-4 border-l border-dashed border-ink/30 pb-1 flex flex-col">
+                            {link.children.map((child) => (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="text-left py-2 pl-4 text-[13px] text-pencil hover:text-ink transition-colors"
+                              >
+                                {child.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <button
+                    key={link.name}
+                    onClick={() => scrollToSection(link.href)}
+                    className={`border-b border-dashed border-ink/25 py-2.5 px-2 text-left text-sm transition-colors last:border-b-0 ${
+                      activeSection === link.href.replace("#", "")
+                        ? "font-bold text-ink"
+                        : "text-ink/85 hover:text-ink"
+                    }`}
+                  >
+                    <span className="mr-2 font-mono text-[10px] text-pencil">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {link.name}
+                  </button>
+                )
+              )}
+              {ctaLabel && (
+                <div className="pt-4">
+                  <ActionStamp
+                    variant="action"
+                    size="md"
+                    className="w-full"
+                    onClick={() => scrollToSection(ctaHref)}
+                  >
+                    {ctaLabel}
+                  </ActionStamp>
                 </div>
-              ) : (
-                <button
-                  key={link.name}
-                  onClick={() => scrollToSection(link.href)}
-                  className={`text-left py-2 px-4 rounded-lg font-medium transition-colors ${
-                    activeSection === link.href.replace("#", "")
-                      ? "text-[#0040ff] bg-[#0040ff]/5"
-                      : "text-[#cdd6f4] hover:bg-[#252538]"
-                  }`}
-                >
-                  {link.name}
-                </button>
-              )
-            )}
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

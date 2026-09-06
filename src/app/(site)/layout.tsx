@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Archivo, Courier_Prime } from "next/font/google";
 import "../globals.css";
 import { OrganizationJsonLd } from "@/components/SEO/JsonLd";
 import { WebSiteJsonLd } from "@/components/SEO/JsonLd";
@@ -7,20 +7,21 @@ import { getPayloadClient } from "@/lib/payload";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 import type { SiteSetting } from "@/payload-types";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const archivo = Archivo({
   subsets: ["latin", "latin-ext"],
   display: "swap",
-  variable: "--font-plus-jakarta",
+  variable: "--font-archivo",
 });
 
-const jetBrainsMono = JetBrains_Mono({
+const courierPrime = Courier_Prime({
   subsets: ["latin", "latin-ext"],
+  weight: ["400", "700"],
   display: "swap",
-  variable: "--font-jetbrains",
+  variable: "--font-courier",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#181825",
+  themeColor: "#f6f4ec",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -97,9 +98,8 @@ export default function SiteLayout({
   return (
     <html
       lang="tr"
-      className={`${plusJakartaSans.variable} ${jetBrainsMono.variable} dark`}
+      className={`${archivo.variable} ${courierPrime.variable}`}
       suppressHydrationWarning
-      style={{ colorScheme: "dark" }}
       data-scroll-behavior="smooth"
     >
       <head>
@@ -118,13 +118,12 @@ export default function SiteLayout({
         />
       </head>
       <body
-        className="font-sans antialiased bg-[#181825] text-[#cdd6f4] overflow-x-hidden"
+        className="font-sans antialiased bg-paper text-ink overflow-x-hidden"
         suppressHydrationWarning
-        style={{ backgroundColor: "#181825", color: "#cdd6f4" }}
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--theme-primary)] focus:text-white focus:rounded-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-ink focus:text-paper focus:font-mono focus:text-sm focus:tracking-wider"
         >
           Ana içeriğe atla
         </a>

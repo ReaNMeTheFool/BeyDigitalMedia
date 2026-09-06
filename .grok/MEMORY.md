@@ -27,6 +27,14 @@ Rejected: Hesap Defteri (model pick, stayed alternate), Enstrüman Panosu VU-met
 
 ## Dead ends
 
+### 2026-09-06 — Root layout passthrough breaks not-found SSR
+Failed: src/app/layout.tsx renders <>{children}</>, so 404s serve the __next_error__ client shell and (site)/not-found.tsx never renders for unmatched URLs; fixed by adding src/app/not-found.tsx with its own html/body shell.
+Don't retry unless: the root layout becomes a real document shell (ripples into payload admin and (site) layouts).
+
+### 2026-09-05 — npm run payload:seed locally
+Failed: exits requiring ADMIN_USERNAME/ADMIN_PASSWORD env vars that are not in .env; full local seeding impossible as-is.
+Don't retry unless: those vars are added to .env. Individual globals/collections can be seeded selectively without them.
+
 ### 2026-08-29 — code-reviewer subagent type
 Failed: dispatching the `code-reviewer` agent type twice returned harness error "captcha verify failed" (no work performed).
 Don't retry unless: the harness error disappears. Use `Explore` (read-only, has Bash for git diff) for diff reviews instead.
