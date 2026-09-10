@@ -3,10 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
-import { getPayloadClient } from "@/lib/payload";
+import { listBlogPosts } from "@/lib/content";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
-import type { BlogPost } from "@/payload-types";
+import type { BlogPost } from "@/types/content";
 import SerialStrip from "@/components/document/SerialStrip";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   return mergeMetadata(defaultSeoFields, {
@@ -34,13 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlogPage() {
   let posts: BlogPost[] = [];
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "blogPosts",
-      sort: "-publishedDate",
-      limit: 100,
-    });
-    posts = result.docs;
+    posts = await listBlogPosts(100);
   } catch {
     posts = [];
   }

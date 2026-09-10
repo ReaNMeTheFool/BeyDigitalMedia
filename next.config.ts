@@ -1,4 +1,3 @@
-import { withPayload } from "@payloadcms/next/withPayload";
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import type { NextConfig } from "next";
 import path from "path";
@@ -13,9 +12,6 @@ const nextConfig: NextConfig = {
   // React Compiler - Next.js 16.1.6'da root seviyesinde
   reactCompiler: true,
 
-  // Docker icin standalone output
-  output: "standalone",
-
   // URL trailing slash kapali (SEO)
   trailingSlash: false,
 
@@ -24,32 +20,9 @@ const nextConfig: NextConfig = {
     root: path.resolve(dirname),
   },
 
-  // Image optimizasyonu
+  // Sharp workerd altinda calismadigi icin optimizasyon kapali (Cloudflare deploy)
   images: {
-    formats: ["image/webp", "image/avif"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
-    localPatterns: [
-      {
-        pathname: "/api/media/file/**",
-      },
-      {
-        pathname: "/**",
-      },
-    ],
-  },
-
-  webpack: (webpackConfig) => {
-    webpackConfig.resolve.extensionAlias = {
-      ".cjs": [".cts", ".cjs"],
-      ".js": [".ts", ".tsx", ".js", ".jsx"],
-      ".mjs": [".mts", ".mjs"],
-    };
-    return webpackConfig;
+    unoptimized: true,
   },
 
   // www -> non-www redirect
@@ -97,4 +70,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPayload(nextConfig, { devBundleServerPackages: false });
+export default nextConfig;

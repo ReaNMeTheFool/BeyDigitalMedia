@@ -10,7 +10,7 @@ import WhyUsServer from "@/components/sections/WhyUsServer";
 import Pricing from "@/components/sections/Pricing";
 import PartnerBadges from "@/components/sections/PartnerBadges";
 import CTAServer from "@/components/sections/CTAServer";
-import type { HeroBlock, PartnerBadgesBlock } from "@/payload-types";
+import type { HeroBlock, PartnerBadgesBlock } from "@/types/content";
 
 export interface Block {
   blockType: string;

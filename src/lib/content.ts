@@ -1,6 +1,5 @@
 import {
   getDB,
-  hydrateBlocks,
   mediaId,
   mediaRef,
   num,
@@ -29,7 +28,6 @@ import type {
   MediaRef,
   Navigation,
   Page,
-  PageBlock,
   Service,
   SiteSettings,
   Testimonial,

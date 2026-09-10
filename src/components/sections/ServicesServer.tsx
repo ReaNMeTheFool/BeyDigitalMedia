@@ -1,4 +1,4 @@
-import { getPayloadClient } from "@/lib/payload";
+import { listServices } from "@/lib/content";
 import Services from "./Services";
 import { defaultServices } from "@/lib/defaultServices";
 
@@ -37,16 +37,9 @@ export default async function ServicesServer({
   }[] = [];
 
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "services",
-      sort: "order",
-    });
-    cmsServices = result.docs.map((doc) => ({
-      imageSrc:
-        doc.icon && typeof doc.icon === "object"
-          ? doc.icon.url || undefined
-          : undefined,
+    const docs = await listServices();
+    cmsServices = docs.map((doc) => ({
+      imageSrc: doc.icon?.url || undefined,
       title: doc.title,
       description: doc.description,
       link: `/${doc.slug}`,

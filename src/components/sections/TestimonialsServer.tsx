@@ -1,4 +1,4 @@
-import { getPayloadClient } from "@/lib/payload";
+import { listTestimonials } from "@/lib/content";
 import Testimonials from "./Testimonials";
 
 interface TestimonialsServerProps {
@@ -21,22 +21,16 @@ export default async function TestimonialsServer({
   }[] = [];
 
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "testimonials",
-      sort: "name",
-      ...(showAll ? {} : { limit: 5 }),
-    });
-    testimonials = result.docs.map((doc) => ({
-      // CMS belge id'leri string döner; bileşen prop tipi hardcoded veriden number bekliyor.
-      id: doc.id as unknown as number,
+    let docs = await listTestimonials();
+    // Eski CMS davranisi korunur: isme gore sirala, gerekirse ilk 5 ile sinirla
+    docs = [...docs].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    if (!showAll) docs = docs.slice(0, 5);
+    testimonials = docs.map((doc) => ({
+      id: doc.id,
       name: doc.name,
       company: doc.company,
       role: doc.role || "",
-      image:
-        (doc.image && typeof doc.image === "object"
-          ? doc.image.url
-          : doc.image) || "",
+      image: doc.image?.url || "",
       rating: doc.rating || 5,
       text: doc.text,
     }));

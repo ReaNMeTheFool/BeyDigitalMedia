@@ -1,4 +1,4 @@
-import { getPayloadClient } from "@/lib/payload";
+import { listProjects } from "@/lib/content";
 import Portfolio from "./Portfolio";
 import { defaultProjects } from "@/lib/defaultProjects";
 
@@ -27,15 +27,10 @@ export default async function PortfolioServer({
   }[] = [];
 
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "projects",
-      sort: "order",
-      ...(showAll ? {} : { limit: 6 }),
-    });
-    cmsProjects = result.docs.map((doc) => ({
-      // CMS belge id'leri string döner; bileşen prop tipi hardcoded veriden number bekliyor.
-      id: doc.id as unknown as number,
+    const all = await listProjects();
+    const docs = showAll ? all : all.slice(0, 6);
+    cmsProjects = docs.map((doc) => ({
+      id: doc.id,
       title: doc.title,
       category: doc.category,
       services: (doc.services || []).map((tag) => ({
@@ -45,10 +40,7 @@ export default async function PortfolioServer({
       })),
       color: doc.color,
       results: doc.results,
-      logo:
-        doc.logo && typeof doc.logo === "object"
-          ? doc.logo.url || undefined
-          : undefined,
+      logo: doc.logo?.url || undefined,
       logoScale: doc.logoScale ?? undefined,
       resultsColor: doc.resultsColor ?? undefined,
       smallTags: doc.smallTags ?? undefined,

@@ -3,42 +3,9 @@
 import { headers } from "next/headers";
 import { z } from "zod";
 import { Resend } from "resend";
-import { getPayloadClient } from "@/lib/payload";
+import { countRecentSubmissions, createContactSubmission } from "@/lib/content";
 
-// Basit in-memory rate limit (tek container kurulumu için yeterli)
-const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
-const RATE_LIMIT = 5; // 5 dakikada max 5 istek
-const RATE_LIMIT_WINDOW = 5 * 60 * 1000; // 5 dakika
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-
-  // Süresi geçen kayıtları temizle (Map sınırsız büyümesin)
-  for (const [key, record] of rateLimitMap) {
-    if (now - record.timestamp > RATE_LIMIT_WINDOW) {
-      rateLimitMap.delete(key);
-    }
-  }
-
-  const record = rateLimitMap.get(ip);
-
-  if (!record) {
-    rateLimitMap.set(ip, { count: 1, timestamp: now });
-    return true;
-  }
-
-  if (now - record.timestamp > RATE_LIMIT_WINDOW) {
-    rateLimitMap.set(ip, { count: 1, timestamp: now });
-    return true;
-  }
-
-  if (record.count >= RATE_LIMIT) {
-    return false;
-  }
-
-  record.count++;
-  return true;
-}
+const RATE_LIMIT = 5; // 5 dakikada max 5 talep (IP basina, D1 uzerinden)
 
 function escapeHtml(value: string): string {
   return value
@@ -84,11 +51,16 @@ export async function submitContactForm(
   formData: FormData,
 ) {
   try {
-    // Rate limiting check
+    // Rate limiting: created_at > datetime('now','-5 minutes') araliginda
+    // ayni IP'den kayitli talep sayisi RATE_LIMIT'e ulastiysa reddet.
     const hdrs = await headers();
-    const clientId =
-      hdrs.get("x-forwarded-for") || hdrs.get("x-real-ip") || "anonymous";
-    if (!checkRateLimit(clientId)) {
+    const clientIp =
+      hdrs.get("Cf-Connecting-Ip") ||
+      hdrs.get("x-forwarded-for") ||
+      hdrs.get("x-real-ip") ||
+      "anonymous";
+    const recentCount = await countRecentSubmissions(clientIp);
+    if (recentCount >= RATE_LIMIT) {
       return {
         success: false,
         message:
@@ -151,20 +123,17 @@ export async function submitContactForm(
         : "Belirtilmemiş";
 
     // Talebi önce veritabanına kaydet
-    try {
-      const payload = await getPayloadClient();
-      await payload.create({
-        collection: "contactSubmissions",
-        data: {
-          name,
-          email,
-          phone: phone || undefined,
-          service,
-          message,
-        },
-      });
-    } catch (dbError) {
-      console.error("Form talebi veritabanına kaydedilemedi:", dbError);
+    const submissionId = await createContactSubmission({
+      name,
+      email,
+      phone: phone || null,
+      service: service ?? null,
+      message,
+      ip: clientIp,
+    });
+
+    if (submissionId == null) {
+      console.error("Form talebi veritabanına kaydedilemedi");
       return {
         success: false,
         message: "Bir hata oluştu. Lütfen tekrar deneyin.",

@@ -3,9 +3,8 @@ import { Archivo, Courier_Prime } from "next/font/google";
 import "../globals.css";
 import { OrganizationJsonLd } from "@/components/SEO/JsonLd";
 import { WebSiteJsonLd } from "@/components/SEO/JsonLd";
-import { getPayloadClient } from "@/lib/payload";
+import { getSiteSettings } from "@/lib/content";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
-import type { SiteSetting } from "@/payload-types";
 
 const archivo = Archivo({
   subsets: ["latin", "latin-ext"],
@@ -25,26 +24,17 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  let siteSettings: Partial<SiteSetting> = {};
+  const siteSettings = await getSiteSettings();
 
-  try {
-    const payload = await getPayloadClient();
-    siteSettings = await payload.findGlobal({ slug: "siteSettings" });
-  } catch {
-    siteSettings = {};
-  }
-
-  const siteName = (siteSettings.siteName as string) || "Bey Digital Media";
-  const tagline =
-    (siteSettings.tagline as string) || "Dijital Pazarlama Ajansı";
+  const siteName = siteSettings.siteName || "Bey Digital Media";
+  const tagline = siteSettings.tagline || "Dijital Pazarlama Ajansı";
   const description =
-    (siteSettings.defaultMetaDescription as string) ||
+    siteSettings.defaultMetaDescription ||
     "Dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.";
-  const title =
-    (siteSettings.defaultMetaTitle as string) || `${siteName} | ${tagline}`;
+  const title = siteSettings.defaultMetaTitle || `${siteName} | ${tagline}`;
 
   const verification: Record<string, string> = {};
-  const googleCode = siteSettings.googleVerification as string | undefined;
+  const googleCode = siteSettings.googleVerification;
   if (googleCode) {
     verification.google = googleCode;
   }

@@ -2,7 +2,6 @@ import type { Navigation, SiteSettings, Footer, CtaBlock } from "@/types/content
 
 /**
  * D1 satirlari eksik oldugunda kullanilan icerik varsayilanlari.
- * Kaynak: src/payload/globals/*.ts ve blok tanimlarindaki defaultValue'lar.
  */
 
 export const defaultSiteSettings: SiteSettings = {

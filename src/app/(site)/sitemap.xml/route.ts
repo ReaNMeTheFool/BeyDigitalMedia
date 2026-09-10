@@ -1,4 +1,5 @@
-import { getPayloadClient } from "@/lib/payload";
+import { listBlogPosts, listProjects, listServices } from "@/lib/content";
+import { getDB } from "@/lib/db";
 
 const baseUrl = "https://beydigitalmedia.com";
 
@@ -34,7 +35,6 @@ function buildUrlEntry(
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const payload = await getPayloadClient();
   let entries = "";
 
   // Statik sayfalar
@@ -43,81 +43,56 @@ export async function GET() {
   entries += buildUrlEntry(`${baseUrl}/blog`, new Date(), "daily", 0.9);
   entries += buildUrlEntry(`${baseUrl}/iletisim`, new Date(), "monthly", 0.6);
 
+  // Pages tablosundan dinamik sayfalar (home haric); kayit tarihleri
+  // D1'de tutulmadigi icin lastmod verilmez
   try {
-    // Pages koleksiyonundan dinamik sayfalar (home haric)
-    const pagesResult = await payload.find({
-      collection: "pages",
-      limit: 1000,
-      where: {
-        slug: {
-          not_equals: "home",
-        },
-      },
-    });
+    const { results } = await getDB()
+      .prepare("SELECT slug FROM pages WHERE slug <> 'home' ORDER BY id ASC")
+      .all<{ slug?: string }>();
 
-    for (const page of pagesResult.docs as { slug?: string; updatedAt?: string }[]) {
+    for (const page of results ?? []) {
       if (page.slug) {
-        entries += buildUrlEntry(
-          `${baseUrl}/${page.slug}`,
-          page.updatedAt ? new Date(page.updatedAt) : new Date(),
-          "weekly",
-          0.7
-        );
-      }
-    }
-
-    // Services koleksiyonu
-    const servicesResult = await payload.find({
-      collection: "services",
-      limit: 1000,
-    });
-
-    for (const service of servicesResult.docs as { slug?: string; updatedAt?: string }[]) {
-      if (service.slug) {
-        entries += buildUrlEntry(
-          `${baseUrl}/${service.slug}`,
-          service.updatedAt ? new Date(service.updatedAt) : new Date(),
-          "weekly",
-          0.8
-        );
-      }
-    }
-
-    // Blog yazilari
-    const blogResult = await payload.find({
-      collection: "blogPosts",
-      limit: 1000,
-    });
-
-    for (const post of blogResult.docs as { slug?: string; publishedDate?: string }[]) {
-      if (post.slug) {
-        entries += buildUrlEntry(
-          `${baseUrl}/blog/${post.slug}`,
-          post.publishedDate ? new Date(post.publishedDate) : new Date(),
-          "weekly",
-          0.7
-        );
-      }
-    }
-
-    // Portfolyo projeleri
-    const projectsResult = await payload.find({
-      collection: "projects",
-      limit: 1000,
-    });
-
-    for (const project of projectsResult.docs as { slug?: string; updatedAt?: string }[]) {
-      if (project.slug) {
-        entries += buildUrlEntry(
-          `${baseUrl}/portfolyo/${project.slug}`,
-          project.updatedAt ? new Date(project.updatedAt) : new Date(),
-          "monthly",
-          0.6
-        );
+        entries += buildUrlEntry(`${baseUrl}/${page.slug}`, undefined, "weekly", 0.7);
       }
     }
   } catch {
-    // CMS'e erisilemezse sadece statik sayfalari dondur
+    // sayfa kayitlarina erisilemezse atla
+  }
+
+  // Services tablosu
+  for (const service of await listServices()) {
+    if (service.slug) {
+      entries += buildUrlEntry(
+        `${baseUrl}/${service.slug}`,
+        undefined,
+        "weekly",
+        0.8
+      );
+    }
+  }
+
+  // Blog yazilari
+  for (const post of await listBlogPosts(1000)) {
+    if (post.slug) {
+      entries += buildUrlEntry(
+        `${baseUrl}/blog/${post.slug}`,
+        post.publishedDate ? new Date(post.publishedDate) : undefined,
+        "weekly",
+        0.7
+      );
+    }
+  }
+
+  // Portfolyo projeleri
+  for (const project of await listProjects()) {
+    if (project.slug) {
+      entries += buildUrlEntry(
+        `${baseUrl}/portfolyo/${project.slug}`,
+        undefined,
+        "monthly",
+        0.6
+      );
+    }
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}</urlset>`;

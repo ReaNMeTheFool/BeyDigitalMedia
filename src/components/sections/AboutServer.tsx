@@ -1,5 +1,4 @@
-import { getPayloadClient } from "@/lib/payload";
-import { lexicalToHtml } from "@/lib/lexicalToHtml";
+import { getPage } from "@/lib/content";
 import About from "./About";
 import { Award, Users, Heart, Briefcase } from "lucide-react";
 
@@ -26,19 +25,13 @@ export default async function AboutServer({
   let aboutParagraphs = paragraphs;
 
   if (!aboutParagraphs) {
-    try {
-      const payload = await getPayloadClient();
-      const result = await payload.find({
-        collection: "pages",
-        where: { slug: { equals: "about" } },
-        limit: 1,
-      });
-      const aboutPage = result.docs[0];
-      if (aboutPage?.content) {
-        aboutParagraphs = [lexicalToHtml(aboutPage.content)];
-      }
-    } catch {
-      // fallback
+    // about sayfasi icerigi PageBlock[] icindeki "about" blogunda saklanir
+    const aboutPage = await getPage("about");
+    const aboutBlock = aboutPage?.content?.find(
+      (block) => block.blockType === "about"
+    );
+    if (aboutBlock) {
+      aboutParagraphs = [aboutBlock.content];
     }
   }
 

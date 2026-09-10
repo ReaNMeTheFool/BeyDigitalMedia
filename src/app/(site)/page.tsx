@@ -6,23 +6,17 @@ import NavbarServer from "@/components/ui/NavbarServer";
 import FooterServer from "@/components/sections/FooterServer";
 import BlocksRenderer from "@/components/blocks/BlocksRenderer";
 import type { Block } from "@/components/blocks/BlocksRenderer";
-import { getPayloadClient } from "@/lib/payload";
+import { getHomePage } from "@/lib/content";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "pages",
-      where: { slug: { equals: "home" } },
-      limit: 1,
-    });
-    const page = result.docs[0];
+    const page = await getHomePage();
     if (page) {
       const title =
-        (page.metaTitle as string) || "Bey Digital Media | Dijital Pazarlama Ajansı";
+        page.metaTitle || "Bey Digital Media | Dijital Pazarlama Ajansı";
       const description =
-        (page.metaDescription as string) ||
+        page.metaDescription ||
         "Dijital pazarlama ajansı. Sosyal medya yönetimi, web tasarım, SEO ve kurumsal kimlik çalışmaları ile markanızı büyütüyoruz.";
       return mergeMetadata(defaultSeoFields, {
         title,
@@ -58,13 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   let page = null;
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "pages",
-      where: { slug: { equals: "home" } },
-      limit: 1,
-    });
-    page = result.docs[0] || null;
+    page = await getHomePage();
   } catch {
     page = null;
   }

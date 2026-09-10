@@ -1,6 +1,5 @@
-import { getPayloadClient } from "@/lib/payload";
+import { getFooter, getSiteSettings } from "@/lib/content";
 import Footer from "./Footer";
-import type { Footer as FooterGlobal, SiteSetting } from "@/payload-types";
 
 // Footer.tsx'teki defaultFooterLinks ile aynı içerik.
 const defaultFooterLinks = {
@@ -27,18 +26,8 @@ const defaultFooterLinks = {
 };
 
 export default async function FooterServer() {
-  let footerData: Partial<FooterGlobal> = {};
-  let siteSettings: Partial<SiteSetting> = {};
-
-  try {
-    const payload = await getPayloadClient();
-    [footerData, siteSettings] = await Promise.all([
-      payload.findGlobal({ slug: "footer" }).catch(() => ({})),
-      payload.findGlobal({ slug: "siteSettings" }).catch(() => ({})),
-    ]);
-  } catch {
-    // fallback to empty defaults
-  }
+  const footerData = await getFooter();
+  const siteSettings = await getSiteSettings();
 
   const columns = footerData?.columns || [];
 

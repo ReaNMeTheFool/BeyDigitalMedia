@@ -1,6 +1,6 @@
 /**
- * D1 veri katmani tip tanimlari. src/payload-types.ts'in kullanilan
- * yuzeyinin portu; richText alanlari string, upload alanlari MediaRef'tir.
+ * D1 veri katmani tip tanimlari. richText alanlari string, upload
+ * alanlari MediaRef'tir.
  */
 
 export interface MediaRef {

@@ -1,6 +1,5 @@
-import { getPayloadClient } from "@/lib/payload";
+import { listFaqs } from "@/lib/content";
 import FAQ from "./FAQ";
-import { lexicalToHtml } from "@/lib/lexicalToHtml";
 
 interface FAQServerProps {
   title?: string;
@@ -19,14 +18,10 @@ export default async function FAQServer({
 
   if (showAll) {
     try {
-      const payload = await getPayloadClient();
-      const result = await payload.find({
-        collection: "faqs",
-        sort: "order",
-      });
-      faqs = result.docs.map((doc) => ({
+      const docs = await listFaqs();
+      faqs = docs.map((doc) => ({
         question: doc.question,
-        answer: lexicalToHtml(doc.answer),
+        answer: doc.answer,
       }));
     } catch {
       faqs = [];
@@ -34,10 +29,7 @@ export default async function FAQServer({
   } else if (selectedFaqs && selectedFaqs.length > 0) {
     faqs = selectedFaqs.map((doc) => ({
       question: doc.question,
-      answer:
-        doc.answer && typeof doc.answer === "object"
-          ? lexicalToHtml(doc.answer)
-          : "",
+      answer: typeof doc.answer === "string" ? doc.answer : "",
     }));
   }
 

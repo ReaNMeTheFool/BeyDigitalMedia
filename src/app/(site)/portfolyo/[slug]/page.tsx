@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
-import { getPayloadClient } from "@/lib/payload";
+import { getProject } from "@/lib/content";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
-import type { Project } from "@/payload-types";
+import type { Project } from "@/types/content";
 import SerialStrip from "@/components/document/SerialStrip";
 import KaseStamp from "@/components/document/KaseStamp";
 import ActionStamp from "@/components/document/ActionStamp";
@@ -14,29 +14,12 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "projects",
-      limit: 100,
-    });
-    return result.docs.map((doc) => ({ slug: doc.slug as string }));
-  } catch {
-    return [];
-  }
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "projects",
-      where: { slug: { equals: slug } },
-      limit: 1,
-    });
-    const project = result.docs[0];
+    const project = await getProject(slug);
     if (!project) {
       return mergeMetadata(defaultSeoFields, {
         title: "Proje Bulunamadı | Bey Digital Media",
@@ -66,13 +49,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   let project: Project | null = null;
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "projects",
-      where: { slug: { equals: slug } },
-      limit: 1,
-    });
-    project = result.docs[0] || null;
+    project = await getProject(slug);
   } catch {
     project = null;
   }
@@ -83,10 +60,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
   const category = project.category;
   const services = project.services || [];
   const results = project.results;
-  const logo =
-    project.logo && typeof project.logo === "object"
-      ? project.logo.url || ""
-      : "";
+  const logo = project.logo?.url || "";
 
   const displayServices = services.map((s) => s.label);
 

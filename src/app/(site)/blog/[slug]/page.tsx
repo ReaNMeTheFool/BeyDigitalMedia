@@ -4,8 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
-import { getPayloadClient } from "@/lib/payload";
-import { lexicalToHtml } from "@/lib/lexicalToHtml";
+import { getBlogPost } from "@/lib/content";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 import { ArticleJsonLd } from "@/components/SEO/JsonLd";
 import SerialStrip from "@/components/document/SerialStrip";
@@ -14,35 +13,17 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "blogPosts",
-      limit: 100,
-    });
-    return result.docs.map((doc) => ({ slug: doc.slug as string }));
-  } catch {
-    return [];
-  }
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const payload = await getPayloadClient();
-    const result = await payload.find({
-      collection: "blogPosts",
-      where: { slug: { equals: slug } },
-      limit: 1,
-    });
-    const post = result.docs[0];
+    const post = await getBlogPost(slug);
     if (!post) return { title: "Sayfa Bulunamadı | Bey Digital Media" };
 
-    const title = (post.metaTitle as string) || (post.title as string);
-    const description =
-      (post.metaDescription as string) || (post.excerpt as string);
-    const image = (post.featuredImage as { url?: string })?.url || "";
+    const title = post.metaTitle || post.title;
+    const description = post.metaDescription || post.excerpt;
+    const image = post.featuredImage?.url || "";
 
     return mergeMetadata(defaultSeoFields, {
       title,
@@ -70,24 +51,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const payload = await getPayloadClient();
-  const result = await payload.find({
-    collection: "blogPosts",
-    where: { slug: { equals: slug } },
-    limit: 1,
-  });
-
-  const post = result.docs[0];
+  const post = await getBlogPost(slug);
   if (!post) notFound();
 
-  const title = post.title as string;
-  const excerpt = post.excerpt as string;
+  const title = post.title;
+  const excerpt = post.excerpt;
   const date = post.publishedDate
-    ? new Date(post.publishedDate as string).toLocaleDateString("tr-TR")
+    ? new Date(post.publishedDate).toLocaleDateString("tr-TR")
     : "";
-  const image = (post.featuredImage as { url?: string })?.url || "";
-  const category = (post.category as { name?: string })?.name || "";
-  const author = (post.author as { name?: string })?.name || "";
+  const image = post.featuredImage?.url || "";
+  const category = post.category?.name || "";
 
   return (
     <>
@@ -100,10 +73,9 @@ export default async function BlogPostPage({ params }: Props) {
           image={image || undefined}
           datePublished={
             post.publishedDate
-              ? new Date(post.publishedDate as string).toISOString()
+              ? new Date(post.publishedDate).toISOString()
               : undefined
           }
-          authorName={author || undefined}
           publisherName="Bey Digital Media"
         />
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,7 +95,6 @@ export default async function BlogPostPage({ params }: Props) {
               </span>
             )}
             <span>{date}</span>
-            {author && <span>- {author}</span>}
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-ink mb-6">
@@ -150,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div
             className="max-w-none [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-ink [&_h1]:mt-10 [&_h1]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-ink [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-ink [&_h3]:mt-8 [&_h3]:mb-3 [&_p]:text-pencil [&_p]:leading-relaxed [&_p]:mb-5 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-5 [&_li]:text-pencil [&_li]:mb-1.5 [&_a]:text-kase [&_a]:underline [&_a]:underline-offset-4 [&_strong]:text-ink [&_blockquote]:border-y [&_blockquote]:border-dashed [&_blockquote]:border-ink/40 [&_blockquote]:py-1 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-pencil [&_img]:rounded-[3px] [&_hr]:border-dashed [&_hr]:border-ink/40 [&_hr]:my-8"
             dangerouslySetInnerHTML={{
-              __html: lexicalToHtml(post.content as object),
+              __html: post.content,
             }}
           />
         </article>
