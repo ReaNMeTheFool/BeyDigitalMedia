@@ -1,0 +1,7 @@
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+RESEND_API_KEY=
+RECIPIENT_EMAIL=info@beydigitalmedia.com
+RESEND_FROM_EMAIL=no-reply@beydigitalmedia.com
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=
+AUTH_SECRET=

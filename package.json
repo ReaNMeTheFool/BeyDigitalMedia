@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:worker": "opennextjs-cloudflare build",
     "start": "next start",
     "lint": "eslint",
     "payload:seed": "tsx src/payload/seed/index.ts",
     "start:all": "bash scripts/start-dev.sh",
-    "deploy": "bash scripts/deploy.sh",
+    "deploy": "opennextjs-cloudflare build && wrangler deploy",
     "sync": "bash scripts/sync-from-server.sh",
     "seed": "bash scripts/seed.sh"
   },
@@ -31,6 +32,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260910.1",
+    "@opennextjs/cloudflare": "^1.20.6",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.2.3",
     "@types/react": "^19.2.13",
@@ -41,6 +44,15 @@
     "eslint-config-next": "^16.1.6",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.130.0"
+  },
+  "allowScripts": {
+    "esbuild@0.25.4": true,
+    "esbuild@0.27.7": true,
+    "esbuild@0.28.1": true,
+    "sharp@0.34.5": true,
+    "unrs-resolver@1.11.1": true,
+    "workerd@1.20260908.1": true
   }
 }

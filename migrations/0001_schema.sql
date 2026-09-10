@@ -1,0 +1,1 @@
+-- 0001_schema.sql: yer tutucu. Gerçek D1 şeması leaf 2 (data layer) teslimatı.
