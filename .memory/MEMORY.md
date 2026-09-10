@@ -47,3 +47,11 @@ Don't retry unless: the harness error disappears. Use `Explore` (read-only, has 
 Failed: app is Next.js 16 + Payload + MongoDB + sharp, server-rendered (force-dynamic, Payload admin, server actions). No wrangler config, so `npx wrangler deploy` fails; Payload/sharp/mongodb driver do not run in workerd.
 Don't retry unless: DB swapped (D1/Postgres+Hyperdrive), CMS+media layer replaced, @opennextjs/cloudflare added — a rewrite, not a config change.
 
+### 2026-09-10 — Turbopack builds for opennextjs-cloudflare (while sharp is in the tree)
+Failed: Turbopack emits content-hashed externals (e.g. `sharp-20c6a5da84e2135f` symlink under .next/node_modules); OpenNext excludes sharp from traced node_modules, so esbuild fails "Could not resolve sharp-<hash>". Fix in place: open-next.config.ts `buildCommand: "next build --webpack"`.
+Don't retry unless: sharp is fully removed from the dependency tree (planned in leaf 1.2.1) or OpenNext stops excluding sharp/copies hashed targets.
+
+### 2026-09-10 — `docker compose up -d mongo` for local dev DB
+Failed: compose mongo service publishes no host port, so DATABASE_URI (mongodb://localhost:27017) is unreachable. Use the pre-existing `mongo` container (publishes 0.0.0.0:27017) instead.
+Don't retry unless: docker-compose.yml adds `ports: 27017:27017`.
+
