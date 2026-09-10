@@ -22,10 +22,10 @@ Decided BEFORE fan-out. Locked decisions (from .memory/MEMORY.md 2026-09-10): fu
 - 1 Full Cloudflare migration (root)
   - 1.1 Foundation
     - 1.1.1 Leaf: OpenNext skeleton + compat proof .... gates/leaf-1-skeleton.md
-    - 1.1.2 Leaf: Payload removal + D1 data layer ..... gates/leaf-2-data-layer.md
+    - 1.1.2 Leaf: D1 data layer (additive only) ....... gates/leaf-2-data-layer.md
     - 1.1.x Branch gate: foundation integrated ........ gates/node-1.1.md
   - 1.2 Application
-    - 1.2.1 Leaf: public pages wiring + contact form .. gates/leaf-3-wiring-form.md
+    - 1.2.1 Leaf: Payload removal + pages wiring + contact form .. gates/leaf-3-wiring-form.md
     - 1.2.2 Leaf: mini admin ........................... gates/leaf-4-admin.md
     - 1.2.x Branch gate: app integrated ............... gates/node-1.2.md
   - 1.3 Integration & cutover
@@ -37,3 +37,5 @@ Append-only. One line per event.
 
 - 2026-09-10 plan written, contract fixed
 - 2026-09-10 gates files written (5 leaves + 2 branch gates); dispatching leaf 1.1.1
+- 2026-09-10 leaf 1.1.1 verified 6/6 by driver (commit c72bf5a). OpenNext 1.20.6 + Next 16.3.4 works, via `buildCommand: "next build --webpack"` (Turbopack hashed-externals × OpenNext sharp-exclusion conflict). Real D1 eb3df19d + R2 bucket created (wrangler authed).
+- 2026-09-10 contract amendment: leaf 1.1.2 is purely ADDITIVE (types, db, content layer, migrations, migrate script — no deletions, no dep changes). All Payload deletions + import swaps + deps removal move to leaf 1.2.1. Reason: deleting payload runtime in leaf 2 would break tsc (pages still import getPayloadClient/payload-types until the swap), violating per-leaf compilability.
