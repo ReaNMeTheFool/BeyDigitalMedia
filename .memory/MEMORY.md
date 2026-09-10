@@ -25,9 +25,9 @@ Rejected: Bursa/local-first focus, AI-first as lead positioning (AI services sta
 Why: impeccable direction round (seed 16ad156d, roll assigned candidate 5, user confirmed via decision flow). Redesign presents every result as a certified Turkish fiscal document: serials, dotted ledger rules, line-item results, kaşe stamps, founder signature; one red action stamp = quote CTA. Raises absorbed: one-gesture ink commitment per viewport (from Ebru), exposed-mechanism interactions (from automata). Code-led build (no image generation on this machine). Logo stays as-is; "Bursa" banned from site copy; build scope = full site.
 Rejected: Hesap Defteri (model pick, stayed alternate), Enstrüman Panosu VU-meter (competitive), Ebru + Kâğıt Otomata (declined), kategori standardı (canon).
 
-### 2026-09-10 — Hosting locked: full Cloudflare, no non-Cloudflare services
-Why: user decision — everything on Cloudflare (Workers via OpenNext, D1, R2); dropping the VDS. Consequence: Payload CMS + MongoDB must be replaced (workerd incompatibility, see dead end).
-Rejected: Railway/Fly/Vercel, keeping the VDS, any non-CF hosting. Open issue: outbound email has no native CF service (Resend currently used).
+### 2026-09-10 — Hosting locked: full Cloudflare; Resend is the single external exception
+Why: user decisions — Workers via @opennextjs/cloudflare + D1; Payload+MongoDB replaced by D1 + custom mini admin panel (services, projects, home, leads, login). Contact form keeps DB-write-first flow, Resend notification stays.
+Rejected: Railway/Fly/Vercel, git-based CMS, content-as-code, no-email option, keeping the VDS, any non-CF hosting.
 
 ## Dead ends
 
