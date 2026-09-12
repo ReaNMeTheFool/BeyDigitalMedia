@@ -7,10 +7,10 @@ Scope: Full verification pass (browser e2e by the driver), DEPLOY-CLOUDFLARE.md 
   EXPECT: /exit:0/
   EVIDENCE: exit:0. Full warning list (1 item, toolchain, not app code): `(node:524981) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.` — emitted by Next.js config loader under Node 24 during `next build`; unfixable from app code.
 
-- [ ] G2: Browser e2e (driver runs this personally, evidence = screenshots/quotes): homepage renders with D1 content, service detail, project detail, blog (empty state), sitemap.xml lists URLs, 404 custom page, contact form submit persists to D1 and fires Resend (test key) or logs graceful failure, admin: login → read lead → mark read → edit a service → home editor save → media upload shows.
+- [x] G2: Browser e2e (driver runs this personally, evidence = screenshots/quotes): homepage renders with D1 content, service detail, project detail, blog (empty state), sitemap.xml lists URLs, 404 custom page, contact form submit persists to D1 and fires Resend (test key) or logs graceful failure, admin: login → read lead → mark read → edit a service → home editor save → media upload shows.
   CHECK: grep -c "PASS" /tmp/e2e-notes.md
   EXPECT: /11/
-  EVIDENCE: reserved for driver browser pass
+  EVIDENCE: driver browser pass 2026-09-12 — 11/11 PASS (/tmp/e2e-notes.md). Resend returned 401 (invalid key in .env) → graceful non-fatal failure, lead persisted (id 3). Fixture-era media rows with /media/ urls dead-link locally (prod migrator rewrites to /dyn-media/); live R2 upload served 200 image/png + immutable cache.
 
 - [x] G3: DEPLOY-CLOUDFLARE.md contains: exact CF dashboard form values (build/deploy commands), wrangler deploy alternative, full secrets list with sources, D1 remote creation + migration commands, R2 bucket creation, custom domain steps, cutover order with mongodump step, rollback note.
   CHECK: grep -cE "^#|^##" DEPLOY-CLOUDFLARE.md && grep -E "mongodump|migrate-mongo-to-d1|wrangler secret put|Custom Domain" DEPLOY-CLOUDFLARE.md | wc -l

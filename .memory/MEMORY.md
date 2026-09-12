@@ -53,5 +53,13 @@ Don't retry unless: sharp is fully removed from the dependency tree (planned in 
 
 ### 2026-09-10 — `docker compose up -d mongo` for local dev DB
 Failed: compose mongo service publishes no host port, so DATABASE_URI (mongodb://localhost:27017) is unreachable. Use the pre-existing `mongo` container (publishes 0.0.0.0:27017) instead.
-Don't retry unless: docker-compose.yml adds `ports: 27017:27017`.
+Don't retry unless: docker-compose.yml adds `ports: 27017:27017`. (Obsolete since Payload/mongo removal, kept for history.)
+
+### 2026-09-12 — mongodump from VPS via deleted sync scripts
+Failed: 2026-09-12 probe — SERVER_HOST/SERVER_USER/SERVER_SSH_PASSWORD exist nowhere (shell, .env, .env.local, .dev.vars); sunucu_bilgi.md password marked "(gizli)"; SSH probe returned REMOTE HOST IDENTIFICATION HAS CHANGED (host key rotated/reinstalled). Migrator proven against committed fixture scripts/fixtures/sample.archive instead.
+Don't retry unless: user supplies fresh VPS SSH creds before cutover day (cutover step 2 in DEPLOY-CLOUDFLARE.md needs it).
+
+### 2026-09-12 — .env RESEND_API_KEY is invalid (401)
+Failed: e2e contact submit → Resend 401 validation_error; email failed gracefully (non-fatal by design), lead persisted to D1.
+Don't retry unless: user provides a valid RESEND_API_KEY (production secret + local .env); also verify sending domain in Resend or keep onboarding@resend.dev from-address.
 

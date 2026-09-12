@@ -45,3 +45,5 @@ Append-only. One line per event.
 - 2026-09-10 node-1.1 branch gate MET (driver re-run): plain npm ci exit 0, opennextjs-cloudflare build exit 0, dev home 200 with D1 content. Dispatching leaf 1.2.2 (mini admin).
 - 2026-09-10 leaf 1.2.2 verified 6/6 by driver (commit 34ea089, 28 new admin files, 3236 insertions; tsc clean; guard + 23/23 guarded actions re-verified by driver; upload action deferred to browser e2e — React flight protocol not curl-replayable).
 - 2026-09-10 node-1.2 branch gate MET (driver re-run): OpenNext build exit 0, home/login 200 + /admin redirect in same dev process. Dispatching leaf 1.3.1 (integration + e2e + cutover prep).
+- 2026-09-12 leaf 1.3.1 verified 5/6 by driver (commit 22d9499): fixture mongodump proven (two migrator bugs found+fixed), VDS stack removed, env hygiene done, DEPLOY-CLOUDFLARE.md written, final build exit 0. VPS dump NOT possible: no SSH creds in repo/env + SSH host key changed — cutover day needs fresh SERVER_HOST/USER/PASSWORD from user.
+- 2026-09-12 leaf 1.3.1 G2 (driver browser e2e) 11/11 PASS: full public + admin flows verified live. Root gates now satisfiable — final ledger below.
