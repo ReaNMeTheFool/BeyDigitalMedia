@@ -54,8 +54,8 @@ export default async function ServiceEditPage({ params }: { params: Promise<{ id
             addLabel="Özellik ekle"
             initialRows={service?.features ?? []}
             fields={[
-              { key: "title", label: "Başlık" },
-              { key: "description", label: "Açıklama", type: "textarea" },
+              { key: "title", label: "Özellik başlığı" },
+              { key: "description", label: "Özellik açıklaması", type: "textarea" },
             ]}
           />
         </div>
@@ -67,8 +67,8 @@ export default async function ServiceEditPage({ params }: { params: Promise<{ id
             addLabel="Adım ekle"
             initialRows={service?.process ?? []}
             fields={[
-              { key: "title", label: "Başlık" },
-              { key: "description", label: "Açıklama", type: "textarea" },
+              { key: "title", label: "Adım başlığı" },
+              { key: "description", label: "Adım açıklaması", type: "textarea" },
             ]}
           />
           <p className="mt-1 text-xs text-neutral-400">Adım numaraları kaydetme sırasında otomatik atanır.</p>

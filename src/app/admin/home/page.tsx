@@ -178,8 +178,8 @@ export default async function AdminHomePage() {
 
       <SectionCard title="CTA">
         <ActionForm action={updateCtaAction} submitLabel="CTA'yı kaydet" className="space-y-4">
-          <TextField label="Başlık" name="title" defaultValue={cta?.title} required />
-          <TextAreaField label="Alt metin" name="subtitle" defaultValue={cta?.subtitle} rows={2} />
+          <TextField label="CTA başlığı" name="title" defaultValue={cta?.title} required />
+          <TextAreaField label="CTA alt metni" name="subtitle" defaultValue={cta?.subtitle} rows={2} />
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField label="Düğme metni" name="ctaText" defaultValue={cta?.ctaText} required />
             <TextField label="Düğme bağlantısı" name="ctaLink" defaultValue={cta?.ctaLink} required />
@@ -189,7 +189,7 @@ export default async function AdminHomePage() {
 
       <SectionCard title="Hakkımızda">
         <ActionForm action={updateAboutAction} submitLabel="Hakkımızda'yı kaydet" className="space-y-4">
-          <TextField label="Başlık" name="title" defaultValue={about?.title} />
+          <TextField label="Hakkımızda başlığı" name="title" defaultValue={about?.title} />
           <TextAreaField label="Paragraf" name="content" defaultValue={about?.content} rows={5} />
         </ActionForm>
       </SectionCard>
@@ -214,8 +214,8 @@ export default async function AdminHomePage() {
       <SectionCard title="Portfolyo Bloğu">
         <ActionForm action={updateHomeBlockAction} submitLabel="Bloğu kaydet" className="space-y-4">
           <input type="hidden" name="blockType" value="portfolioSlider" />
-          <TextField label="Başlık" name="title" defaultValue={portfolioSlider?.title} required />
-          <TextAreaField label="Alt metin" name="subtitle" defaultValue={portfolioSlider?.subtitle} rows={2} />
+          <TextField label="Portfolyo başlığı" name="title" defaultValue={portfolioSlider?.title} required />
+          <TextAreaField label="Portfolyo alt metni" name="subtitle" defaultValue={portfolioSlider?.subtitle} rows={2} />
           <CheckboxField
             label="Tüm projeleri göster"
             name="showAll"
@@ -232,7 +232,7 @@ export default async function AdminHomePage() {
       <SectionCard title="Referanslar Bloğu">
         <ActionForm action={updateHomeBlockAction} submitLabel="Bloğu kaydet" className="space-y-4">
           <input type="hidden" name="blockType" value="testimonialsCarousel" />
-          <TextField label="Başlık" name="title" defaultValue={testimonialsCarousel?.title} required />
+          <TextField label="Referanslar başlığı" name="title" defaultValue={testimonialsCarousel?.title} required />
           <CheckboxField
             label="Tüm referansları göster"
             name="showAll"
@@ -252,8 +252,8 @@ export default async function AdminHomePage() {
       <SectionCard title="SSS Bloğu">
         <ActionForm action={updateHomeBlockAction} submitLabel="Bloğu kaydet" className="space-y-4">
           <input type="hidden" name="blockType" value="faqAccordion" />
-          <TextField label="Başlık" name="title" defaultValue={faqAccordion?.title} required />
-          <TextAreaField label="Alt metin" name="subtitle" defaultValue={faqAccordion?.subtitle} rows={2} />
+          <TextField label="SSS başlığı" name="title" defaultValue={faqAccordion?.title} required />
+          <TextAreaField label="SSS alt metni" name="subtitle" defaultValue={faqAccordion?.subtitle} rows={2} />
           <CheckboxField
             label="Tüm soruları göster"
             name="showAll"
