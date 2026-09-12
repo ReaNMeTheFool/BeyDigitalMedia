@@ -247,7 +247,7 @@ function parseArchive(bytes: Uint8Array): Map<string, Doc[]> {
         list.push(doc);
         collections.set(current, list);
       } else if (typeof doc.collection === "string") {
-        current = doc.collection;
+        current = doc.collection.toLowerCase();
       }
     } catch (e) {
       console.error(`Bolum cozumlenemedi @${off}:`, e instanceof Error ? e.message : e);
@@ -511,11 +511,14 @@ function emitSql(collections: Map<string, Doc[]>): string {
             ? doc.url.split("/").pop() ?? ""
             : "";
       const url = typeof doc.url === "string" && doc.url ? doc.url : `/media/${filename}`;
+      // Eski Payload medya yolu (/media/<dosya>) R2 sunum yoluna tasınır
+      // (dosyalar wrangler r2 object put ile R2'ye yuklenir).
+      const r2Url = url.startsWith("/media/") ? `/dyn-media/${filename}` : url;
       lines.push(
         insert(
           "media",
           ["id", "filename", "url", "alt"],
-          [mediaIds.get(doc), filename, url, typeof doc.alt === "string" ? doc.alt : null],
+          [mediaIds.get(doc), filename, r2Url, typeof doc.alt === "string" ? doc.alt : null],
         ),
       );
     }

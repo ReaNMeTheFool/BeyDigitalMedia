@@ -1,185 +1,76 @@
-# Bey Digital Media — Payload CMS Entegrasyonu
+# Bey Digital Media
 
-Bey Digital Media kurumsal web sitesi, **Payload CMS 3.84+** + **Next.js 16** + **MongoDB 8** + **React 19** ile tamamen headless CMS yapısına dönüştürülmüştür.
+Kurumsal lead-gen sitesi: Next.js 16 + Cloudflare Workers (OpenNext) + D1 + R2 + Resend.
 
-## 🚀 Teknoloji Stack
+## Teknoloji Stack
 
 | Katman | Teknoloji |
 |--------|-----------|
-| Frontend | Next.js 16.2, React 19, Tailwind CSS 4 |
-| CMS | Payload CMS 3.84+ |
-| Database | MongoDB 8 |
-| Container | Docker + Docker Compose |
-| Reverse Proxy | Nginx Proxy Manager |
-| Container Yönetimi | Portainer CE |
+| Frontend | Next.js 16 (App Router), React 19, Tailwind CSS 4 |
+| Barındırma | Cloudflare Workers (`@opennextjs/cloudflare`) |
+| Veritabanı | Cloudflare D1 (SQLite) |
+| Medya | Cloudflare R2 (bucket: `beydigitalmedia-media`) |
+| E-posta | Resend (iletişim formu bildirimi) |
+| İçerik | Mini admin panel (`/admin`, D1 + R2 üzerinde) |
 
-## 📁 Proje Yapısı
+## Proje Yapısı
 
 ```
 src/
 ├── app/
-│   ├── (frontend)/           # Mevcut frontend sayfaları
-│   ├── (payload)/            # Payload Admin + API routes
-│   │   ├── admin/[[...segments]]/page.tsx
-│   │   ├── api/[...slug]/route.ts
-│   │   └── layout.tsx
-│   ├── blog/                 # Blog listesi + detay
-│   ├── [slug]/               # Dinamik servis sayfaları
-│   └── page.tsx              # Ana sayfa (CMS blocks)
-├── payload/
-│   ├── collections/          # 10 Collection tanımı
-│   ├── globals/              # 3 Global tanımı
-│   ├── blocks/               # 10 Block tanımı
-│   └── seed.ts               # Seed script
-├── components/
-│   ├── blocks/               # Block render bileşenleri
-│   └── sections/             # Sayfa section bileşenleri
+│   ├── (site)/               # Herkese açık sayfalar (anasayfa, hizmet, proje, blog)
+│   ├── admin/                # Mini admin panel (login, leads, içerik CRUD, medya)
+│   ├── dyn-media/[...key]/   # R2 medya sunumu (cache-control: immutable)
+│   └── actions.ts            # İletişim formu (zod + rate limit + D1 + Resend)
 ├── lib/
-│   ├── payload.ts            # Payload client helper
-│   └── lexicalToHtml.ts      # Lexical → HTML converter
-└── payload.config.ts         # Payload yapılandırması
+│   ├── db.ts                 # Cloudflare binding erişimi (D1 -> DB, R2 -> MEDIA)
+│   ├── content.ts            # Tüm içerik sorguları + admin CRUD
+│   ├── content-defaults.ts   # Boş DB için varsayılan içerik
+│   └── admin-auth.ts         # PBKDF2 + HMAC imzalı oturum cookie'si
+└── types/content.ts          # İçerik tipleri (tek kaynak)
+migrations/
+├── 0001_schema.sql           # 10 tablo şeması
+└── 0002_seed.sql             # Başlangıç içeriği (9 hizmet, 5 proje, 5 referans, 6 FAQ, home + about, 3 global)
+scripts/
+├── migrate-mongo-to-d1.ts    # Eski Payload/MongoDB içeriğini D1 SQL'ine çevirir
+└── fixtures/sample.archive   # Dönüştürücü için test mongodump arşivi
 ```
 
-## 📦 Collections (Veritabanı Tabloları)
+## Environment Variables
 
-| Collection | Amaç |
-|------------|------|
-| `users` | Admin / Editor kullanıcıları |
-| `media` | Dosya yükleme (görseller, logolar) |
-| `categories` | Blog kategorileri |
-| `services` | 9 hizmet sayfası içeriği |
-| `blogPosts` | Blog yazıları |
-| `projects` | Portfolyo projeleri |
-| `testimonials` | Müşteri referansları |
-| `faqs` | Sıkça sorulan sorular |
-| `contactSubmissions` | İletişim formu kayıtları |
-| `pages` | Dinamik sayfalar (blocks ile) |
+Değişken listesi ve açıklamaları için [.env.example](.env.example). Yerel geliştirmede aynı değişkenler `.dev.vars` dosyasına yazılır ([.dev.vars.example](.dev.vars.example)).
 
-## 🌍 Globals (Site Geneli Ayarlar)
-
-| Global | Amaç |
-|--------|------|
-| `siteSettings` | Site adı, logo, SEO varsayılanları, iletişim bilgileri |
-| `navigation` | Menü linkleri, CTA butonu |
-| `footer` | Footer sütunları, alt metin |
-
-## 🧱 Blocks (Sayfa Bileşenleri)
-
-Admin panelinden sürükle-bırak ile sayfa oluşturabileceğiniz 10 block:
-
-- `hero` — Ana sayfa hero section
-- `marquee` — Yazı kaydırma bandı
-- `servicesGrid` — Hizmetler grid
-- `aiAutomation` — AI & Otomasyon section
-- `whyUs` — Neden Biz section
-- `portfolioSlider` — Portfolyo slider
-- `testimonialsCarousel` — Referanslar carousel
-- `faqAccordion` — FAQ accordion
-- `cta` — CTA section
-- `about` — Hakkımızda section
-
-## ⚙️ Environment Variables
-
-`.env.local` (geliştirme) veya `.env` (production):
-
-```env
-# Database
-DATABASE_URI=mongodb://localhost:27017/beydigital
-
-# Payload
-PAYLOAD_SECRET=your-random-secret-key-min-32-chars
-
-# App
-
-# Email
-RESEND_API_KEY=re_xxxxxxxx
-RECIPIENT_EMAIL=info@beydigitalmedia.com
-```
-
-## 🖥️ Geliştirme
+## Geliştirme
 
 ```bash
-# Bağımlılıkları yükle
 npm install
 
-# Geliştirme sunucusu
+# Yerel veritabanı şeması ve başlangıç içeriği
+npx wrangler d1 execute DB --local --file migrations/0001_schema.sql
+npx wrangler d1 execute DB --local --file migrations/0002_seed.sql
+
+# Geliştirme sunucusu (wrangler binding'leri initOpenNextCloudflareForDev ile gelir)
 npm run dev
 
-# Admin panel: http://localhost:3000/admin
+# Admin panel: http://localhost:3000/admin (.dev.vars içindeki ADMIN_USERNAME / ADMIN_PASSWORD ile giriş)
 ```
 
-## 🌱 Seed (İlk Verileri Yükleme)
-
-MongoDB çalışıyor olmalı:
+## Deploy (Cloudflare)
 
 ```bash
-# Docker ile MongoDB başlat
-docker run -d -p 27017:27017 --name mongo mongo:8
-
-# Seed script çalıştır (ADMIN_USERNAME ve ADMIN_PASSWORD .env'de zorunlu)
-npm run payload:seed
+npx opennextjs-cloudflare build   # veya: npm run build:worker
+npx wrangler deploy               # veya: npm run deploy
 ```
 
-Seed script şunları oluşturur:
-- Admin kullanıcısı (kullanıcı adı/şifre `.env` içindeki `ADMIN_USERNAME` / `ADMIN_PASSWORD` değerlerinden alınır)
-- 9 hizmet (services-data.ts'den)
-- 5 portfolyo projesi
-- 5 müşteri referansı
-- 6 FAQ
-- Home page (blocks ile)
-- SiteSettings, Navigation, Footer globals
+Dashboard üzerinden git entegrasyonu, secret'lar, D1/R2 kurulumu, özel alan adı ve geçiş (cutover) sırası için [DEPLOY-CLOUDFLARE.md](DEPLOY-CLOUDFLARE.md) dosyasına bakın.
 
-Blog yazıları seed edilmez; içerik admin panelinden eklenir.
-
-## 🐳 Docker Deploy (Production)
+## Eski Payload/MongoDB içeriğini D1'e taşıma
 
 ```bash
-# .env dosyasını oluştur
-cp .env.example .env
-# .env dosyasını düzenle
-
-# Build ve başlat
-docker compose up -d --build
+# VPS'ten mongodump arşivi alındıktan sonra:
+npx tsx scripts/migrate-mongo-to-d1.ts <dump.archive> --out /tmp/dump.sql
+npx wrangler d1 execute DB --remote --file migrations/0001_schema.sql
+npx wrangler d1 execute DB --remote --file /tmp/dump.sql
 ```
 
-Container'lar:
-- `mongo` — MongoDB 8
-- `app` — Next.js + Payload (port 3000)
-
-## 🔐 Admin Paneli
-
-İlk kurulumda `/admin` adresine gidip create-first-user ekranından admin kullanıcısı oluşturun. Seed kullanıldıysa giriş bilgileri `.env` dosyasındaki `ADMIN_USERNAME` / `ADMIN_PASSWORD` değerleridir.
-
-## 🌐 Nginx Proxy Manager Ayarları
-
-1. `http://212.68.34.84:81` adresinden NPM paneline giriş yap
-2. Proxy Host ekle:
-   - **Domain Names:** `beydigitalmedia.com`, `www.beydigitalmedia.com`
-   - **Forward Hostname/IP:** `app` (Docker network adı) veya `127.0.0.1`
-   - **Forward Port:** `3000`
-3. SSL sekmesinden "Request a new SSL Certificate" ile Let's Encrypt aktif et
-
-## 🔌 API Endpoint'leri
-
-Payload otomatik olarak REST ve GraphQL API sunar:
-
-- **REST:** `/api/{collection}`
-  - Örn: `GET /api/services` — Tüm hizmetler
-  - Örn: `GET /api/blogPosts?sort=-publishedDate` — Blog yazıları
-- **GraphQL:** `/api/graphql`
-- **Admin:** `/admin`
-
-## 📋 Yapılan Değişiklikler Özeti
-
-1. ✅ Payload CMS 3.84+ kurulumu
-2. ✅ 10 Collection tanımı
-3. ✅ 3 Global tanımı
-4. ✅ 10 Block tanımı
-5. ✅ Next.js App Router entegrasyonu (admin + API)
-6. ✅ Standalone Docker build
-7. ✅ Mevcut statik verilerin CMS'e aktarımı (seed script)
-8. ✅ İletişim formu → Payload CMS kayıtları
-9. ✅ Blog sayfaları (liste + detay)
-10. ✅ Servis sayfaları dinamik CMS'den çekiliyor
-11. ✅ Ana sayfa CMS blocks sistemi ile yönetilebilir
-12. ✅ Lexical rich text → HTML converter
+Dönüştürücü, Payload 3.x mongodump arşivlerini (koleksiyonlar + `globals.globalType`) okur, Lexical richText'i düz metin/HTML'e çevirir ve idempotent `INSERT OR IGNORE` üretir. Test arşivi: `scripts/fixtures/sample.archive`.

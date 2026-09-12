@@ -65,11 +65,11 @@ The contact form additionally offers **İçerik Üretimi** and **Dijital Danış
 
 ## 6. Conversion path (primary on every surface)
 
-The primary action everywhere is **"Ücretsiz Teklif Al"** (free quote) leading to the contact form. Form fields: name, email, phone, service multi-select, message. The form must: validate server-side (zod), rate-limit per IP (5 requests / 5 minutes), **persist every lead to the `contactSubmissions` collection first**, then send an optional Resend email notification whose failure is non-fatal. No third-party form embeds; no chat widgets required.
+The primary action everywhere is **"Ücretsiz Teklif Al"** (free quote) leading to the contact form. Form fields: name, email, phone, service multi-select, message. The form must: validate server-side (zod), rate-limit per IP (5 requests / 5 minutes), **persist every lead to the `contact_submissions` table first**, then send an optional Resend email notification whose failure is non-fatal. No third-party form embeds; no chat widgets required.
 
 ## 7. Functional requirements that must survive any redesign
 
-- **CMS:** Payload CMS 3 with admin at `/admin`, Turkish-fallback UI. Collections: Users (role-based access), Media, Categories, Services, BlogPosts, Projects, Testimonials, FAQs, ContactSubmissions. Globals: SiteSettings, Navigation, Footer. The founder edits every page's content here; the seed script (`npm run payload:seed`) is idempotent and restores canonical content.
+- **CMS:** Mini admin panel at `/admin`, Turkish UI, backed by Cloudflare D1 (services, projects, testimonials, FAQs, blogPosts, pages, settings) + R2 (media). The founder edits every page's content here; the seed migration (`migrations/0002_seed.sql`) is idempotent and restores canonical content.
 - **SEO:** Organization + WebSite JSON-LD sitewide; Service + BreadcrumbList JSON-LD on service pages; Article JSON-LD on blog posts; `sitemap.xml` route; `robots.txt`; canonical/OG metadata with metadataBase `https://beydigitalmedia.com`; semantic headings; server rendering.
 - **Blog:** collection and routes exist but **stay empty until real articles exist** — ship a designed empty state ("arşiv hazırlanıyor" honesty), never placeholder posts.
 - **404:** a designed, on-brand not-found page.
@@ -78,7 +78,7 @@ The primary action everywhere is **"Ücretsiz Teklif Al"** (free quote) leading 
 
 ## 8. Working stack
 
-The current implementation is Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Payload CMS 3 (Lexical rich text), MongoDB, framer-motion, lucide-react, deployed via Docker Compose behind Nginx Proxy Manager. If your build targets this repo, keep the stack and the functional contract above; if it targets another platform, carry the requirements, not the stack.
+The current implementation is Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Cloudflare Workers via `@opennextjs/cloudflare` (D1 database, R2 media), framer-motion, lucide-react, deployed with `npx opennextjs-cloudflare build` + `npx wrangler deploy`. If your build targets this repo, keep the stack and the functional contract above; if it targets another platform, carry the requirements, not the stack.
 
 ## 9. Confirmed anti-goals (user-confirmed, apply to the new design)
 

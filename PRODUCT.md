@@ -20,12 +20,12 @@ Measured-results, full-service partner with direct founder access: clients get a
 
 ## Operating Context
 
-Single-language Turkish site (`lang="tr"`, no i18n) at https://beydigitalmedia.com. All page content (services, portfolio, testimonials, FAQs, navigation, footer, site settings) is CMS-editable in Payload at `/admin` and seeded from code (`npm run payload:seed`). Deployment is Docker Compose (app + MongoDB) behind Nginx Proxy Manager. Outbound lead generation runs in a separate n8n workflow (`n8n-automations/`) that is not wired into the site. The blog is intentionally empty until real articles exist.
+Single-language Turkish site (`lang="tr"`, no i18n) at https://beydigitalmedia.com. All page content (services, portfolio, testimonials, FAQs, navigation, footer, site settings) is editable in the mini admin panel at `/admin`, backed by Cloudflare D1; canonical content lives in `migrations/0002_seed.sql`. Deployment is Cloudflare Workers (D1 + R2) via `@opennextjs/cloudflare`. Outbound lead generation runs in a separate n8n workflow (`n8n-automations/`) that is not wired into the site. The blog is intentionally empty until real articles exist.
 
 ## Capabilities and Constraints
 
 - Services (9, each with a dedicated page): Sosyal Medya Yönetimi, Meta Ads, Google Ads, Web Tasarım, SEO, Logo Tasarımı, Kurumsal Kimlik, AI & Otomasyon, Detaylı Raporlama. The contact form additionally offers İçerik Üretimi and Dijital Danışmanlık.
-- Contact form: zod-validated server action; rate-limited 5 req / 5 min per IP; persists to `contactSubmissions` first, then sends an optional Resend notification (email failure is non-fatal).
+- Contact form: zod-validated server action; rate-limited 5 req / 5 min per IP; persists to the `contact_submissions` table first, then sends an optional Resend notification (email failure is non-fatal).
 - SEO infrastructure: Organization/WebSite JSON-LD sitewide, Service + BreadcrumbList JSON-LD on service pages, sitemap route, canonical/OG metadata (metadataBase `https://beydigitalmedia.com`).
 - No legal entity or registration is displayed anywhere — keep it that way until registered; never fabricate one. Displayed address is "Türkiye" only.
 - Blog collection and routes exist but must stay empty until real content is provided.
@@ -40,8 +40,8 @@ Single-language Turkish site (`lang="tr"`, no i18n) at https://beydigitalmedia.c
 ## Evidence on Hand
 
 - Canonical stats (user-confirmed real): 150+ Tamamlanan Proje, 100+ Memnun Müşteri, 8+ Yıllık Deneyim, %100 Müşteri Memnuniyeti (defaults in `src/components/sections/Hero.tsx`).
-- 5 testimonials with real names and companies (Lada Wedding, Guzgun Tekstil, Emfa Pet, Nil Forklift, İşbir Yatak) — `src/payload/seed/testimonials.ts`.
-- 5 portfolio projects with performance metrics and client logos in `public/` — `src/payload/seed/projects.ts`.
+- 5 testimonials with real names and companies (Lada Wedding, Guzgun Tekstil, Emfa Pet, Nil Forklift, İşbir Yatak) — `migrations/0002_seed.sql`.
+- 5 portfolio projects with performance metrics and client logos in `public/` — `migrations/0002_seed.sql`.
 - Absences that must not be fabricated: case-study documents, press coverage, certifications, legal registration, blog articles.
 
 ## Product Principles
@@ -50,4 +50,4 @@ Single-language Turkish site (`lang="tr"`, no i18n) at https://beydigitalmedia.c
 2. One roof, one owner — present full-service breadth with direct founder accountability.
 3. Shortest path to a quote — the contact/quote action is the primary conversion on every surface.
 4. Turkish-first clarity — plain, scannable Turkish an SMB owner trusts; no untranslated jargon.
-5. Content is operable — the founder edits everything through the Payload admin without code changes.
+5. Content is operable — the founder edits everything through the mini admin panel without code changes.
