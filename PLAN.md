@@ -47,3 +47,4 @@ Append-only. One line per event.
 - 2026-09-10 node-1.2 branch gate MET (driver re-run): OpenNext build exit 0, home/login 200 + /admin redirect in same dev process. Dispatching leaf 1.3.1 (integration + e2e + cutover prep).
 - 2026-09-12 leaf 1.3.1 verified 5/6 by driver (commit 22d9499): fixture mongodump proven (two migrator bugs found+fixed), VDS stack removed, env hygiene done, DEPLOY-CLOUDFLARE.md written, final build exit 0. VPS dump NOT possible: no SSH creds in repo/env + SSH host key changed — cutover day needs fresh SERVER_HOST/USER/PASSWORD from user.
 - 2026-09-12 leaf 1.3.1 G2 (driver browser e2e) 11/11 PASS: full public + admin flows verified live. Root gates now satisfiable — final ledger below.
+- 2026-09-12 polish: leaf-4 label dedup fix verified (commit 530d8ac, tsc+build exit 0). FINAL LEDGER: 7/7 gate files ALL MET (6+5+5+6+6+3+2 = 33/33 gates). Migration complete; cutover steps are user-side (DEPLOY-CLOUDFLARE.md).
