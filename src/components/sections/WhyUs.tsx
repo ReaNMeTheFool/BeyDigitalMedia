@@ -1,7 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { iconMap } from "@/lib/icon-map";
-import PerforationDivider from "@/components/document/PerforationDivider";
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 const defaultReasons = [
   {
@@ -47,46 +48,58 @@ export default function WhyUs({
 }) {
   const activeReasons = propReasons && propReasons.length > 0 ? propReasons : defaultReasons;
   return (
-    <section id="why-us" className="relative py-20 bg-paper overflow-hidden">
-      <PerforationDivider tone="paper-alt" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* Bolum basligi */}
-        <div className="mb-14">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil mb-4">
-            Beyan / Neden Biz
+    <section id="why-us" className="relative py-24 bg-[#181825] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: title }} />
+          <p className="text-[#cdd6f4]/90 text-lg max-w-3xl mx-auto">
+            {subtitle}
           </p>
-          <h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-ink mb-5"
-            dangerouslySetInnerHTML={{ __html: title }}
-          />
-          <p className="text-pencil text-lg max-w-3xl">{subtitle}</p>
-        </div>
+        </motion.div>
 
-        {/* Beyan cetvelleri */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Reasons Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {activeReasons.map((reason) => (
-            <div
+            <motion.div
               key={reason.title}
-              className="group p-5 rounded-[3px] border border-ink/30 bg-paper transition-shadow duration-200 hover:shadow-doc"
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="group p-6 bg-[#181825] rounded-2xl border border-[#2d2d44] hover:border-[#0040ff]/30 hover:shadow-lg hover:shadow-[#0040ff]/5 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-4 w-full">
-                <div className="w-11 h-11 shrink-0 rounded-[3px] bg-ink flex items-center justify-center">
+              <div className="flex items-center gap-5 mb-5 w-full">
+                <div className="w-14 h-14 shrink-0 bg-[#0040ff]/10 rounded-xl flex items-center justify-center group-hover:bg-[#0040ff] group-hover:scale-110 transition-all duration-300">
                   {(() => {
                     const IconComponent = iconMap[reason.icon];
                     return IconComponent ? (
-                      <IconComponent className="w-5 h-5 text-paper" aria-hidden="true" />
+                      <IconComponent className="w-7 h-7 text-[#0040ff] group-hover:text-[#cdd6f4] transition-colors" />
                     ) : null;
                   })()}
                 </div>
-                <h3 className="flex-1 text-base font-bold text-ink leading-tight">
+                <h3 className="flex-1 text-lg font-bold text-[#a6adc8] leading-tight">
                   {reason.title}
                 </h3>
               </div>
-              <p className="text-pencil leading-relaxed text-sm">{reason.description}</p>
-            </div>
+              <p className="text-[#cdd6f4]/80 leading-relaxed text-sm">
+                {reason.description}
+              </p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );
 }

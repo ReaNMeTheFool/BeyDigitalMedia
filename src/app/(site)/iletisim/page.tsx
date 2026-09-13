@@ -3,7 +3,6 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/sections/Footer";
 import ContactForm from "@/components/ui/ContactForm";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
-import SerialStrip from "@/components/document/SerialStrip";
 
 export async function generateMetadata(): Promise<Metadata> {
   return mergeMetadata(defaultSeoFields, {
@@ -95,63 +94,59 @@ export default function IletisimPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-paper">
-        {/* Belge basligi */}
-        <section className="pt-24 pb-14">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SerialStrip serial="I-01" label="Teklif Talebi" />
-            <div className="mt-8 text-center">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-ink mb-6">
-                Bizimle <span className="text-[#0040ff]">İletişime</span> Geçin
-              </h1>
-              <p className="text-pencil text-lg md:text-xl max-w-3xl mx-auto">
-                Markanız için ücretsiz analiz ve teklif almak, sorularınızı sormak
-                veya iş birliği detaylarını konuşmak için bize ulaşın.
-              </p>
-            </div>
+      <main className="min-h-screen bg-[#181825]">
+        {/* Hero Banner */}
+        <section className="relative pt-32 pb-20 bg-[#1e1e2e] overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0040ff]/8 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#ffd76e]/5 rounded-full blur-3xl" />
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#cdd6f4] mb-6">
+              Bizimle <span className="text-[#0040ff]">İletişime</span> Geçin
+            </h1>
+            <p className="text-[#cdd6f4]/80 text-lg md:text-xl max-w-3xl mx-auto">
+              Markanız için ücretsiz analiz ve teklif almak, sorularınızı sormak
+              veya iş birliği detaylarını konuşmak için bize ulaşın.
+            </p>
           </div>
         </section>
 
-        {/* Form belgesi */}
-        <section className="pb-24">
+        {/* Contact Content */}
+        <section className="py-20 bg-[#181825]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-12">
-              {/* Teklif formu */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+              {/* Contact Form */}
               <div className="lg:col-span-3">
-                <div className="rounded-[3px] border border-ink/40 bg-paper shadow-doc p-6 sm:p-8">
-                  <div className="flex items-baseline gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-pencil mb-6">
-                    <span>Teklif Formu</span>
-                    <span aria-hidden="true" className="dots-leader" />
-                    <span>BDM-{new Date().getFullYear()}</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-ink mb-2">
+                <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] p-8">
+                  <h2 className="text-2xl font-bold text-[#cdd6f4] mb-2">
                     Mesaj Gönder
                   </h2>
-                  <p className="text-pencil mb-8">
+                  <p className="text-[#cdd6f4]/60 mb-8">
                     Projeniz hakkında bilgi verin, en kısa sürede dönüş yapalım.
                   </p>
                   <ContactForm />
                 </div>
               </div>
 
-              {/* Iletisim kayitlari */}
-              <div className="lg:col-span-2 space-y-5">
-                <div className="rounded-[3px] border border-ink/30 bg-paper-alt p-6 sm:p-8">
-                  <h3 className="text-xl font-bold text-ink mb-6">
+              {/* Contact Info Sidebar */}
+              <div className="lg:col-span-2 space-y-6">
+                <div className="bg-[#1e1e2e] rounded-2xl border border-[#2d2d44] p-8">
+                  <h3 className="text-xl font-bold text-[#cdd6f4] mb-6">
                     İletişim Bilgileri
                   </h3>
                   <div className="space-y-6">
                     {contactInfo.map((info) => {
                       const inner = (
                         <>
-                          <div className="w-10 h-10 rounded-[3px] bg-ink flex items-center justify-center text-paper shrink-0">
+                          <div className="w-10 h-10 rounded-xl bg-[#0040ff]/10 flex items-center justify-center text-[#0040ff] shrink-0 group-hover:bg-[#0040ff] group-hover:text-[#cdd6f4] transition-all">
                             {info.icon}
                           </div>
                           <div>
-                            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-pencil mb-0.5">
+                            <div className="text-[#cdd6f4]/50 text-xs uppercase tracking-wider mb-0.5">
                               {info.label}
                             </div>
-                            <div className="text-ink font-bold">
+                            <div className="text-[#cdd6f4] font-medium group-hover:text-[#0040ff] transition-colors">
                               {info.value}
                             </div>
                           </div>
@@ -177,9 +172,9 @@ export default function IletisimPage() {
                   </div>
                 </div>
 
-                {/* Neden bizi secmelisiniz */}
-                <div className="rounded-[3px] border border-ink/30 bg-paper p-6 sm:p-8">
-                  <h3 className="text-lg font-bold text-ink mb-4">
+                {/* Social Proof Card */}
+                <div className="bg-gradient-to-br from-[#0040ff]/10 to-[#ffd76e]/5 rounded-2xl border border-[#2d2d44] p-8">
+                  <h3 className="text-lg font-bold text-[#cdd6f4] mb-4">
                     Neden Bizi Seçmelisiniz?
                   </h3>
                   <ul className="space-y-3">
@@ -191,7 +186,7 @@ export default function IletisimPage() {
                     ].map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-center gap-2 text-pencil text-sm"
+                        className="flex items-center gap-2 text-[#cdd6f4]/70 text-sm"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -203,8 +198,7 @@ export default function IletisimPage() {
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          className="text-kase shrink-0"
-                          aria-hidden="true"
+                          className="text-[#0040ff] shrink-0"
                         >
                           <polyline points="20 6 9 17 4 12" />
                         </svg>

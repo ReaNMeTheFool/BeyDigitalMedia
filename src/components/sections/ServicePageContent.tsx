@@ -1,5 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 import {
+  ArrowRight,
+  ArrowLeft,
   CalendarDays,
   Clapperboard,
   Hash,
@@ -11,16 +16,36 @@ import {
   Phone,
 } from "lucide-react";
 import type { ServiceData } from "@/lib/services-data";
-import SerialStrip from "@/components/document/SerialStrip";
-import PerforationDivider from "@/components/document/PerforationDivider";
-import ActionStamp from "@/components/document/ActionStamp";
+
+/* ------------------------------------------------------------------ */
+/*  Animation variants                                                 */
+/* ------------------------------------------------------------------ */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
 
 const contactInfo = {
   email: "info@beydigitalmedia.com",
   phone: "+90 544 376 03 39",
 };
 
-const featureIconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }>> = {
+/* ------------------------------------------------------------------ */
+/*  Feature icon mapping                                               */
+/* ------------------------------------------------------------------ */
+const featureIconMap: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties }>> = {
   "İçerik Takvimi": CalendarDays,
   "Görsel & Video Üretimi": Clapperboard,
   "Topluluk Yönetimi": Users,
@@ -34,174 +59,290 @@ function getFeatureIcon(title: string) {
   return Icon;
 }
 
-/* Hizmet föyü: her hizmet resmi bir belge olarak sunulur */
+/* ------------------------------------------------------------------ */
+/*  Component                                                          */
+/* ------------------------------------------------------------------ */
 export default function ServicePageContent({
   service,
 }: {
   service: ServiceData;
 }) {
-  return (
-    <main className="min-h-screen bg-paper pt-24">
-      {/* Foy basligi */}
-      <section className="py-14 sm:py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SerialStrip serial={service.slug} label="Hizmet Föyü" />
+  const accent = service.accentColor;
 
-          <div className="mt-8 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-pencil mb-8 flex-wrap">
+  return (
+    <main className="min-h-screen bg-[#11111b] pt-20">
+      {/* ================================================================ */}
+      {/*  Hero                                                             */}
+      {/* ================================================================ */}
+      <section className="relative py-20 sm:py-28 overflow-hidden">
+        <div
+          className="absolute top-0 left-0 w-full h-[700px] pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse 70% 60% at 50% -10%, ${accent}22 0%, ${accent}08 55%, transparent 100%)`,
+          }}
+        />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/* Breadcrumb */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2 text-sm text-[#cdd6f4]/50 mb-8 flex-wrap"
+          >
             <Link
               href="/"
-              className="hover:text-ink transition-colors"
+              className="hover:text-[#cdd6f4] transition-colors flex items-center gap-1"
             >
+              <ArrowLeft size={14} />
               Ana Sayfa
             </Link>
-            <span aria-hidden="true">/</span>
+            <span>/</span>
             <Link
               href="/#services"
-              className="hover:text-ink transition-colors"
+              className="hover:text-[#cdd6f4] transition-colors"
             >
               Hizmetler
             </Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-ink font-bold">{service.title}</span>
-          </div>
+            <span>/</span>
+            <span style={{ color: accent }}>{service.title}</span>
+          </motion.div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink mb-5 leading-tight">
-            {service.title}
-          </h1>
+          {/* Title block */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#cdd6f4] mb-5 leading-tight">
+              {service.title}
+            </h1>
 
-          <p className="text-pencil text-lg sm:text-xl max-w-3xl leading-relaxed mb-8">
-            {service.subtitle}
-          </p>
+            <p className="text-[#cdd6f4]/70 text-xl max-w-3xl leading-relaxed mb-6">
+              {service.subtitle}
+            </p>
 
-          <ActionStamp href="/#contact" size="lg">
-            Ücretsiz Teklif Alın
-          </ActionStamp>
+            <div>
+              <Link
+                href="/#contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:scale-105 active:scale-100"
+                style={{ backgroundColor: accent }}
+              >
+                Ücretsiz Teklif Alın
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Uzun aciklama */}
-      <section className="bg-paper-alt">
-        <PerforationDivider tone="paper" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <div className="max-w-3xl">
+      {/* ================================================================ */}
+      {/*  Long Description                                                 */}
+      {/* ================================================================ */}
+      <section className="relative py-16 bg-[#181825]">
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#11111b] to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+            className="max-w-3xl"
+          >
             {service.longDescriptionHtml ? (
               <div
-                className="text-pencil text-lg leading-relaxed space-y-5 [&_p]:text-pencil [&_p]:text-lg [&_p]:leading-relaxed"
+                className="text-[#bac2de] text-lg leading-relaxed space-y-5 [&_p]:text-[#bac2de] [&_p]:text-lg [&_p]:leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: service.longDescriptionHtml }}
               />
             ) : (
               service.longDescription.map((para, i) => (
                 <p
                   key={i}
-                  className="text-pencil text-lg leading-relaxed mb-5 last:mb-0"
+                  className="text-[#bac2de] text-lg leading-relaxed mb-5 last:mb-0"
                 >
                   {para}
                 </p>
               ))
             )}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Kapsam: ne sunuyoruz */}
-      <section className="bg-paper">
-        <PerforationDivider tone="paper-alt" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-ink mb-10">
-            Ne Sunuyoruz?
-          </h2>
+      {/* ================================================================ */}
+      {/*  Features                                                         */}
+      {/* ================================================================ */}
+      <section className="relative py-20 bg-[#11111b]">
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#181825] to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#cdd6f4] mb-3">
+              Ne{" "}
+              <span style={{ color: accent }}>Sunuyoruz?</span>
+            </h2>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
             {service.features.map((feature) => {
               const Icon = getFeatureIcon(feature.title);
               return (
-                <div
+                <motion.div
                   key={feature.title}
-                  className="rounded-[3px] border border-ink/30 bg-paper p-5 transition-shadow duration-200 hover:shadow-doc"
+                  variants={itemVariants}
+                  className="group bg-[#1e1e2e] rounded-2xl p-5 sm:p-6 border border-[#2d2d44] hover:border-opacity-60 transition-all duration-300 hover:-translate-y-1"
+                  style={
+                    {
+                      "--hover-border": `${accent}40`,
+                    } as React.CSSProperties
+                  }
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-[3px] bg-ink flex items-center justify-center shrink-0">
-                      <Icon size={20} className="text-paper" />
+                  <div className="flex items-center gap-3 sm:gap-4 mb-3">
+                    <div
+                      className="w-10 h-10 sm:w-[56px] sm:h-[56px] rounded-lg flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${accent}18` }}
+                    >
+                      <Icon size={24} style={{ color: accent }} />
                     </div>
-                    <h3 className="text-ink font-bold text-[15px] sm:text-base leading-tight">
+                    <h3 className="text-[#cdd6f4] font-semibold text-[15px] sm:text-base">
                       {feature.title}
                     </h3>
                   </div>
-                  <p className="text-pencil text-[15px] leading-relaxed">
+                  <p className="text-[#cdd6f4]/65 text-[15px] leading-relaxed">
                     {feature.description}
                   </p>
-                </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================================================================ */}
+      {/*  Process                                                          */}
+      {/* ================================================================ */}
+      <section className="relative py-20 bg-[#181825]">
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#11111b] to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#cdd6f4] mb-3">
+              Nasıl{" "}
+              <span style={{ color: accent }}>Çalışıyoruz?</span>
+            </h2>
+            <p className="text-[#cdd6f4]/60">
+              Şeffaf ve sistematik çalışma sürecimiz
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {service.process.map((step, index) => {
+              const isFirst = index === 0;
+              return (
+                <motion.div
+                  key={step.step}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                  className="flex gap-4 sm:gap-5 items-start bg-[#1e1e2e] rounded-2xl p-5 sm:p-6 border border-[#2d2d44]"
+                >
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 font-bold text-lg"
+                    style={
+                      isFirst
+                        ? {
+                            backgroundColor: accent,
+                            color: "#fff",
+                          }
+                        : {
+                            backgroundColor: `${accent}18`,
+                            color: accent,
+                          }
+                    }
+                  >
+                    {step.step}
+                  </div>
+                  <div className="pt-1">
+                    <h3 className="text-[#cdd6f4] font-semibold text-lg mb-1">
+                      {step.title}
+                    </h3>
+                    <p className="text-[#cdd6f4]/70 text-[15px] leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Surec: numarali cetvel satirlari */}
-      <section className="bg-paper-alt">
-        <PerforationDivider tone="paper" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-ink mb-3">
-            Nasıl Çalışıyoruz?
-          </h2>
-          <p className="text-pencil mb-10">
-            Şeffaf ve sistematik çalışma sürecimiz
-          </p>
+      {/* ================================================================ */}
+      {/*  CTA                                                              */}
+      {/* ================================================================ */}
+      <section className="relative py-24 bg-[#11111b]">
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#181825] to-transparent pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div
+              className="inline-block w-16 h-1 rounded-full mb-8"
+              style={{ backgroundColor: accent }}
+            />
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#cdd6f4] mb-4">
+              {service.title} için{" "}
+              <span style={{ color: accent }}>Hazır mısınız?</span>
+            </h2>
+            <p className="text-[#cdd6f4]/65 text-lg mb-10 max-w-5xl mx-auto">
+              Ücretsiz danışmanlık için hemen iletişime geçin. Size özel
+              çözümler geliştirmek için buradayız.
+            </p>
+            <Link
+              href="/#contact"
+              className="inline-flex items-center gap-3 px-9 py-4 rounded-xl font-bold text-lg text-white transition-all hover:opacity-90 hover:scale-105 active:scale-100"
+              style={{ backgroundColor: accent }}
+            >
+              İletişime Geç
+              <ArrowRight size={20} />
+            </Link>
 
-          <div className="border-y border-ink/40">
-            {service.process.map((step) => (
-              <div
-                key={step.step}
-                className="flex items-start gap-4 py-4 border-b border-dashed border-ink/25 last:border-b-0"
+            {/* Contact info row */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-8 text-[#cdd6f4]/45 text-sm">
+              <a
+                href={`mailto:${contactInfo.email}`}
+                className="flex items-center gap-2 hover:text-[#cdd6f4] transition-colors"
               >
-                <span className="font-mono text-sm font-bold text-kase shrink-0 w-8 pt-0.5 tabular-nums">
-                  {String(step.step).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-ink font-bold text-base mb-1">
-                    {step.title}
-                  </h3>
-                  <p className="text-pencil text-[15px] leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-paper">
-        <PerforationDivider tone="paper-alt" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-ink mb-4">
-            {service.title} için Hazır mısınız?
-          </h2>
-          <p className="text-pencil text-lg mb-10 max-w-3xl mx-auto">
-            Ücretsiz danışmanlık için hemen iletişime geçin. Size özel
-            çözümler geliştirmek için buradayız.
-          </p>
-          <ActionStamp href="/#contact" size="lg">
-            İletişime Geç
-          </ActionStamp>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-10 font-mono text-xs sm:text-sm">
-            <a
-              href={`mailto:${contactInfo.email}`}
-              className="flex items-center gap-2 text-pencil hover:text-ink transition-colors"
-            >
-              <Mail size={14} aria-hidden="true" />
-              {contactInfo.email}
-            </a>
-            <a
-              href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
-              className="flex items-center gap-2 text-pencil hover:text-ink transition-colors"
-            >
-              <Phone size={14} aria-hidden="true" />
-              {contactInfo.phone}
-            </a>
-          </div>
+                <Mail size={14} />
+                {contactInfo.email}
+              </a>
+              <a
+                href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-2 hover:text-[#cdd6f4] transition-colors"
+              >
+                <Phone size={14} />
+                {contactInfo.phone}
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
     </main>

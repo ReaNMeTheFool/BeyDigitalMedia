@@ -67,18 +67,18 @@ export default async function Home() {
         {hasBlocks ? (
           <BlocksRenderer blocks={blocks} />
         ) : (
-          <div className="min-h-screen flex items-center justify-center bg-paper text-ink">
+          <div className="min-h-screen flex items-center justify-center bg-[#181825] text-[#cdd6f4]">
             <div className="text-center px-4">
               <h1 className="text-3xl sm:text-4xl font-bold mb-4">
                 Bu sayfa henüz hazırlanmadı
               </h1>
-              <p className="text-lg text-pencil mb-8 max-w-lg mx-auto">
+              <p className="text-lg text-[#cdd6f4]/80 mb-8 max-w-lg mx-auto">
                 Yönetim panelinden &quot;home&quot; sayfasını oluşturarak tüm
                 bölümleri yönetebilirsiniz.
               </p>
               <Link
                 href="/admin"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-paper rounded-[3px] font-semibold hover:bg-kase transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0040ff] text-white rounded-xl font-semibold hover:bg-[#0033cc] transition-colors shadow-lg shadow-[#0040ff]/25"
               >
                 Yönetim Paneline Git
               </Link>

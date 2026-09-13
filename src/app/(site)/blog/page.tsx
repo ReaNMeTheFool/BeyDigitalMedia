@@ -6,7 +6,6 @@ import Footer from "@/components/sections/Footer";
 import { listBlogPosts } from "@/lib/content";
 import { mergeMetadata, defaultSeoFields } from "@/lib/metadata";
 import type { BlogPost } from "@/types/content";
-import SerialStrip from "@/components/document/SerialStrip";
 
 export const dynamic = "force-dynamic";
 
@@ -36,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlogPage() {
   let posts: BlogPost[] = [];
   try {
-    posts = await listBlogPosts(100);
+    posts = await listBlogPosts();
   } catch {
     posts = [];
   }
@@ -44,31 +43,22 @@ export default async function BlogPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-paper pt-24 pb-24">
+      <main className="min-h-screen bg-[#181825] pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SerialStrip serial="B-01" label="Arşiv Kayıtları" />
-
-          <div className="mt-8 mb-12">
-            <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-ink mb-4">
-              Blog
-            </h1>
-            <p className="text-pencil text-lg">
-              Dijital pazarlama dünyasından uzman içerikler.
-            </p>
-          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-4">
+            Blog
+          </h1>
+          <p className="text-[#cdd6f4]/70 text-lg mb-12">
+            Dijital pazarlama dünyasından uzman içerikler.
+          </p>
 
           {posts.length === 0 && (
-            <div className="rounded-[3px] border border-dashed border-ink/40 bg-paper-alt px-6 py-16 text-center max-w-2xl mx-auto">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-kase font-bold mb-4">
-                Arşiv hazırlanıyor
-              </p>
-              <p className="text-pencil text-lg">
-                Henüz yayınlanmış bir yazı bulunmuyor.
-              </p>
-            </div>
+            <p className="text-[#cdd6f4]/60 text-lg">
+              Henüz yayınlanmış bir yazı bulunmuyor.
+            </p>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts.map((post) => {
               const slug = post.slug;
               const title = post.title;
@@ -88,39 +78,34 @@ export default async function BlogPage() {
               return (
                 <article
                   key={slug}
-                  className="group rounded-[3px] overflow-hidden border border-ink/30 bg-paper transition-shadow duration-200 hover:shadow-doc"
+                  className="group bg-[#1e1e2e] rounded-2xl overflow-hidden border border-[#2d2d44] hover:border-[#0040ff]/30 transition-all duration-300"
                 >
                   <Link href={`/blog/${slug}`}>
-                    <div className="relative aspect-video overflow-hidden border-b border-ink/20 bg-paper-alt">
+                    <div className="relative aspect-video overflow-hidden">
                       {image ? (
                         <Image
                           src={image}
                           alt={title}
                           fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="font-mono text-4xl font-bold text-ink/20" aria-hidden="true">
-                            {title.charAt(0)}
-                          </span>
-                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#0040ff]/20 to-[#ffd76e]/20" />
                       )}
                     </div>
-                    <div className="p-5">
-                      <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-pencil mb-3">
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 text-sm text-[#cdd6f4]/60 mb-3">
                         {category && (
-                          <span className="text-kase font-bold">
+                          <span className="bg-[#0040ff]/10 text-[#0040ff] px-2 py-0.5 rounded-full text-xs font-medium">
                             {category}
                           </span>
                         )}
                         <span>{date}</span>
                       </div>
-                      <h2 className="text-lg font-bold text-ink mb-2 group-hover:underline underline-offset-4">
+                      <h2 className="text-xl font-bold text-[#cdd6f4] mb-2 group-hover:text-[#0040ff] transition-colors">
                         {title}
                       </h2>
-                      <p className="text-pencil text-sm line-clamp-3">
+                      <p className="text-[#cdd6f4]/70 text-sm line-clamp-3">
                         {excerpt}
                       </p>
                     </div>

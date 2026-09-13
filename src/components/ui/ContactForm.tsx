@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle, AlertCircle, ChevronDown, Check } from "lucide-react";
 import { submitContactForm } from "@/app/actions";
-import ActionStamp from "@/components/document/ActionStamp";
 
 const services = [
   { id: "social-media", label: "Sosyal Medya Yönetimi" },
@@ -16,11 +15,6 @@ const services = [
   { id: "content", label: "İçerik Üretimi" },
   { id: "consulting", label: "Dijital Danışmanlık" },
 ];
-
-const fieldLabelClass =
-  "block font-mono text-[11px] uppercase tracking-[0.18em] text-pencil mb-1";
-const fieldClass =
-  "w-full rounded-none border-0 border-b border-dashed border-ink/40 bg-transparent px-0 py-2.5 text-ink placeholder:text-pencil/70 outline-none transition-colors duration-150 focus:border-solid focus:border-ink focus-visible:outline-none";
 
 interface ServiceDropdownProps {
   selectedServices: string[];
@@ -65,22 +59,20 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
         aria-label="Hizmet seçin"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        className={`w-full px-0 py-2.5 rounded-none border-0 border-b border-dashed bg-transparent flex items-center justify-between outline-none focus-visible:outline-none transition-colors duration-150 ${
+        className={`w-full px-4 py-3 rounded-xl border transition-all bg-[#181825] text-[#cdd6f4] flex items-center justify-between ${
           isOpen
-            ? "border-solid border-ink"
-            : "border-ink/40 hover:border-ink"
+            ? "border-[#0040ff] ring-2 ring-[#0040ff]/20"
+            : "border-[#2d2d44] hover:border-[#0040ff]/50"
         }`}
       >
-        <span
-          className={`text-sm ${selectedServices.length === 0 ? "text-pencil/70" : "text-ink"}`}
-        >
+        <span className={selectedServices.length === 0 ? "text-[#6c7086]" : ""}>
           {getButtonText()}
         </span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <ChevronDown size={18} className="text-pencil" aria-hidden="true" />
+          <ChevronDown size={20} className="text-[#6c7086]" />
         </motion.span>
       </button>
 
@@ -88,12 +80,12 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            initial={{ opacity: 0, y: -8, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
             role="listbox"
-            className="absolute z-50 w-full mt-2 rounded-[3px] border border-ink/40 bg-paper shadow-doc overflow-hidden"
+            className="absolute z-50 w-full mt-2 bg-[#181825] border border-[#2d2d44] rounded-xl shadow-xl overflow-hidden"
           >
             <div className="max-h-64 overflow-y-auto py-1">
               {services.map((service) => {
@@ -103,7 +95,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                     key={service.id}
                     role="option"
                     aria-selected={isSelected}
-                    className="flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors hover:bg-paper-alt"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer transition-all hover:bg-[#0040ff]/5"
                   >
                     <input
                       type="checkbox"
@@ -114,7 +106,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                       className="sr-only"
                     />
                     <span className={`text-sm flex-1 transition-colors ${
-                      isSelected ? "text-kase font-bold" : "text-ink"
+                      isSelected ? "text-[#0040ff] font-medium" : "text-[#cdd6f4]"
                     }`}>
                       {service.label}
                     </span>
@@ -123,7 +115,7 @@ function ServiceDropdown({ selectedServices, onToggle }: ServiceDropdownProps) {
                       animate={{ opacity: isSelected ? 1 : 0, scale: isSelected ? 1 : 0.5 }}
                       transition={{ duration: 0.2, ease: "easeOut" }}
                     >
-                      <Check size={16} className="text-kase" aria-hidden="true" />
+                      <Check size={16} className="text-[#0040ff]" />
                     </motion.div>
                   </label>
                 );
@@ -156,7 +148,7 @@ export default function ContactForm() {
 
   const validateForm = (formData: FormData): Record<string, string[]> => {
     const errors: Record<string, string[]> = {};
-
+    
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const message = formData.get("message") as string;
@@ -183,10 +175,8 @@ export default function ContactForm() {
 
     const formData = new FormData(formRef.current);
 
-    // Add selected services to formData
-    if (selectedServices.length > 0) {
-      formData.set("service", selectedServices.join(","));
-    }
+    // Add selected services to formData; bos secimde "" (null degil)
+    formData.set("service", selectedServices.join(","));
 
     // Client-side quick validation
     const errors = validateForm(formData);
@@ -236,7 +226,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="name"
-          className={fieldLabelClass}
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           Adınız Soyadınız *
         </label>
@@ -245,12 +235,12 @@ export default function ContactForm() {
           id="name"
           name="name"
           required
-          className={fieldClass}
+          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
           placeholder="Örn: Ahmet Yılmaz"
         />
         {status?.errors?.name && (
-          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
-            <AlertCircle size={13} aria-hidden="true" />
+          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
+            <AlertCircle size={14} />
             {status.errors.name[0]}
           </p>
         )}
@@ -260,7 +250,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="email"
-          className={fieldLabelClass}
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           E-posta Adresiniz *
         </label>
@@ -269,12 +259,12 @@ export default function ContactForm() {
           id="email"
           name="email"
           required
-          className={fieldClass}
+          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
           placeholder="ornek@email.com"
         />
         {status?.errors?.email && (
-          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
-            <AlertCircle size={13} aria-hidden="true" />
+          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
+            <AlertCircle size={14} />
             {status.errors.email[0]}
           </p>
         )}
@@ -284,7 +274,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="phone"
-          className={fieldLabelClass}
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           Telefon Numaranız
         </label>
@@ -292,12 +282,12 @@ export default function ContactForm() {
           type="tel"
           id="phone"
           name="phone"
-          className={fieldClass}
+          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086]"
           placeholder="05XX XXX XX XX"
         />
         {status?.errors?.phone && (
-          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
-            <AlertCircle size={13} aria-hidden="true" />
+          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
+            <AlertCircle size={14} />
             {status.errors.phone[0]}
           </p>
         )}
@@ -305,7 +295,7 @@ export default function ContactForm() {
 
       {/* Service Field - Custom Multiple Select Dropdown */}
       <div>
-        <label className={fieldLabelClass}>
+        <label className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1">
           İlgilendiğiniz Hizmetler
         </label>
         <ServiceDropdown
@@ -318,7 +308,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="message"
-          className={fieldLabelClass}
+          className="block text-sm font-semibold text-[#cdd6f4] mb-2 pl-1"
         >
           Mesajınız *
         </label>
@@ -327,46 +317,47 @@ export default function ContactForm() {
           name="message"
           required
           rows={4}
-          className={`${fieldClass} resize-none`}
+          className="w-full px-4 py-3 rounded-xl border border-[#2d2d44] focus:border-[#0040ff] focus:ring-2 focus:ring-[#0040ff]/20 outline-none transition-all bg-[#181825] text-[#cdd6f4] placeholder-[#6c7086] resize-none"
           placeholder="Projeniz hakkında kısa bir bilgi verin..."
         />
         {status?.errors?.message && (
-          <p className="mt-1.5 text-action font-mono text-xs flex items-center gap-1">
-            <AlertCircle size={13} aria-hidden="true" />
+          <p className="mt-1 text-red-400 text-sm flex items-center gap-1">
+            <AlertCircle size={14} />
             {status.errors.message[0]}
           </p>
         )}
       </div>
 
       {/* Submit Button */}
-      <ActionStamp
+      <motion.button
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isSubmitting}
-        size="lg"
-        className="w-full disabled:opacity-60 disabled:pointer-events-none"
+        className="w-full bg-[#0040ff] text-[#cdd6f4] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#0033cc] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {isSubmitting ? (
           <>
-            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-paper/30 border-t-paper" aria-hidden="true" />
+            <div className="w-5 h-5 border-2 border-[#cdd6f4]/30 border-t-[#cdd6f4] rounded-full animate-spin" />
             <span>Gönderiliyor...</span>
           </>
         ) : (
           <>
-            <Send size={18} aria-hidden="true" />
+            <Send size={20} />
             <span>Mesaj Gönder</span>
           </>
         )}
-      </ActionStamp>
+      </motion.button>
 
-      {/* Success Message: damgali onay */}
+      {/* Success Message */}
       {status?.success && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2.5 rounded-[3px] border-[2.5px] border-kase text-kase p-4 shadow-[inset_0_0_0_2px_var(--color-paper)]"
+          className="flex items-center gap-2 text-green-400 bg-green-400/10 p-4 rounded-xl"
         >
-          <CheckCircle size={20} aria-hidden="true" />
-          <span className="font-bold text-sm">{status.message}</span>
+          <CheckCircle size={20} />
+          <span>{status.message}</span>
         </motion.div>
       )}
 
@@ -375,10 +366,10 @@ export default function ContactForm() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2.5 rounded-[3px] border-2 border-action text-action bg-action/5 p-4"
+          className="flex items-center gap-2 text-red-400 bg-red-400/10 p-4 rounded-xl"
         >
-          <AlertCircle size={20} aria-hidden="true" />
-          <span className="font-bold text-sm">{status.message}</span>
+          <AlertCircle size={20} />
+          <span>{status.message}</span>
         </motion.div>
       )}
     </form>

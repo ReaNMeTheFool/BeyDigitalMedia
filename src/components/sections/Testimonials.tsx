@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import Image from "next/image";
 import { sanitizeHtml } from "@/lib/sanitize-html";
-import PerforationDivider from "@/components/document/PerforationDivider";
 
 const testimonials = [
   {
@@ -107,42 +106,39 @@ export default function Testimonials({
     }),
   };
 
-  const current = activeTestimonials[currentIndex];
-
   return (
-    <section className="relative py-20 bg-paper-alt overflow-hidden">
-      <PerforationDivider tone="paper" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* Bolum basligi */}
-        <div className="mb-14 text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil mb-4">
-            Tutanak / Referanslar
-          </p>
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink"
-            dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }}
-          />
-        </div>
+    <section className="relative py-24 bg-[#181825] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#cdd6f4] mb-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
+        </motion.div>
 
         {/* Carousel */}
         <div className="relative max-w-4xl mx-auto">
           {/* Navigation Buttons */}
           <button
             onClick={goToPrev}
-            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-16 z-10 w-11 h-11 rounded-[3px] border border-ink/40 bg-paper items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors"
+            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-16 z-10 w-12 h-12 bg-[#1e1e2e] rounded-full shadow-lg items-center justify-center text-[#cdd6f4] hover:bg-[#0040ff] hover:text-white transition-colors"
             aria-label="Önceki yorum"
           >
-            <ChevronLeft size={22} aria-hidden="true" />
+            <ChevronLeft size={24} />
           </button>
           <button
             onClick={goToNext}
-            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-16 z-10 w-11 h-11 rounded-[3px] border border-ink/40 bg-paper items-center justify-center text-ink hover:bg-ink hover:text-paper transition-colors"
+            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-16 z-10 w-12 h-12 bg-[#1e1e2e] rounded-full shadow-lg items-center justify-center text-[#cdd6f4] hover:bg-[#0040ff] hover:text-white transition-colors"
             aria-label="Sonraki yorum"
           >
-            <ChevronRight size={22} aria-hidden="true" />
+            <ChevronRight size={24} />
           </button>
 
-          {/* Testimonial belgesi */}
+          {/* Testimonial Card */}
           <div className="relative overflow-hidden">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -152,51 +148,47 @@ export default function Testimonials({
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="relative rounded-[3px] border border-ink/40 bg-paper shadow-doc p-5 sm:p-8 md:p-10"
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-[#1e1e2e] rounded-3xl p-5 sm:p-8 md:p-12 shadow-lg"
               >
-                {/* Tutanak basligi */}
-                <div className="flex items-baseline gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-pencil mb-6">
-                  <Quote size={14} aria-hidden="true" className="text-kase" />
-                  <span>Tutanak {String(currentIndex + 1).padStart(2, "0")}</span>
-                  <span aria-hidden="true" className="dots-leader" />
-                  <span>{current.company}</span>
+                {/* Quote Icon */}
+                <div className="absolute top-8 right-8 w-16 h-16 bg-[#0040ff]/10 rounded-full flex items-center justify-center">
+                  <Quote className="w-8 h-8 text-[#0040ff]" />
                 </div>
 
                 {/* Stars */}
-                <div className="flex gap-1 mb-5" aria-label={`${current.rating} / 5`}>
-                  {[...Array(current.rating)].map((_, i) => (
+                <div className="flex gap-1 mb-6">
+                  {[...Array(activeTestimonials[currentIndex].rating)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 text-kase fill-kase"
-                      aria-hidden="true"
+                      className="w-5 h-5 text-[#ffd76e] fill-[#ffd76e]"
                     />
                   ))}
                 </div>
 
                 {/* Text */}
-                <p className="text-lg md:text-xl text-ink leading-relaxed mb-8">
-                  &quot;{current.text}&quot;
+                <p className="text-lg md:text-xl text-[#cdd6f4] italic leading-relaxed mb-8">
+                  &quot;{activeTestimonials[currentIndex].text}&quot;
                 </p>
 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-[3px] border border-ink/40 bg-paper-alt overflow-hidden shrink-0 flex items-center justify-center">
-                    {current.image ? (
-                      <Image src={current.image} alt={current.name} width={56} height={56} className="w-full h-full object-cover" />
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden shrink-0 ${!activeTestimonials[currentIndex].image ? 'bg-gradient-to-br from-[#0040ff] to-[#ffd76e]' : 'bg-[#1e1e2e]'}`}>
+                    {activeTestimonials[currentIndex].image ? (
+                      <Image src={activeTestimonials[currentIndex].image} alt={activeTestimonials[currentIndex].name} width={64} height={64} className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-xl font-black text-ink">{current.name.charAt(0)}</span>
+                      activeTestimonials[currentIndex].name.charAt(0)
                     )}
                   </div>
                   <div>
-                    {(current.role || current.company) && (
-                      <p className="font-mono text-xs uppercase tracking-[0.14em] text-pencil">
-                        {current.role}
-                        {current.company && (current.role ? ` @ ${current.company}` : current.company)}
+                    {(activeTestimonials[currentIndex].role || activeTestimonials[currentIndex].company) && (
+                      <p className="font-bold text-[#cdd6f4] text-lg">
+                        {activeTestimonials[currentIndex].role}
+                        {activeTestimonials[currentIndex].company && (activeTestimonials[currentIndex].role ? ` @ ${activeTestimonials[currentIndex].company}` : activeTestimonials[currentIndex].company)}
                       </p>
                     )}
-                    <h4 className="font-bold text-ink">
-                      {current.name}
+                    <h4 className="text-[#cdd6f4]/90">
+                      {activeTestimonials[currentIndex].name}
                     </h4>
                   </div>
                 </div>
@@ -204,16 +196,16 @@ export default function Testimonials({
             </AnimatePresence>
           </div>
 
-          {/* Sekme gostergeleri */}
+          {/* Dots */}
           <div className="flex justify-center gap-2 mt-8">
             {activeTestimonials.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`h-2.5 transition-all border ${
+                className={`w-3 h-3 rounded-full transition-all ${
                   index === currentIndex
-                    ? "w-7 bg-ink border-ink"
-                    : "w-2.5 border-ink/50 hover:bg-ink/20"
+                    ? "bg-[#0040ff] w-8"
+                    : "bg-[#0040ff]/30 hover:bg-[#0040ff]/50"
                 }`}
                 aria-label={`Yorum ${index + 1}`}
               />
@@ -221,6 +213,7 @@ export default function Testimonials({
           </div>
         </div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#11111b] pointer-events-none" />
     </section>
   );
 }

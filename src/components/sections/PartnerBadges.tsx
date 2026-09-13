@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Linkedin } from "lucide-react";
 import Image from "next/image";
 
@@ -27,45 +28,57 @@ export default function PartnerBadges({
   badges?: (Badge | { name: string; iconComponent: typeof LinkedinIcon })[];
 }) {
   return (
-    <section className="relative py-16 bg-paper overflow-hidden">
+    <section className="relative py-20 bg-[#1e1e2e] overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#0040ff]/3 rounded-full blur-3xl" />
+      </div>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Baslik */}
-        <div className="text-center mb-10">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-pencil mb-4">
-            Ek Belge / Platformlar
-          </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-ink mb-4">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#cdd6f4] mb-4">
             {title}
           </h2>
-          <p className="text-pencil text-lg max-w-xl mx-auto">
+          <p className="text-[#cdd6f4]/60 text-lg max-w-xl mx-auto">
             Markanızın dijital büyümesi için en güçlü platformlarla çalışıyoruz.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Platform kayitlari */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
-          {badges.map((badge) => (
-            <div
+        {/* Badges Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto">
+          {badges.map((badge, index) => (
+            <motion.div
               key={badge.name}
-              className="flex flex-col items-center justify-center gap-3 p-5 rounded-[3px] border border-ink/25 bg-paper-alt"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-[#181825] border border-[#2d2d44] hover:border-[#0040ff]/30 hover:shadow-[0_0_30px_rgba(0,64,255,0.1)] transition-all duration-300"
             >
               <div className="h-10 flex items-center justify-center">
                 {"iconComponent" in badge ? (
-                  <badge.iconComponent className="text-ink" />
+                  <badge.iconComponent className="text-[#cdd6f4]/80" />
                 ) : badge.icon ? (
                   <Image
                     src={badge.icon}
                     alt={badge.name}
                     width={40}
                     height={40}
-                    className="h-10 w-10 object-contain"
+                    className="h-10 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
                   />
                 ) : null}
               </div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-pencil text-center">
+              <span className="text-[#cdd6f4]/50 text-xs font-medium text-center">
                 {badge.name}
               </span>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
