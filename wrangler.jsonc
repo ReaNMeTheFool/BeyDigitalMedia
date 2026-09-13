@@ -1,5 +1,6 @@
 {
   "name": "beydigitalmedia",
+  "account_id": "9141694319c7507693fd8c4947bdc5ad",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-09-08",
   "compatibility_flags": ["nodejs_compat"],
@@ -11,7 +12,7 @@
     {
       "binding": "DB",
       "database_name": "beydigitalmedia",
-      "database_id": "eb3df19d-c4b4-4d59-818d-cda91e2cd1ba"
+      "database_id": "a6bf3e14-9b19-4a77-b304-eed22d87bc9b"
     }
   ],
   "r2_buckets": [
