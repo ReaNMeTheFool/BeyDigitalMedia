@@ -60,6 +60,15 @@ Why: user connected the repo via CF dashboard under this account; domain cutover
 Rejected: R34nm3@gmail.com account (`cb6cdeb0…`) — leaf-1 created D1 `eb3df19d…` + R2 bucket there by mistake; junk (delete later).
 Note: R2 not enabled on this account yet (code 10042) — user must enable via dashboard before the `beydigitalmedia-media` bucket can be created.
 
+### 2026-09-13 — Local D1 re-seed required after wrangler database_id changes
+Failed: miniflare keys the local sqlite file by database_id; the 2026-09-13 account fix (commit 31c1d72, db id eb3df19d… → a6bf3e14…) orphaned the seeded local file and `next dev` came up empty.
+Fix: `npx wrangler d1 execute DB --local --file migrations/0001_schema.sql` then `0002_seed.sql` after any database_id change.
+Rejected: assuming local D1 state persists across id changes.
+
+### 2026-09-13 — Public site visuals restored to 7d5f113b (redesign rolled back)
+Why: user instruction after seeing the fatura-kase redesign on the Cloudflare deployment — live site should keep the Aug-29 look. Commit 8d4daf1 restores all site visuals on the D1 stack; the redesign remains recoverable at commit 6fed861 (visual diff: 44 files, ±~2.4k lines).
+Rejected: keeping fatura-kase on the public site; git revert of migration commits.
+
 ### 2026-09-12 — mongodump from VPS via deleted sync scripts
 Failed: 2026-09-12 probe — SERVER_HOST/SERVER_USER/SERVER_SSH_PASSWORD exist nowhere (shell, .env, .env.local, .dev.vars); sunucu_bilgi.md password marked "(gizli)"; SSH probe returned REMOTE HOST IDENTIFICATION HAS CHANGED (host key rotated/reinstalled). Migrator proven against committed fixture scripts/fixtures/sample.archive instead.
 Don't retry unless: user supplies fresh VPS SSH creds before cutover day (cutover step 2 in DEPLOY-CLOUDFLARE.md needs it).
