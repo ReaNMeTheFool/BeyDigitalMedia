@@ -55,6 +55,11 @@ Don't retry unless: sharp is fully removed from the dependency tree (planned in 
 Failed: compose mongo service publishes no host port, so DATABASE_URI (mongodb://localhost:27017) is unreachable. Use the pre-existing `mongo` container (publishes 0.0.0.0:27017) instead.
 Don't retry unless: docker-compose.yml adds `ports: 27017:27017`. (Obsolete since Payload/mongo removal, kept for history.)
 
+### 2026-09-13 — Production Cloudflare account is balaban.yigitemre@gmail.com (9141694319c7507693fd8c4947bdc5ad)
+Why: user connected the repo via CF dashboard under this account; domain cutover happens here. D1 `beydigitalmedia` id `a6bf3e14-9b19-4a77-b304-eed22d87bc9b` created here; wrangler.jsonc pins account_id.
+Rejected: R34nm3@gmail.com account (`cb6cdeb0…`) — leaf-1 created D1 `eb3df19d…` + R2 bucket there by mistake; junk (delete later).
+Note: R2 not enabled on this account yet (code 10042) — user must enable via dashboard before the `beydigitalmedia-media` bucket can be created.
+
 ### 2026-09-12 — mongodump from VPS via deleted sync scripts
 Failed: 2026-09-12 probe — SERVER_HOST/SERVER_USER/SERVER_SSH_PASSWORD exist nowhere (shell, .env, .env.local, .dev.vars); sunucu_bilgi.md password marked "(gizli)"; SSH probe returned REMOTE HOST IDENTIFICATION HAS CHANGED (host key rotated/reinstalled). Migrator proven against committed fixture scripts/fixtures/sample.archive instead.
 Don't retry unless: user supplies fresh VPS SSH creds before cutover day (cutover step 2 in DEPLOY-CLOUDFLARE.md needs it).
