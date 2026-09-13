@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { COOKIE_NAME, isValidSession } from "@/lib/admin-auth";
 import AdminShell from "@/components/admin/AdminShell";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: {
