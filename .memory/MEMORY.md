@@ -69,6 +69,10 @@ Rejected: assuming local D1 state persists across id changes.
 Why: user instruction after seeing the fatura-kase redesign on the Cloudflare deployment — live site should keep the Aug-29 look. Commit 8d4daf1 restores all site visuals on the D1 stack; the redesign remains recoverable at commit 6fed861 (visual diff: 44 files, ±~2.4k lines).
 Rejected: keeping fatura-kase on the public site; git revert of migration commits.
 
+### 2026-09-17 — Remove homepage blue CTA panel and navbar CTA; restore expanded navigation
+Why: user explicitly removed these two surfaces and requested the original expanded menu; preserve hero/contact CTAs and Cloudflare architecture.
+Rejected: reverting whole historical commits or removing CTA blocks from unrelated pages.
+
 ### 2026-09-12 — mongodump from VPS via deleted sync scripts
 Failed: 2026-09-12 probe — SERVER_HOST/SERVER_USER/SERVER_SSH_PASSWORD exist nowhere (shell, .env, .env.local, .dev.vars); sunucu_bilgi.md password marked "(gizli)"; SSH probe returned REMOTE HOST IDENTIFICATION HAS CHANGED (host key rotated/reinstalled). Migrator proven against committed fixture scripts/fixtures/sample.archive instead.
 Don't retry unless: user supplies fresh VPS SSH creds before cutover day (cutover step 2 in DEPLOY-CLOUDFLARE.md needs it).
