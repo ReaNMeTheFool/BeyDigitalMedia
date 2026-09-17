@@ -23,8 +23,6 @@ export default async function NavbarServer() {
       logoSrc={siteSettings?.logo?.url || "/beydigital_logo.webp"}
       brandName={siteSettings?.siteName || "Bey Digital Media"}
       navLinks={links.length > 0 ? links : undefined}
-      ctaLabel={navData?.ctaLabel ?? undefined}
-      ctaHref={navData?.ctaHref ?? undefined}
     />
   );
 }

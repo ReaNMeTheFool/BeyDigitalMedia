@@ -26,8 +26,8 @@ export const defaultSiteSettings: SiteSettings = {
 
 export const defaultNavigation: Navigation = {
   links: null,
-  ctaLabel: "Ücretsiz Teklif Al",
-  ctaHref: "#contact",
+  ctaLabel: null,
+  ctaHref: null,
 };
 
 export const defaultFooter: Footer = {

@@ -42,16 +42,12 @@ interface NavbarProps {
   logoSrc?: string;
   brandName?: string;
   navLinks?: NavLink[];
-  ctaLabel?: string;
-  ctaHref?: string;
 }
 
 export default function Navbar({
   logoSrc = "/beydigital_logo.webp",
   brandName = "Bey Digital Media",
   navLinks = defaultNavLinks,
-  ctaLabel = "Ücretsiz Teklif Al",
-  ctaHref = "#contact",
 }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -197,16 +193,6 @@ export default function Navbar({
                     )
                   )}
                 </div>
-                {ctaLabel && (
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2">
-                    <button
-                      onClick={() => scrollToSection(ctaHref)}
-                      className="px-5 py-2.5 bg-[#0040ff] text-white rounded-xl font-semibold text-sm hover:bg-[#0033cc] transition-colors shadow-lg shadow-[#0040ff]/25"
-                    >
-                      {ctaLabel}
-                    </button>
-                  </div>
-                )}
               </div>
             </div>
 
