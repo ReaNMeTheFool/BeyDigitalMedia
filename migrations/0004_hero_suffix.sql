@@ -4,11 +4,13 @@
 UPDATE pages
 SET content = (
   SELECT json_group_array(
-    CASE
-      WHEN json_extract(block.value, '$.blockType') = 'hero'
-      THEN json_set(block.value, '$.icerik.titleSuffix', 'Büyütüyoruz')
-      ELSE block.value
-    END
+    json(
+      CASE
+        WHEN json_extract(block.value, '$.blockType') = 'hero'
+        THEN json_set(block.value, '$.icerik.titleSuffix', 'Büyütüyoruz')
+        ELSE block.value
+      END
+    )
   )
   FROM (
     SELECT value
