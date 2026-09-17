@@ -83,7 +83,7 @@ export const defaultFooter: Footer = {
 
 export const defaultHeroIcerik = {
   titlePrefix: "Dijital",
-  titleSuffix: "Çözümleri",
+  titleSuffix: "Büyütüyoruz",
   subtitle:
     "Türkiye'nin önde gelen dijital pazarlama ajansı olarak markanızı büyütmek için buradayız.",
 };

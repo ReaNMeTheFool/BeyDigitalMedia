@@ -214,7 +214,7 @@ function ParticleCanvas() {
 
 export default function Hero({
   titlePrefix = "Dijital",
-  titleSuffix = "Çözümleri",
+  titleSuffix = "Büyütüyoruz",
   animatedWords = ["Satışlarınızı", "Kazancınızı", "Verimliliğinizi", "Geleceğinizi"],
   description = "Bey Digital Media olarak markanızı dijital dünyada büyütmek için Meta Ads, Google Ads, Sosyal Medya Yönetimi ve daha fazlasını sunuyoruz.",
   primaryCta,
